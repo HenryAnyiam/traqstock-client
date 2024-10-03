@@ -2,7 +2,7 @@ import React from 'react'
 
 function ManageProfile() {
   return (
-    <div>ManageProfile</div>
+    <div className='ml-4'>ManageProfile</div>
   )
 }
 

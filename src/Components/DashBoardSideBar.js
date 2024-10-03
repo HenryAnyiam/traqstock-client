@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import logo from '../Assets/img/traqstock_logo1.png';
 import hamburger from '../Assets/img/hamburger.svg';
+import close from '../Assets/img/close_icon.svg';
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../Utils/userAuth';
+import Header from './Header';
 
 function DashboardSideBar() {
   const { logout } = useAuth()
@@ -12,7 +14,9 @@ function DashboardSideBar() {
     menu?.classList.toggle("grid");
     menu?.classList.toggle("z-10");
     const opener = document.querySelector(".opener");
+    const closer = document.querySelector(".closer");
     opener?.classList.toggle("hidden");
+    closer?.classList.toggle("hidden");
   }
 
   useEffect(() => {
@@ -33,10 +37,16 @@ function DashboardSideBar() {
 
   return (
     <>
-    <button onClick={() => { toggleMenu()}} id="sideBarToggle" className="px-2 py-2 text-gray-200 hover:bg-gray-200 focus:outline-none rounded-md mr-1.5 ml-2 opener lg:hidden">
-      <img src={hamburger} alt="Menu" className="h-6 w-6"/>
-    </button>
-    <div className='bg-white h-screen w-fit grid-rows-5 grid-flow-col gap-4 shadow-xl hidden lg:grid absolute lg:relative' id='menu'>
+    <div className='flex'>
+      <button onClick={() => { toggleMenu()}} id="sideBarToggle" className="h-fit px-2 py-2 text-gray-200 hover:bg-gray-200 focus:outline-none opener lg:hidden shadow-md bg-white">
+        <img src={hamburger} alt="Menu" className="h-6 w-6"/>
+      </button>
+      <button onClick={() => { toggleMenu()}} id="sideBarToggle" className="h-fit px-2 py-2 text-gray-200 hover:bg-gray-200 focus:outline-none closer hidden lg:hidden shadow-md bg-white">
+        <img src={close} alt="Menu" className="h-6 w-6"/>
+      </button>
+      <Header extraClass='flex lg:hidden grow'/>
+    </div>
+    <div className='bg-white h-screen min-w-52 grid-rows-5 grid-flow-col gap-4 shadow-xl hidden lg:grid absolute lg:relative' id='menu'>
       <div className="py-2 px-2 w-full items-center">
         <img src={logo} alt="logo" className="h-8 w-40 ml-2"/>
         <hr />

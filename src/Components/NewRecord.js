@@ -2,7 +2,24 @@ import React from 'react'
 
 function NewRecord() {
   return (
-    <div> NewRecord NewRecord NewRecord NewRecord NewRecordNewRecord</div>
+    <div className='ml-4'>
+      NewRecord NewRecord NewRecord NewRecord NewRecordNewRecord
+      NewRecord NewRecord NewRecord NewRecord NewRecordNewRecord
+      NewRecord NewRecord NewRecord NewRecord NewRecordNewRecord
+      NewRecord NewRecord NewRecord NewRecord NewRecordNewRecord
+      NewRecord NewRecord NewRecord NewRecord NewRecordNewRecord
+      NewRecord NewRecord NewRecord NewRecord NewRecordNewRecord
+      NewRecord NewRecord NewRecord NewRecord NewRecordNewRecord
+      NewRecord NewRecord NewRecord NewRecord NewRecordNewRecord
+      NewRecord NewRecord NewRecord NewRecord NewRecordNewRecord
+      NewRecord NewRecord NewRecord NewRecord NewRecordNewRecord
+      NewRecord NewRecord NewRecord NewRecord NewRecordNewRecord
+      NewRecord NewRecord NewRecord NewRecord NewRecordNewRecord
+      NewRecord NewRecord NewRecord NewRecord NewRecordNewRecord
+      NewRecord NewRecord NewRecord NewRecord NewRecordNewRecord
+      NewRecord NewRecord NewRecord NewRecord NewRecordNewRecord
+      NewRecord NewRecord NewRecord NewRecord NewRecordNewRecord
+    </div>
   )
 }
 

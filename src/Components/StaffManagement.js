@@ -2,7 +2,7 @@ import React from 'react'
 
 function StaffManagement() {
   return (
-    <div>StaffManagement</div>
+    <div className='ml-4'>StaffManagement</div>
   )
 }
 
