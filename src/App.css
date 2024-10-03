@@ -1,0 +1,11 @@
+#forms {
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    height: 88vh;
+}
+
+.logout-btn:hover svg {
+    fill: #dbc76f
+}
