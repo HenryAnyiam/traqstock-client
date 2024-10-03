@@ -10,6 +10,22 @@
     fill: #dbc76f
 }
 
+#navList a {
+  color: #613a12;
+}
+
+#navList a:hover {
+    color: #dbc76f;
+    font-weight: 700;
+    background-color: #613a12;
+}
+
+#navList a.active {
+    color: #dbc76f;
+    font-weight: 700;
+    background-color: #613a12;
+}
+
 .background-container {
     position: fixed;
     top: 0;

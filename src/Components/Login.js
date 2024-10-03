@@ -1,4 +1,6 @@
 import React, { useEffect, useState, useReducer } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../Utils/userAuth';
 
 
 const loginData = { username: '', password: '' };
@@ -18,6 +20,16 @@ function Login() {
   const [currIndex, setCurrIndex] = useState(0);
   const [data, dispatch] = useReducer(reducer, loginData);
   const { username, password } = data;
+  const navigate = useNavigate();
+  const location = useLocation();
+  const auth = useAuth();
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    auth.login(username);
+    const redirect = location.state?.path || '/dashboard/new-record';
+    navigate(redirect, { replace: true });
+  }
 
   useEffect(() => {
     const firstImage = document.querySelector('.firstImage');
@@ -41,14 +53,17 @@ function Login() {
 
   useEffect(() => {
     const togglePassword = document.getElementById('togglePassword');
-    togglePassword.addEventListener('click', () => {
+    const handleToggle = () => {
       const type = passwordType === 'password' ? 'text' : 'password';
       setPasswordType(type);
       const passwordIcon = document.getElementById('password-icon')
       passwordIcon?.classList.toggle('fa-eye');
       passwordIcon?.classList.toggle('fa-eye-slash');
-    })
+    }
+    togglePassword.addEventListener('click', handleToggle)
+    return () => { togglePassword.removeEventListener('click', handleToggle); };
   }, [passwordType])
+
   return (
     <>
     <div className="background-container">
@@ -85,10 +100,11 @@ function Login() {
                 </div>
             </div>
             <div className="mr-4 flex justify-end text-base-brown">
-                <p>Forgot Password?</p>
+                <button>Forgot Password?</button>
             </div>
             <div className="m-4 flex justify-center">
-                <button type="submit" className="text-center w-full text-base-brown bg-hover-gold p-2 rounded-xl font-bold hover:text-hover-gold hover:bg-base-brown">Continue</button>
+                <button type="submit" onClick={handleLogin}
+                className="text-center w-full text-base-brown bg-hover-gold p-2 rounded-xl font-bold hover:text-hover-gold hover:bg-base-brown">Continue</button>
             </div>
         </form>
     </div>
