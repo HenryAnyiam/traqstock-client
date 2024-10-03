@@ -9,3 +9,52 @@
 .logout-btn:hover svg {
     fill: #dbc76f
 }
+
+.background-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 2s ease-in-out;
+}
+
+.firstImage {
+    opacity: 1;
+}
+
+#images1 {
+    background-image: url('./Assets/img/farm_images/farm_image_1.png');
+}
+
+#images2 {
+    background-image: url('./Assets/img/farm_images/farm_image_2.png');
+}
+
+#images3 {
+    background-image: url('./Assets/img/farm_images/farm_image_3.png');
+}
+
+#images4 {
+    background-image: url('./Assets/img/farm_images/farm_image_4.png');
+}
+
+#images5 {
+    background-image: url('./Assets/img/farm_images/farm_image_5.png');
+}
+
+#images6 {
+    background-image: url('./Assets/img/farm_images/farm_image_6.png');
+}
