@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useReducer } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../Utils/userAuth';
+import logo from '../Assets/img/traqstock_logo1.png';
 
 
 const loginData = { username: '', password: '' };
@@ -74,8 +75,12 @@ function Login() {
         <div className="background-image" id="images5"></div>
         <div className="background-image firstImage" id="images6"></div>
   </div>
-    <div className="w-full flex justify-center items-center" id="forms">
-    <div className="bg-white/[.3] shadow-2xl rounded-xl h-fit w-60 lg:w-fit z-10">
+  <div class="w-full z-10">
+    <div className="py-2 px-2">
+          <img src={logo} alt="logo" className="h-10 w-44 ml-2"/>
+    </div>
+    <div className="flex justify-center items-center" id="forms">
+    <div className="bg-white/[.3] shadow-2xl rounded-xl h-fit w-60 lg:w-fit">
         <p className="text-center rounded-xl font-bold font-serif text-base-brown p-1 w-full mb-2 text-xl">Sign In To Your Account</p>
         <form>
             <div className="m-4 flex items-center">
@@ -107,6 +112,7 @@ function Login() {
                 className="text-center w-full text-base-brown bg-hover-gold p-2 rounded-xl font-bold hover:text-hover-gold hover:bg-base-brown">Continue</button>
             </div>
         </form>
+    </div>
     </div>
     </div>
     </>

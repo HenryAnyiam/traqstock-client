@@ -46,7 +46,7 @@ function DashboardSideBar() {
       </button>
       <Header extraClass='flex lg:hidden grow'/>
     </div>
-    <div className='bg-white h-screen min-w-52 grid-rows-5 grid-flow-col gap-4 shadow-xl hidden lg:grid absolute lg:relative' id='menu'>
+    <div className='bg-white h-screen-minus-nav lg:h-screen min-w-52 grid-rows-5 grid-flow-col gap-4 shadow-xl hidden lg:grid absolute lg:relative overflow-hidden' id='menu'>
       <div className="py-2 px-2 w-full items-center">
         <img src={logo} alt="logo" className="h-8 w-40 ml-2"/>
         <hr />

@@ -7,9 +7,11 @@ function Dashboard() {
   return (
     <div className='w-full lg:flex'>
       <DashboardSideBar />
-      <div className="">
+      <div className="grow">
         <Header extraClass='hidden lg:flex'/>
-        <Outlet />
+        <div className='overflow-auto h-screen-minus-nav'>
+          <Outlet />
+        </div>
       </div>
     </div>
   )
