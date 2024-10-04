@@ -75,7 +75,7 @@ function Login() {
         <div className="background-image" id="images5"></div>
         <div className="background-image firstImage" id="images6"></div>
   </div>
-  <div class="w-full z-10 bg-white/50 h-screen">
+  <div className="w-full z-10 bg-white/50 h-screen">
     <div className="py-2 px-2">
           <img src={logo} alt="logo" className="h-10 w-44 ml-2"/>
     </div>
