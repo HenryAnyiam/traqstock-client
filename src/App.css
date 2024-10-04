@@ -18,12 +18,14 @@
     color: #dbc76f;
     font-weight: 700;
     background-color: #613a12;
+    text-align: center;
 }
 
 #navList a.active {
     color: #dbc76f;
     font-weight: 700;
     background-color: #613a12;
+    text-align: center;
 }
 
 .background-container {

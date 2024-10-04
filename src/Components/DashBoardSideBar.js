@@ -51,7 +51,7 @@ function DashboardSideBar() {
         <img src={logo} alt="logo" className="h-8 w-40 ml-2"/>
         <hr />
       </div>
-      <nav className="row-span-3 px-2 text-center tracking-widest" id="navList">
+      <nav className="row-span-3 px-2 text-left tracking-widest" id="navList">
         <NavLink to='new-record' className="block p-2 rounded-xl my-1">New Record</NavLink>
         <NavLink to='weekly-report' className="block p-2 rounded-xl my-1">Weekly Report</NavLink>
         <NavLink to='monthly-report' className="block p-2 rounded-xl my-1">Monthly Report</NavLink>
