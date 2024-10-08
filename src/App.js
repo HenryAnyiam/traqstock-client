@@ -11,6 +11,11 @@ import ManageProfile from "./Components/ManageProfile";
 import Login from "./Components/Login";
 import Page404 from "./Components/Page404";
 import LoggedIn from "./Utils/LoggedIn";
+import MothlyReportTable from "./Components/MothlyReportTable";
+import MonthlyReportChart from "./Components/MonthlyReportChart";
+import WeeklyReportTable from "./Components/WeeklyReportTable";
+import WeeklyReportChart from "./Components/WeeklyReportChart";
+import 'tippy.js/dist/tippy.css';
 
 function App() {
   return (
@@ -19,8 +24,14 @@ function App() {
         <Routes>
           <Route path='dashboard' element={<RequireLogin><Dashboard /></RequireLogin>}>
             <Route path='new-record' element={<NewRecord />}/>
-            <Route path='weekly-report' element={<WeeklyReport />}/>
-            <Route path='monthly-report' element={<MonthlyReport />}/>
+            <Route path='weekly-report' element={<WeeklyReport />}>
+              <Route path='table' element={<WeeklyReportTable />}/>
+              <Route path='chart' element={<WeeklyReportChart />}/>
+            </Route>
+            <Route path='monthly-report' element={<MonthlyReport />}>
+              <Route path='table' element={<MothlyReportTable />}/>
+              <Route path='chart' element={<MonthlyReportChart />}/>
+            </Route>
             <Route path='manage-staffs' element={<StaffManagement />}/>
             <Route path='profile' element={<ManageProfile />}/>
           </Route>

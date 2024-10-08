@@ -76,3 +76,26 @@
 #images6 {
     background-image: url('./Assets/img/farm_images/farm_image_6.png');
 }
+
+#report-view a {
+    padding: 0.5rem;
+    width: 7rem;
+    border-radius: 0.75rem;
+    background-color: #613a12;
+    color: #dbc76f;
+    margin: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+#report-view a.active {
+    color: #613a12;
+    background-color: #dbc76f;
+}
+
+#report-view a:hover {
+    color: #613a12;
+    background-color: #dbc76f;
+}

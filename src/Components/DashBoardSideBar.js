@@ -2,12 +2,24 @@ import React, { useEffect } from 'react';
 import logo from '../Assets/img/traqstock_logo1.png';
 import hamburger from '../Assets/img/hamburger.svg';
 import close from '../Assets/img/close_icon.svg';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../Utils/userAuth';
 import Header from './Header';
 
 function DashboardSideBar() {
-  const { logout } = useAuth()
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleMonthly = (e) => {
+    e.preventDefault()
+    navigate('monthly-report/table')
+  }
+
+  const handleWeekly = (e) => {
+    e.preventDefault()
+    navigate('weekly-report/table')
+  }
+
   const toggleMenu = () => {
     const menu = document.getElementById("menu");
     menu?.classList.toggle("hidden");
@@ -53,8 +65,8 @@ function DashboardSideBar() {
       </div>
       <nav className="row-span-3 px-2 text-left tracking-widest" id="navList">
         <NavLink to='new-record' className="block p-2 rounded-xl my-1">New Record</NavLink>
-        <NavLink to='weekly-report' className="block p-2 rounded-xl my-1">Weekly Report</NavLink>
-        <NavLink to='monthly-report' className="block p-2 rounded-xl my-1">Monthly Report</NavLink>
+        <NavLink to='weekly-report' className="block p-2 rounded-xl my-1" onClick={handleWeekly}>Weekly Report</NavLink>
+        <NavLink to='monthly-report' className="block p-2 rounded-xl my-1" onClick={handleMonthly}>Monthly Report</NavLink>
         <NavLink to='manage-staffs' className="block p-2 rounded-xl my-1">Staff Management</NavLink>
       </nav>
       <div className="text-center p-2 text-base-brown rounded-xl hover:text-hover-gold hover:font-bold logout-btn">
