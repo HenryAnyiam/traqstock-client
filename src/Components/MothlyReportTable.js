@@ -16,7 +16,6 @@ function MothlyReportTable() {
           <th className='p-2 w-[13%]'>Feed Intake</th>
           <th className='p-2 w-[13%]'>Water Intake</th>
           <th  className='p-2 w-[13%]'>Mortality</th>
-          <th  className='p-2 w-[20%]'>Vaccination</th>
           <th  className='p-2 w-[5%]'></th>
         </tr>
       </thead>
@@ -28,7 +27,6 @@ function MothlyReportTable() {
             <td className='p-2'>{ report.feed_intake }</td>
             <td className='p-2'>{ report.water_intake }</td>
             <td className='p-2'>{ report.mortality }</td>
-            <td className='p-2'>{ report.vaccination }</td>
             <td className='p-2'>
               <Tippy content='Edit Report'>
                 <button>

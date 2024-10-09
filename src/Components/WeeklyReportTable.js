@@ -4,7 +4,7 @@ import Tippy from '@tippyjs/react';
 import { FaPencilAlt } from 'react-icons/fa';
 
 function WeeklyReportTable() {
-  const reportData = REPORT.slice(0, 10);
+  const reportData = REPORT.slice(11, 21);
 
   return (
     <table className='table-auto w-full border-collapse'>
@@ -16,7 +16,6 @@ function WeeklyReportTable() {
           <td className='p-2 w-[13%]'>Feed Intake</td>
           <td className='p-2 w-[13%]'>Water Intake</td>
           <td  className='p-2 w-[13%]'>Mortality</td>
-          <td  className='p-2 w-[20%]'>Vaccination</td>
           <td  className='p-2 w-[5%]'></td>
         </tr>
       </thead>
@@ -28,7 +27,6 @@ function WeeklyReportTable() {
             <td className='p-2'>{ report.feed_intake }</td>
             <td className='p-2'>{ report.water_intake }</td>
             <td className='p-2'>{ report.mortality }</td>
-            <td className='p-2'>{ report.vaccination }</td>
             <td className='p-2'>
               <Tippy content='Edit Report'>
                 <button>
