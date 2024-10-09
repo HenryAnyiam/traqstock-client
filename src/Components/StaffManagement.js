@@ -1,9 +1,12 @@
 import Modal from 'react-modal';
 import React, { useEffect, useState } from 'react'
-import { FaLock, FaUser, FaUserTag } from 'react-icons/fa';
+import { FaLock, FaUser, FaUserTag, FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
+import STAFFS from '../mock_data/MOCK_STAFF_DATA.json'
+import Tippy from '@tippyjs/react';
 
 function StaffManagement() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const staffData = STAFFS.slice(0, 10);
 
   useEffect(() => {
     Modal.setAppElement('#dashboard-body');
@@ -55,13 +58,13 @@ function StaffManagement() {
                 <div className="bg-white h-9 flex items-center p-1 border-2 border-r-0 border-hover-gold rounded-l-lg">
                     <FaUserTag className='text-gray-700'/>
                 </div>
-                <select id='role' name='name'
+                <select id='role' name='name' defaultValue=''
                 className="bg-white text-gray-700 h-9 border-2 border-l-0 border-hover-gold rounded-r-lg p-1 w-52 lg:w-72 focus:outline-0">
-                  <option disabled selected className='sticky'>Select User Role</option>
-                  <option>Admin</option>
-                  <option>Manager</option>
-                  <option>Worker</option>
-                  <option>Viewer</option>
+                  <option disabled value=''>Select User Role</option>
+                  <option value='admin'>Admin</option>
+                  <option value='manager'>Manager</option>
+                  <option value='worker'>Worker</option>
+                  <option value='viewer'>Viewer</option>
                 </select>
             </div>
             <div className="m-4 mb-1 flex items-center">
@@ -93,13 +96,31 @@ function StaffManagement() {
       <table className='table-auto w-full border-collapse'>
         <thead className='shadow-lg text-left bg-hover-gold text-base-brown font-bold'>
           <tr className='h-10'>
-            <td className='p-2 w-[10%]'>S/N</td>
+            <td className='p-2 w-[10%] hidden lg:table-cell'>S/N</td>
             <td className='p-2 w-[25%]'>Name</td>
             <td className='p-2 w-[15%]'>Role</td>
             <td className='p-2 w-[40%]'>Last Activity</td>
             <td  className='p-2 w-[10%]'>Action</td>
           </tr>
         </thead>
+        <tbody>
+          {
+            staffData.map((staff, index) => <tr key={staff.id} className='h-10 border-b-2 font-normal text-sm lg:text-base'>
+              <td className='p-2 hidden lg:table-cell font-normal'>{ index + 1 }</td>
+              <td className='p-2'>{ staff.username }</td>
+              <td className='p-2'>{ staff.role }</td>
+              <td className='p-2'>{ staff.last_activity }</td>
+              <td className='p-2'>
+                <Tippy content={`Edit ${staff.username} details`}>
+                  <button><FaPencilAlt /></button>
+                </Tippy>
+                <Tippy content={`Delete ${staff.username}`}>
+                  <button className='ml-2'><FaTrashAlt /></button>
+                </Tippy>
+              </td>
+            </tr>)
+          }
+        </tbody>
       </table>
     </div>
   )
