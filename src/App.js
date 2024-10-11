@@ -15,11 +15,14 @@ import MothlyReportTable from "./Components/MothlyReportTable";
 import MonthlyReportChart from "./Components/MonthlyReportChart";
 import WeeklyReportTable from "./Components/WeeklyReportTable";
 import WeeklyReportChart from "./Components/WeeklyReportChart";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import 'tippy.js/dist/tippy.css';
 
 function App() {
   return (
     <div className="App flex">
+      <ToastContainer />
       <AuthProvider>
         <Routes>
           <Route path='dashboard' element={<RequireLogin><Dashboard /></RequireLogin>}>

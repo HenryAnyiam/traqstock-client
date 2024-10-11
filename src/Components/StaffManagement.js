@@ -3,6 +3,7 @@ import React, { useEffect, useState, useReducer } from 'react'
 import { FaLock, FaUser, FaUserTag, FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
 import STAFFS from '../mock_data/MOCK_STAFF_DATA.json'
 import Tippy from '@tippyjs/react';
+import { toast } from 'react-toastify';
 
 const initialModalState = { main: false, edit: false, delete: false }
 const reducer = (state, action) => {
@@ -43,9 +44,10 @@ function StaffManagement() {
   }
 
   const delStaff = () => {
-    staffData.pop(delItem);
+    const val = staffData.pop(delItem);
     setDelItem(null);
     dispatch('closeDelete');
+    toast.success(`Successfully Deleted Staff: ${val.username}`);
   }
 
   return (
