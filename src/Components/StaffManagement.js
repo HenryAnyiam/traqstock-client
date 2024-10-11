@@ -28,6 +28,7 @@ const reducer = (state, action) => {
 function StaffManagement() {
   const [ modalState, dispatch ] = useReducer(reducer, initialModalState);
   const [ delItem, setDelItem ] = useState(null);
+  const [ editItem, setEditItem ] = useState(null);
   const staffData = STAFFS.slice(0, 10);
 
   useEffect(() => {
@@ -44,10 +45,28 @@ function StaffManagement() {
   }
 
   const delStaff = () => {
-    const val = staffData.pop(delItem);
+    const val = staffData[delItem];
     setDelItem(null);
     dispatch('closeDelete');
     toast.success(`Successfully Deleted Staff: ${val.username}`);
+  }
+
+  const newStaff = (e) => {
+    e.preventDefault();
+    dispatch('closeMain');
+    toast.success(`New Staff Created Successfully`);
+  }
+
+  const openEditModal = (staffIndex) => {
+    setEditItem(staffIndex);
+    dispatch('openEdit')
+  }
+
+  const editStaff = () => {
+    const val = staffData[editItem];
+    setEditItem(null);
+    dispatch('closeEdit');
+    toast.success(`Successfully Saved Changes to Staff: ${val.username}`);
   }
 
   return (
@@ -102,7 +121,7 @@ function StaffManagement() {
                 className="bg-white border-2 border-l-0 border-hover-gold rounded-r-lg p-1 w-52 lg:w-72 focus:outline-0"/>
             </div>
             <div className="m-4 flex justify-center">
-                <button type="submit"
+                <button type="submit" onClick={newStaff}
                 className="text-center w-full text-base-brown bg-hover-gold p-2 rounded-xl font-bold hover:text-hover-gold hover:bg-transparent hover:border-hover-gold hover:border-2">Continue</button>
             </div>
         </form>
@@ -136,6 +155,61 @@ function StaffManagement() {
           </div>
         </div>
       </Modal>
+      <Modal 
+      isOpen={modalState.edit} onRequestClose={() => { dispatch('closeEdit') }}
+      style={{
+        content: {
+          width: 'fit-content',
+          height: 'fit-content',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          backgroundColor: 'rgb(97, 58, 18)',
+          borderRadius: '0.5rem',
+          boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)'
+        },
+        overlay: {
+          backgroundColor: 'rgba(49, 112, 35, 0.4)'
+        }
+      }}
+      >
+        <p className="text-center rounded-xl font-bold font-serif text-hover-gold p-1 w-full mb-2 text-xl">Update Staff Details</p>
+        <form>
+            <div className="m-4 flex items-center">
+                <div className="bg-white h-9 flex items-center p-1 border-2 border-r-0 border-hover-gold rounded-l-lg">
+                    <FaUser className='text-gray-700'/>
+                </div>
+                <input type="text" name="username" value={staffData[editItem]?.username}
+                id="username" placeholder="Username"
+                className="bg-white border-2 border-l-0  border-hover-gold rounded-r-lg p-1 w-52 lg:w-72 focus:outline-0"/>
+            </div>
+            <div className="m-4 flex items-center">
+                <div className="bg-white h-9 flex items-center p-1 border-2 border-r-0 border-hover-gold rounded-l-lg">
+                    <FaUserTag className='text-gray-700'/>
+                </div>
+                <select id='role' name='name' defaultValue={staffData[editItem]?.role}
+                className="bg-white text-gray-700 h-9 border-2 border-l-0 border-hover-gold rounded-r-lg p-1 w-52 lg:w-72 focus:outline-0">
+                  <option disabled value=''>Select User Role</option>
+                  <option value='admin'>Admin</option>
+                  <option value='manager'>Manager</option>
+                  <option value='worker'>Worker</option>
+                  <option value='viewer'>Viewer</option>
+                </select>
+            </div>
+            <div className="m-4 mb-1 flex items-center">
+                <div className="bg-white h-9 flex items-center p-1 border-2 border-r-0 border-hover-gold rounded-l-lg">
+                    <FaLock className='text-gray-700'/>
+                </div>
+                <input type='text' name="password"
+                id="password" placeholder="Password"
+                className="bg-white border-2 border-l-0 border-hover-gold rounded-r-lg p-1 w-52 lg:w-72 focus:outline-0"/>
+            </div>
+            <div className="m-4 flex justify-center">
+                <button type="submit" onClick={editStaff}
+                className="text-center w-full text-base-brown bg-hover-gold p-2 rounded-xl font-bold hover:text-hover-gold hover:bg-transparent hover:border-hover-gold hover:border-2">Continue</button>
+            </div>
+        </form>
+      </Modal>
       <div className='flex justify-between m-2 ml-0'>
         <h2 className='text-3xl'>Staff Details</h2>
         <button
@@ -167,7 +241,7 @@ function StaffManagement() {
               <td className='p-2'>{ staff.last_activity }</td>
               <td className='p-2'>
                 <Tippy content={`Edit ${staff.username} details`}>
-                  <button  aria-label={`Edit ${staff.username}`}><FaPencilAlt /></button>
+                  <button  aria-label={`Edit ${staff.username}`} onClick={() => openEditModal(index)}><FaPencilAlt /></button>
                 </Tippy>
                 <Tippy content={`Delete ${staff.username}`}>
                   <button aria-label={`Delete ${staff.username}`} className='ml-2' onClick={() => openDelModal(index)}><FaTrashAlt /></button>
