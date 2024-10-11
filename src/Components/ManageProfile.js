@@ -6,4 +6,4 @@ function ManageProfile() {
   )
 }
 
-export default ManageProfile
+export default ManageProfile;
