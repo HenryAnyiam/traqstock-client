@@ -145,7 +145,7 @@ function StaffManagement() {
       }}
       >
         <div>
-          <h2 class='text-sm lg:text-xl text-nowrap'>Are you sure you want to delete {staffData[delItem]?.username}?</h2>
+          <h2 className='text-sm lg:text-xl text-nowrap'>Are you sure you want to delete {staffData[delItem]?.username}?</h2>
           <div className='w-full flex justify-end my-4'>
           <button
           className='p-2 fill-hover-gold text-hover-gold flex w-28 items-center bg-base-brown justify-center rounded-lg shadow-md hover:bg-hover-gold hover:text-base-brown hover:fill-base-brown'
@@ -179,7 +179,7 @@ function StaffManagement() {
                 <div className="bg-white h-9 flex items-center p-1 border-2 border-r-0 border-hover-gold rounded-l-lg">
                     <FaUser className='text-gray-700'/>
                 </div>
-                <input type="text" name="username" value={staffData[editItem]?.username}
+                <input type="text" name="username" defaultValue={staffData[editItem]?.username}
                 id="username" placeholder="Username"
                 className="bg-white border-2 border-l-0  border-hover-gold rounded-r-lg p-1 w-52 lg:w-72 focus:outline-0"/>
             </div>

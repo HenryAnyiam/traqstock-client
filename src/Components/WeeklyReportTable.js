@@ -58,7 +58,7 @@ function WeeklyReportTable() {
                     <FaWheatAwn className='text-gray-700'/>
                 </div>
                 <input type="number" name="feed_intake" id="feed_intake"
-                placeholder="Feed Intake" value={reportData[editData]?.feed_intake}
+                placeholder="Feed Intake" defaultValue={reportData[editData]?.feed_intake}
                 className="bg-white border-2 border-l-0  border-hover-gold rounded-r-lg p-1 w-52 lg:w-72 focus:outline-0"/>
             </div>
             <div className="m-4 flex items-center">
@@ -66,7 +66,7 @@ function WeeklyReportTable() {
                     <FaFaucetDrip className='text-gray-700'/>
                 </div>
                 <input type="number" name="water_intake" id="water_intake"
-                placeholder="Water Intake" value={reportData[editData]?.water_intake}
+                placeholder="Water Intake" defaultValue={reportData[editData]?.water_intake}
                 className="bg-white border-2 border-l-0  border-hover-gold rounded-r-lg p-1 w-52 lg:w-72 focus:outline-0"/>
             </div>
             <div className="m-4 flex items-center">
@@ -74,7 +74,7 @@ function WeeklyReportTable() {
                     <FaHeartbeat className='text-gray-700'/>
                 </div>
                 <input type="number" name="mortality" id="mortality"
-                placeholder="Mortality" value={reportData[editData]?.mortality}
+                placeholder="Mortality" defaultValue={reportData[editData]?.mortality}
                 className="bg-white border-2 border-l-0  border-hover-gold rounded-r-lg p-1 w-52 lg:w-72 focus:outline-0"/>
             </div>
             <div className="m-4 flex justify-center">
