@@ -13,7 +13,7 @@ function ResetPassword() {
         </div>
         <div className="flex justify-center items-center" id="forms">
           <div className="bg-white/[.3] shadow-2xl rounded-xl h-fit w-60 lg:w-fit">
-            <p className="text-center rounded-xl font-bold font-serif text-base-brown p-1 w-full mb-2 text-xl">Sign In To Your Account</p>
+            <p className="text-center rounded-xl font-bold font-serif text-base-brown p-1 w-full mb-2 text-xl">Reset Your Password</p>
             <form>
               <div className="m-4 flex items-center">
                   <div className="bg-white h-9 flex items-center p-1 border-2 border-r-0 border-hover-gold rounded-l-lg">
