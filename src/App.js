@@ -18,6 +18,7 @@ import WeeklyReportChart from "./Components/WeeklyReportChart";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'tippy.js/dist/tippy.css';
+import ResetPassword from "./Components/ResetPassword";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
             <Route path='profile' element={<ManageProfile />}/>
           </Route>
           <Route path='login' element={<LoggedIn><Login /></LoggedIn>} />
+          <Route path='forgot-password' element={<LoggedIn><ResetPassword /></LoggedIn>} />
           <Route path='*' element={<Page404 />} />
         </Routes>
       </AuthProvider>
