@@ -4,6 +4,20 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Righteous';
+  src: url('./Assets/fonts/Righteous-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('./Assets/fonts/Montserrat-VariableFont_wght.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
   margin: 0;
   font-family: 'Righteous', 'Montserrat', system-ui, 'Segoe UI', 'Roboto', 'Oxygen',
