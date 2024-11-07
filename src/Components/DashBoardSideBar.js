@@ -20,6 +20,13 @@ function DashboardSideBar() {
     navigate('weekly-report/table')
   }
 
+  const displayDropMenu = () => {
+    const selectedMenu = document.querySelectorAll('.dropFlocks');
+    selectedMenu.forEach((e) => {
+      e.classList.toggle("hidden");
+    })
+  }
+
   const toggleMenu = () => {
     const menu = document.getElementById("menu");
     menu?.classList.toggle("hidden");
@@ -58,16 +65,32 @@ function DashboardSideBar() {
       </button>
       <Header extraClass='flex lg:hidden grow'/>
     </div>
-    <div className='bg-white h-screen-minus-nav lg:h-screen min-w-52 grid-rows-5 grid-flow-col gap-4 shadow-xl hidden lg:grid absolute lg:relative overflow-hidden' id='menu'>
+    <div className='bg-white h-screen-minus-nav lg:h-screen min-w-52 grid-rows-8 grid-flow-col gap-4 shadow-xl hidden lg:grid absolute lg:relative overflow-hidden' id='menu'>
       <div className="py-2 px-2 w-full items-center">
         <img src={logo} alt="logo" className="h-8 w-40 ml-2"/>
         <hr />
       </div>
-      <nav className="row-span-3 px-2 text-left tracking-widest" id="navList">
-        <NavLink to='new-record' className="block p-2 rounded-xl my-1">New Record</NavLink>
+      <nav className="row-span-6 px-2 text-left tracking-widest" id="navList">
+        <NavLink to="nil" className="block p-2 rounded-xl my-1">Dashboard</NavLink>
+        <div className="text-center text-base-brown rounded-xl hover:text-hover-gold hover:font-bold logout-btn">
+          <button className="w-full hover:bg-base-brown p-2 rounded-xl flex items-center space-between"onClick={() => { displayDropMenu() }}>
+              <span>Flock Management</span>
+              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#613a12"><path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z"/></svg>
+          </button>
+        </div>
+        <NavLink to="nil" className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFlocks">Flocks</NavLink>
+        <NavLink to="nil" className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFlocks">Source</NavLink>
+        <NavLink to="nil" className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFlocks">Breed</NavLink>
+        <NavLink to="nil" className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFlocks">Movement</NavLink>
+        <NavLink to="nil" className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFlocks">Inspection Record</NavLink>
+        <NavLink to="nil" className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFlocks">Breed Information</NavLink>
+        <NavLink to="nil" className="block p-2 rounded-xl my-1">Housing Structure</NavLink>
+        <NavLink to="nil" className="block p-2 rounded-xl my-1">Egg Collection</NavLink>
+        <NavLink to='manage-staffs' className="block p-2 rounded-xl my-1">Staff Management</NavLink>
+        {/* <NavLink to='new-record' className="block p-2 rounded-xl my-1">New Record</NavLink>
         <NavLink to='weekly-report' className="block p-2 rounded-xl my-1" onClick={handleWeekly}>Weekly Report</NavLink>
         <NavLink to='monthly-report' className="block p-2 rounded-xl my-1" onClick={handleMonthly}>Monthly Report</NavLink>
-        <NavLink to='manage-staffs' className="block p-2 rounded-xl my-1">Staff Management</NavLink>
+        <NavLink to='manage-staffs' className="block p-2 rounded-xl my-1">Staff Management</NavLink> */}
       </nav>
       <div className="text-center p-2 text-base-brown rounded-xl hover:text-hover-gold hover:font-bold logout-btn">
         <button className="w-full hover:bg-base-brown p-2 rounded-xl flex items-center justify-center" onClick={() => { logout() }}>
