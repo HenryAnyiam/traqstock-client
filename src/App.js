@@ -16,6 +16,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'tippy.js/dist/tippy.css';
 import ResetPassword from "./Components/ResetPassword";
+import UserDashboard from "./Components/UserDashboard";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
       <AuthProvider>
         <Routes>
           <Route path='dashboard' element={<RequireLogin><Dashboard /></RequireLogin>}>
+            <Route path='user' element={<UserDashboard />} />
             <Route path='farm-data/new-record' element={<NewRecord />}/>
             <Route path='farm-data' element={<MonthlyReport />}>
               <Route path='table' element={<MothlyReportTable />}/>

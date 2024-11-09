@@ -21,11 +21,6 @@ function NewRecord() {
                 <input type="text" name="vaccine" id="vaccine" placeholder="Vaccine"
                 className="bg-white border-2 border-base-brown rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2" required />
             </div>
-            <div className="m-4 lg:grid lg:grid-cols-3">
-                <label htmlFor="mortality" className="font-bold font-serif text-hover-gold p-1 mr-2">Mortality:</label>
-                <input type="number" name="mortality" id="mortality" placeholder="Mortality"
-                className="bg-white border-2 border-base-brown rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2" required />
-            </div>
             <div className="m-4">
                 <label htmlFor="additional_notes" className="font-bold font-serif text-hover-gold p-1 mr-2 block">Additional Notes:</label>
                 <textarea rows="5"

@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { FaChartBar, FaTable, FaPlus } from "react-icons/fa";
+import Tippy from '@tippyjs/react';
 
 function MonthlyReport() {
   return (
@@ -16,10 +17,12 @@ function MonthlyReport() {
             Chart
           </NavLink>
         </div>
-        <NavLink className='' to='/dashboard/farm-data/new-record'>
-          <FaPlus className='mr-1' />
-          New Record
-        </NavLink>
+        <Tippy content='Create new farm record'>
+          <NavLink className='' to='/dashboard/farm-data/new-record'>
+            <FaPlus className='mr-1' />
+            New
+          </NavLink>
+        </Tippy>
       </div>
       
       <Outlet />

@@ -73,15 +73,15 @@ function DashboardSideBar() {
         <Header extraClass="flex lg:hidden grow" />
       </div>
       <div
-        className="bg-white h-screen-minus-nav lg:h-screen min-w-56 grid-rows-10 grid-flow-col gap-4 shadow-xl hidden lg:grid absolute lg:relative overflow-hidden"
+        className="bg-white h-screen-minus-nav lg:h-screen min-w-56 grid-rows-8 grid-flow-col gap-4 shadow-xl hidden lg:grid absolute lg:relative overflow-hidden"
         id="menu"
       >
         <div className="py-2 px-2 w-full items-center">
           <img src={logo} alt="logo" className="h-8 w-40 ml-2" />
           <hr />
         </div>
-        <nav className="row-span-8 px-2 text-left tracking-widest" id="navList">
-          <NavLink to="nil" className="block p-2 rounded-xl my-1">
+        <nav className="row-span-6 px-2 text-left tracking-widest" id="navList">
+          <NavLink to="user" className="block p-2 rounded-xl my-1">
             Dashboard
           </NavLink>
           <NavLink
