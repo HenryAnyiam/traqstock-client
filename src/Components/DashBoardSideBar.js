@@ -15,11 +15,6 @@ function DashboardSideBar() {
     navigate('monthly-report/table')
   }
 
-  const handleWeekly = (e) => {
-    e.preventDefault()
-    navigate('weekly-report/table')
-  }
-
   const displayDropMenu = () => {
     const selectedMenu = document.querySelectorAll('.dropFlocks');
     selectedMenu.forEach((e) => {
@@ -78,7 +73,7 @@ function DashboardSideBar() {
         <Header extraClass="flex lg:hidden grow" />
       </div>
       <div
-        className="bg-white h-screen-minus-nav lg:h-screen min-w-52 grid-rows-8 grid-flow-col gap-4 shadow-xl hidden lg:grid absolute lg:relative overflow-hidden"
+        className="bg-white h-fit min-h-screen-minus-nav lg:h-screen min-w-56 grid-rows-8 grid-flow-col gap-4 shadow-xl hidden lg:grid absolute lg:relative overflow-hidden"
         id="menu"
       >
         <div className="py-2 px-2 w-full items-center">
@@ -158,10 +153,6 @@ function DashboardSideBar() {
           <NavLink to="manage-staffs" className="block p-2 rounded-xl my-1">
             Staff Management
           </NavLink>
-          {/* <NavLink to='new-record' className="block p-2 rounded-xl my-1">New Record</NavLink>
-        <NavLink to='weekly-report' className="block p-2 rounded-xl my-1" onClick={handleWeekly}>Weekly Report</NavLink>
-        <NavLink to='monthly-report' className="block p-2 rounded-xl my-1" onClick={handleMonthly}>Monthly Report</NavLink>
-        <NavLink to='manage-staffs' className="block p-2 rounded-xl my-1">Staff Management</NavLink> */}
         </nav>
         <div className="text-center p-2 text-base-brown rounded-xl hover:text-hover-gold hover:font-bold logout-btn">
           <button
