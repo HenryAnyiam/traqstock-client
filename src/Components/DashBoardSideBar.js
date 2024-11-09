@@ -12,13 +12,24 @@ function DashboardSideBar() {
 
   const handleMonthly = (e) => {
     e.preventDefault()
+    closeDropDown();
     navigate('farm-data/table')
   }
 
-  const displayDropMenu = () => {
+  const displayDropMenu = (e) => {
+    e.preventDefault()
     const selectedMenu = document.querySelectorAll('.dropFlocks');
     selectedMenu.forEach((e) => {
       e.classList.toggle("hidden");
+    })
+  }
+
+  const closeDropDown = (e) => {
+    const selectedMenu = document.querySelectorAll('.dropFlocks');
+    selectedMenu.forEach((e) => {
+      if (!e.classList.contains("hidden")) {
+        e.classList.add("hidden");
+      }
     })
   }
 
@@ -91,13 +102,13 @@ function DashboardSideBar() {
           >
             Farm Data
           </NavLink>
-          <div className="text-center text-base-brown rounded-xl hover:text-hover-gold hover:font-bold logout-btn">
-            <button
-              className="w-full hover:bg-base-brown p-2 rounded-xl flex items-center space-between"
-              onClick={displayDropMenu}
-            >
-              <span>Flock Management</span>
-              <svg
+          <NavLink
+            to="flocks"
+            className="w-full hover:bg-base-brown p-2 rounded-xl flex items-center space-between"
+            onClick={displayDropMenu}
+          >
+            Flock Management
+            <svg
                 xmlns="http://www.w3.org/2000/svg"
                 height="24px"
                 viewBox="0 -960 960 960"
@@ -106,8 +117,7 @@ function DashboardSideBar() {
               >
                 <path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z" />
               </svg>
-            </button>
-          </div>
+          </NavLink>
           <NavLink
             to="nil"
             className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFlocks"
@@ -115,14 +125,16 @@ function DashboardSideBar() {
             Flocks
           </NavLink>
           <NavLink
-            to="nil"
+            to="/dashboard/flocks/sources"
             className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFlocks"
+            onClick={closeDropDown}
           >
             Source
           </NavLink>
           <NavLink
-            to="nil"
+            to="/dashboard/flocks/breeds"
             className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFlocks"
+            onClick={closeDropDown}
           >
             Breed
           </NavLink>

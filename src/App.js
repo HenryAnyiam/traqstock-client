@@ -17,6 +17,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'tippy.js/dist/tippy.css';
 import ResetPassword from "./Components/ResetPassword";
 import UserDashboard from "./Components/UserDashboard";
+import FlockSource from "./Components/FlockSource";
+import FlockBreed from "./Components/FlockBreed";
 
 function App() {
   return (
@@ -26,11 +28,13 @@ function App() {
         <Routes>
           <Route path='dashboard' element={<RequireLogin><Dashboard /></RequireLogin>}>
             <Route path='user' element={<UserDashboard />} />
-            <Route path='farm-data/new-record' element={<NewRecord />}/>
             <Route path='farm-data' element={<MonthlyReport />}>
               <Route path='table' element={<MothlyReportTable />}/>
               <Route path='chart' element={<MonthlyReportChart />}/>
             </Route>
+            <Route path='farm-data/new-record' element={<NewRecord />}/>
+            <Route path='flocks/sources' element={<FlockSource />} />
+            <Route path='flocks/breeds' element={<FlockBreed />} />
             <Route path='manage-staffs' element={<StaffManagement />}/>
             <Route path='profile' element={<ManageProfile />}/>
           </Route>
