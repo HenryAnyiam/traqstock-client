@@ -4,7 +4,6 @@ import { AuthProvider } from "./Utils/userAuth";
 import Dashboard from "./Components/Dashboard";
 import RequireLogin from "./Utils/RequireLogin";
 import NewRecord from "./Components/NewRecord";
-import WeeklyReport from "./Components/WeeklyReport";
 import MonthlyReport from "./Components/MonthlyReport";
 import StaffManagement from "./Components/StaffManagement";
 import ManageProfile from "./Components/ManageProfile";
@@ -13,8 +12,6 @@ import Page404 from "./Components/Page404";
 import LoggedIn from "./Utils/LoggedIn";
 import MothlyReportTable from "./Components/MothlyReportTable";
 import MonthlyReportChart from "./Components/MonthlyReportChart";
-import WeeklyReportTable from "./Components/WeeklyReportTable";
-import WeeklyReportChart from "./Components/WeeklyReportChart";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'tippy.js/dist/tippy.css';
@@ -27,12 +24,8 @@ function App() {
       <AuthProvider>
         <Routes>
           <Route path='dashboard' element={<RequireLogin><Dashboard /></RequireLogin>}>
-            <Route path='new-record' element={<NewRecord />}/>
-            <Route path='weekly-report' element={<WeeklyReport />}>
-              <Route path='table' element={<WeeklyReportTable />}/>
-              <Route path='chart' element={<WeeklyReportChart />}/>
-            </Route>
-            <Route path='monthly-report' element={<MonthlyReport />}>
+            <Route path='farm-data/new-record' element={<NewRecord />}/>
+            <Route path='farm-data' element={<MonthlyReport />}>
               <Route path='table' element={<MothlyReportTable />}/>
               <Route path='chart' element={<MonthlyReportChart />}/>
             </Route>

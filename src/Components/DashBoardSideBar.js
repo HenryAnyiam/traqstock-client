@@ -12,7 +12,7 @@ function DashboardSideBar() {
 
   const handleMonthly = (e) => {
     e.preventDefault()
-    navigate('monthly-report/table')
+    navigate('farm-data/table')
   }
 
   const displayDropMenu = () => {
@@ -85,7 +85,7 @@ function DashboardSideBar() {
             Dashboard
           </NavLink>
           <NavLink
-            to="monthly-report"
+            to="farm-data"
             className="block p-2 rounded-xl my-1"
             onClick={handleMonthly}
           >
