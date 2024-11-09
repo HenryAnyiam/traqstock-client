@@ -9,7 +9,7 @@ function Dashboard() {
       <DashboardSideBar />
       <div className="grow">
         <Header extraClass='hidden lg:flex'/>
-        <div className='overflow-auto h-fit min-h-screen-minus-nav' id='dashboard-body'>
+        <div className='overflow-auto h-screen-minus-nav' id='dashboard-body'>
           <Outlet />
         </div>
       </div>
