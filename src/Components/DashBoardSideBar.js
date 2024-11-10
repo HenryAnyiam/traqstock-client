@@ -156,7 +156,7 @@ function DashboardSideBar() {
           >
             Breed Information
           </NavLink>
-          <NavLink to="housing-structure" className="block p-2 rounded-xl my-1">
+          <NavLink to="housing-structure" className="block p-2 rounded-xl my-1" onClick={closeDropDown}>
             Housing Structure
           </NavLink>
           <NavLink to="nil" className="block p-2 rounded-xl my-1">
