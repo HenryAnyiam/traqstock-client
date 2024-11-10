@@ -11,7 +11,7 @@ function FlockBreed() {
     <tr className='h-10 text-xs lg:text-sm'>
       <th className='p-2 w-[10%] lg:table-cell'>S/No</th>
       <th className='p-2 w-[35%] lg:table-cell'>Breed Name</th>
-      <th className='p-2 w-[25%] lg:table-cell '>Total Registered Flocks</th>
+      <th className='p-2 w-[25%] lg:table-cell '>Total Registered</th>
       <th className='p-2 w-[25%] lg:table-cell '></th>
     </tr>
   </thead>

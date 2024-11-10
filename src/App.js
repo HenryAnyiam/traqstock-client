@@ -19,6 +19,8 @@ import ResetPassword from "./Components/ResetPassword";
 import UserDashboard from "./Components/UserDashboard";
 import FlockSource from "./Components/FlockSource";
 import FlockBreed from "./Components/FlockBreed";
+import HousingStructure from "./Components/HousingStructure";
+import NewHousingStructure from "./Components/NewHousingStructure";
 
 function App() {
   return (
@@ -32,6 +34,8 @@ function App() {
               <Route path='table' element={<MothlyReportTable />}/>
               <Route path='chart' element={<MonthlyReportChart />}/>
             </Route>
+            <Route path='housing-structure' element={<HousingStructure />} />
+            <Route path='housing-structure/new' element={<NewHousingStructure />} />
             <Route path='farm-data/new-record' element={<NewRecord />}/>
             <Route path='flocks/sources' element={<FlockSource />} />
             <Route path='flocks/breeds' element={<FlockBreed />} />
