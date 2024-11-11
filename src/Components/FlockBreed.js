@@ -1,5 +1,5 @@
 import React from 'react';
-import breeds from '../mock_data/flock_breed.json'
+import breeds from '../mock_data/flock_breed.json';
 import Tippy from '@tippyjs/react';
 import { FaEye } from 'react-icons/fa';
 

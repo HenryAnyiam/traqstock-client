@@ -7,6 +7,11 @@ function NewHousingStructure() {
         <p className="text-center rounded-xl font-bold font-serif text-hover-gold p-1 w-full mb-2 text-xl">New Housing Structure</p>
         <form>
             <div className="m-4 lg:grid lg:grid-cols-3">
+              <label htmlFor="name" className="font-bold font-serif text-hover-gold p-1 mr-2">Name:</label>
+              <input type="text" name="name" id="name" placeholder="Name"
+                className="bg-white border-2 border-base-brown rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2" required />
+            </div>
+            <div className="m-4 lg:grid lg:grid-cols-3">
                 <label htmlFor="housing-type" className="font-bold font-serif text-hover-gold p-1 mr-2">Type:</label>
                 <select id='housing-type' name='housing-type' className="bg-white border-2 border-base-brown rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2">
                   <option selected disabled>Housing Type</option>
