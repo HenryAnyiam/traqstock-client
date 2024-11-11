@@ -22,6 +22,8 @@ import FlockBreed from "./Components/FlockBreed";
 import HousingStructure from "./Components/HousingStructure";
 import NewHousingStructure from "./Components/NewHousingStructure";
 import NewFlock from "./Components/NewFlock";
+import ViewFlock from "./Components/ViewFlock";
+import FlockDetails from "./Components/FlockDetails";
 
 function App() {
   return (
@@ -41,6 +43,8 @@ function App() {
             <Route path='flocks/sources' element={<FlockSource />} />
             <Route path='flocks/breeds' element={<FlockBreed />} />
             <Route path='flocks/new' element={<NewFlock />} />
+            <Route path='flocks/view' element={<ViewFlock />} />
+            <Route path='flocks/:flockId/details' element={<FlockDetails />} />
             <Route path='manage-staffs' element={<StaffManagement />}/>
             <Route path='profile' element={<ManageProfile />}/>
           </Route>

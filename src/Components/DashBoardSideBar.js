@@ -119,8 +119,9 @@ function DashboardSideBar() {
               </svg>
           </NavLink>
           <NavLink
-            to="nil"
+            to="/dashboard/flocks/view"
             className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFlocks"
+            onClick={closeDropDown}
           >
             Flocks
           </NavLink>
