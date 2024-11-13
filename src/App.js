@@ -4,7 +4,6 @@ import { AuthProvider } from "./Utils/userAuth";
 import Dashboard from "./Components/Dashboard";
 import RequireLogin from "./Utils/RequireLogin";
 import NewRecord from "./Components/NewRecord";
-import WeeklyReport from "./Components/WeeklyReport";
 import MonthlyReport from "./Components/MonthlyReport";
 import StaffManagement from "./Components/StaffManagement";
 import ManageProfile from "./Components/ManageProfile";
@@ -13,12 +12,18 @@ import Page404 from "./Components/Page404";
 import LoggedIn from "./Utils/LoggedIn";
 import MothlyReportTable from "./Components/MothlyReportTable";
 import MonthlyReportChart from "./Components/MonthlyReportChart";
-import WeeklyReportTable from "./Components/WeeklyReportTable";
-import WeeklyReportChart from "./Components/WeeklyReportChart";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'tippy.js/dist/tippy.css';
 import ResetPassword from "./Components/ResetPassword";
+import UserDashboard from "./Components/UserDashboard";
+import FlockSource from "./Components/FlockSource";
+import FlockBreed from "./Components/FlockBreed";
+import HousingStructure from "./Components/HousingStructure";
+import NewHousingStructure from "./Components/NewHousingStructure";
+import NewFlock from "./Components/NewFlock";
+import ViewFlock from "./Components/ViewFlock";
+import FlockDetails from "./Components/FlockDetails";
 
 function App() {
   return (
@@ -27,15 +32,19 @@ function App() {
       <AuthProvider>
         <Routes>
           <Route path='dashboard' element={<RequireLogin><Dashboard /></RequireLogin>}>
-            <Route path='new-record' element={<NewRecord />}/>
-            <Route path='weekly-report' element={<WeeklyReport />}>
-              <Route path='table' element={<WeeklyReportTable />}/>
-              <Route path='chart' element={<WeeklyReportChart />}/>
-            </Route>
-            <Route path='monthly-report' element={<MonthlyReport />}>
+            <Route path='user' element={<UserDashboard />} />
+            <Route path='farm-data' element={<MonthlyReport />}>
               <Route path='table' element={<MothlyReportTable />}/>
               <Route path='chart' element={<MonthlyReportChart />}/>
             </Route>
+            <Route path='housing-structure' element={<HousingStructure />} />
+            <Route path='housing-structure/new' element={<NewHousingStructure />} />
+            <Route path='farm-data/new-record' element={<NewRecord />}/>
+            <Route path='flocks/sources' element={<FlockSource />} />
+            <Route path='flocks/breeds' element={<FlockBreed />} />
+            <Route path='flocks/new' element={<NewFlock />} />
+            <Route path='flocks/view' element={<ViewFlock />} />
+            <Route path='flocks/:flockId/details' element={<FlockDetails />} />
             <Route path='manage-staffs' element={<StaffManagement />}/>
             <Route path='profile' element={<ManageProfile />}/>
           </Route>
