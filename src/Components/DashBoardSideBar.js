@@ -154,8 +154,9 @@ function DashboardSideBar() {
             Inspection Record
           </NavLink>
           <NavLink
-            to="nil"
+            to="/dashboard/flocks/breed-information"
             className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFlocks"
+            onClick={closeDropDown}
           >
             Breed Information
           </NavLink>
