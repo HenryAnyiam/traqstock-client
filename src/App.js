@@ -26,6 +26,8 @@ import ViewFlock from "./Components/ViewFlock";
 import FlockDetails from "./Components/FlockDetails";
 import FlockMovement from "./Components/FlockMovement";
 import NewFlockMovement from "./Components/NewFlockMovement";
+import FlockInspection from "./Components/FlockInspection";
+import NewFlockInspection from "./Components/NewFlockInspection";
 
 function App() {
   return (
@@ -48,6 +50,8 @@ function App() {
             <Route path='flocks/view' element={<ViewFlock />} />
             <Route path='flocks/movement' element={<FlockMovement />} />
             <Route path='flocks/movement/new' element={<NewFlockMovement />} />
+            <Route path='flocks/inspection' element={<FlockInspection />} />
+            <Route path='flocks/inspection/new' element={<NewFlockInspection />} />
             <Route path='flocks/:flockId/details' element={<FlockDetails />} />
             <Route path='manage-staffs' element={<StaffManagement />}/>
             <Route path='profile' element={<ManageProfile />}/>

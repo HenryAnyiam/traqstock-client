@@ -92,7 +92,7 @@ function DashboardSideBar() {
           <hr />
         </div>
         <nav className="row-span-6 px-2 text-left tracking-widest" id="navList">
-          <NavLink to="user" className="block p-2 rounded-xl my-1">
+          <NavLink to="user" className="block p-2 rounded-xl my-1" onClick={closeDropDown}>
             Dashboard
           </NavLink>
           <NavLink
@@ -147,8 +147,9 @@ function DashboardSideBar() {
             Movement
           </NavLink>
           <NavLink
-            to="nil"
+            to="/dashboard/flocks/inspection"
             className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFlocks"
+            onClick={closeDropDown}
           >
             Inspection Record
           </NavLink>
