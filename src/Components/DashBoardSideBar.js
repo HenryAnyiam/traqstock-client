@@ -140,8 +140,9 @@ function DashboardSideBar() {
             Breed
           </NavLink>
           <NavLink
-            to="nil"
+            to="/dashboard/flocks/movement"
             className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFlocks"
+            onClick={closeDropDown}
           >
             Movement
           </NavLink>

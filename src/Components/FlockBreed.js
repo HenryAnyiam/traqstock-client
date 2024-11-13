@@ -6,7 +6,7 @@ import { FaEye } from 'react-icons/fa';
 function FlockBreed() {
 
   return <div className='lg:p-4'>
-    <h2 className='text-3xl text-center lg:text-left'>Flock Breeds</h2>
+    <h2 className='text-3xl'>Flock Breeds</h2>
   <table className='table-auto w-full border-collapse'>
   <thead className='shadow-lg text-left bg-hover-gold text-base-brown font-bold'>
     <tr className='h-10 text-xs lg:text-sm'>
