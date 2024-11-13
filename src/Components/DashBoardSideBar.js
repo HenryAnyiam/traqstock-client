@@ -92,11 +92,11 @@ function DashboardSideBar() {
           <hr />
         </div>
         <nav className="row-span-6 px-2 text-left tracking-widest" id="navList">
-          <NavLink to="user" className="block p-2 rounded-xl my-1" onClick={closeDropDown}>
+          <NavLink to="/dashboard/user" className="block p-2 rounded-xl my-1" onClick={closeDropDown}>
             Dashboard
           </NavLink>
           <NavLink
-            to="farm-data"
+            to="/dashboard/farm-data"
             className="block p-2 rounded-xl my-1"
             onClick={handleMonthly}
           >
@@ -119,7 +119,7 @@ function DashboardSideBar() {
               </svg>
           </NavLink>
           <NavLink
-            to="/dashboard/flocks/view"
+            to="/dashboard/flocks/flocks"
             className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFlocks"
             onClick={closeDropDown}
           >
@@ -160,10 +160,10 @@ function DashboardSideBar() {
           >
             Breed Information
           </NavLink>
-          <NavLink to="housing-structure" className="block p-2 rounded-xl my-1" onClick={closeDropDown}>
+          <NavLink to="/dashboard/housing-structure" className="block p-2 rounded-xl my-1" onClick={closeDropDown}>
             Housing Structure
           </NavLink>
-          <NavLink to="nil" className="block p-2 rounded-xl my-1">
+          <NavLink to="/dashboard/egg-collection" className="block p-2 rounded-xl my-1">
             Egg Collection
           </NavLink>
           <NavLink to="manage-staffs" className="block p-2 rounded-xl my-1">

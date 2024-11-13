@@ -10,7 +10,7 @@ function ViewFlock() {
       <div className="flex justify-between m-2 ml-0">
         <h2 className='text-3xl'>Flocks</h2>
         <Tippy content='Register new flock'>
-          <NavLink className='' to='/dashboard/flocks/new'>
+          <NavLink className='' to='/dashboard/flocks/flocks/new'>
             <FaPlus className='mr-1' />
             New
           </NavLink>
