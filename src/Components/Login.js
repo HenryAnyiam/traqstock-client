@@ -29,7 +29,7 @@ function Login() {
   const handleLogin = (e) => {
     e.preventDefault();
     auth.login(username);
-    const redirect = location.state?.path || '/dashboard/new-record';
+    const redirect = location.state?.path || '/dashboard/user';
     navigate(redirect, { replace: true });
   }
 

@@ -24,6 +24,14 @@ import NewHousingStructure from "./Components/NewHousingStructure";
 import NewFlock from "./Components/NewFlock";
 import ViewFlock from "./Components/ViewFlock";
 import FlockDetails from "./Components/FlockDetails";
+import FlockMovement from "./Components/FlockMovement";
+import NewFlockMovement from "./Components/NewFlockMovement";
+import FlockInspection from "./Components/FlockInspection";
+import NewFlockInspection from "./Components/NewFlockInspection";
+import BreedInformation from "./Components/BreedInformation";
+import NewBreedInformation from "./Components/NewBreedInformation";
+import EggCollection from "./Components/EggCollection";
+import NewEggCollection from "./Components/NewEggCollection";
 
 function App() {
   return (
@@ -42,9 +50,17 @@ function App() {
             <Route path='farm-data/new-record' element={<NewRecord />}/>
             <Route path='flocks/sources' element={<FlockSource />} />
             <Route path='flocks/breeds' element={<FlockBreed />} />
-            <Route path='flocks/new' element={<NewFlock />} />
-            <Route path='flocks/view' element={<ViewFlock />} />
-            <Route path='flocks/:flockId/details' element={<FlockDetails />} />
+            <Route path='flocks/flocks/new' element={<NewFlock />} />
+            <Route path='flocks/flocks' element={<ViewFlock />} />
+            <Route path='flocks/movement' element={<FlockMovement />} />
+            <Route path='flocks/movement/new' element={<NewFlockMovement />} />
+            <Route path='flocks/inspection' element={<FlockInspection />} />
+            <Route path='flocks/inspection/new' element={<NewFlockInspection />} />
+            <Route path='flocks/breed-information' element={<BreedInformation />} />
+            <Route path='flocks/breed-information/new' element={<NewBreedInformation />} />
+            <Route path='egg-collection' element={<EggCollection />} />
+            <Route path='egg-collection/new' element={<NewEggCollection />} />
+            <Route path='flocks/flocks/:flockId/details' element={<FlockDetails />} />
             <Route path='manage-staffs' element={<StaffManagement />}/>
             <Route path='profile' element={<ManageProfile />}/>
           </Route>
