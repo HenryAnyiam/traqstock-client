@@ -6,6 +6,10 @@ function RequireLogin({ children }) {
   const auth = useAuth();
   const location = useLocation();
   if (!auth.user) {
+    const user_token = localStorage.getItem('accessToken');
+    if (!user_token) {
+      return <Navigate to='/login' state={{ path: location.pathname }} />
+    }
     return <Navigate to='/login' state={{ path: location.pathname }} />
   }
   return children;

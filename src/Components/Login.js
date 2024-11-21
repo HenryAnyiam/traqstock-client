@@ -5,6 +5,8 @@ import logo from '../Assets/img/traqstock_logo1.png';
 import { FaUser, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import { useForm } from 'react-hook-form';
 import LoginBackground from './LoginBackground';
+import { toast } from 'react-toastify';
+import { getUser } from '../Utils/Funcs';
 
 
 function Login() {
@@ -14,13 +16,6 @@ function Login() {
   const auth = useAuth();
   const { register, handleSubmit, formState } = useForm();
   const { errors } = formState;
-
-  // const handleLogin = (e) => {
-  //   e.preventDefault();
-  //   auth.login(username);
-  //   const redirect = location.state?.path || '/dashboard/user';
-  //   navigate(redirect, { replace: true });
-  // }
 
   const handleLogin = async (data) => {
     if (!errors.email && !errors.password) {
@@ -40,11 +35,15 @@ function Login() {
         text.style.display = 'inline';
         if (response.status === 200) {
           const responseData = await response.json();
-          console.log(responseData);
+          toast.success(`Successfully Logged In`);
+          getUser(responseData.access_token);
+          auth.login(responseData);
+          const redirect = location.state?.path || "/dashboard/user";
+          navigate(redirect, { replace: true });
         } else {
           console.log(response.status)
           const responseData = await response.json();
-          console.log(responseData);
+          toast.error(`Error: ${responseData.detail}`);
         }
       } catch (err) {
         console.error("Error occured")
