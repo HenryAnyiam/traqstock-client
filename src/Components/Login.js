@@ -6,7 +6,7 @@ import { FaUser, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import { useForm } from 'react-hook-form';
 import LoginBackground from './LoginBackground';
 import { toast } from 'react-toastify';
-import { getUser } from '../Utils/Funcs';
+import { getUser, authUser } from '../Utils/Funcs';
 
 
 function Login() {
@@ -24,26 +24,29 @@ function Login() {
       loader.style.display = 'flex';
       text.style.display = 'none';
       try {
-        const response = await fetch('https://farm-management-production.up.railway.app/users/login/', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data)
-        })
+        const userResponse = await authUser(data);
         loader.style.display = 'none';
         text.style.display = 'inline';
-        if (response.status === 200) {
-          const responseData = await response.json();
-          toast.success(`Successfully Logged In`);
-          getUser(responseData.access_token);
-          auth.login(responseData);
-          const redirect = location.state?.path || "/dashboard/user";
-          navigate(redirect, { replace: true });
+        if (userResponse.status === 200) {
+          loader.style.display = 'flex';
+          text.style.display = 'none';
+          const responseData = await userResponse.json();
+          const userDetails = await getUser(responseData.access_token);
+          if (userDetails.status === 200) {
+            loader.style.display = 'none';
+            text.style.display = 'inline';
+            console.log(await userDetails.json())
+            toast.success(`Successfully Logged In`);
+            auth.login(responseData);
+            const redirect = location.state?.path || "/dashboard/user";
+            navigate(redirect, { replace: true });
+          }
+        } else if (userResponse.status === 500) {
+          toast.error(`Error: ${userResponse.statusText}`);
         } else {
-          console.log(response.status)
-          const responseData = await response.json();
-          toast.error(`Error: ${responseData.detail}`);
+          console.log(userResponse.status)
+          const responseData = await userResponse.json();
+          toast.warning(responseData.detail);
         }
       } catch (err) {
         console.error("Error occured")
