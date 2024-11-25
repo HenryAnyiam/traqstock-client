@@ -23,7 +23,6 @@ import HousingStructure from "./Components/HousingStructure";
 import NewHousingStructure from "./Components/NewHousingStructure";
 import NewFlock from "./Components/NewFlock";
 import ViewFlock from "./Components/ViewFlock";
-import FlockDetails from "./Components/FlockDetails";
 import FlockMovement from "./Components/FlockMovement";
 import NewFlockMovement from "./Components/NewFlockMovement";
 import FlockInspection from "./Components/FlockInspection";
@@ -60,7 +59,6 @@ function App() {
             <Route path='flocks/breed-information/new' element={<NewBreedInformation />} />
             <Route path='egg-collection' element={<EggCollection />} />
             <Route path='egg-collection/new' element={<NewEggCollection />} />
-            <Route path='flocks/flocks/:flockId/details' element={<FlockDetails />} />
             <Route path='manage-staffs' element={<StaffManagement />}/>
             <Route path='profile' element={<ManageProfile />}/>
           </Route>
