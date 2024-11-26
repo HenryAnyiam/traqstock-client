@@ -101,8 +101,47 @@ export const getFlocks = async () => {
 
 export const addFlockData = async (data) => {
   const token = localStorage.getItem('accessToken');
-  console.log(token);
   const response = fetch(`${BaseURL}/poultry/flocks/`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+
+  return response;
+}
+
+export const getFlockMovement = async () => {
+  const token = localStorage.getItem('accessToken');
+  const response = fetch(`${BaseURL}/poultry/flock-movements`, {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    },
+  })
+
+  return response;
+}
+
+export const addFlockMovement = async (data) => {
+  const token = localStorage.getItem('accessToken');
+  const response = fetch(`${BaseURL}/poultry/flock-movements`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+
+  return response;
+}
+
+export const addHousingStructure = async (data) => {
+  const token = localStorage.getItem('accessToken');
+  const response = fetch(`${BaseURL}/poultry/housing-structures/`, {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${token}`,

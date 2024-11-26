@@ -6,9 +6,10 @@ import {
   getFlockSource, getFlockBreed,
   getHousingStructures, addFlockData
 } from '../Utils/Funcs';
+import { toast } from 'react-toastify';
 
 function NewFlock() {
-  const { register, handleSubmit, formState } = useForm();
+  const { register, handleSubmit, formState, reset } = useForm();
   const { errors } = formState;
   const [sources, setSources] = useState([]);
   const [breeds, setBreeds] = useState([]);
@@ -44,14 +45,19 @@ function NewFlock() {
         const res = await addFlockData(refinedData);
         loader.style.display = 'none';
         text.style.display = 'inline';
-        if (res.status === 200) {
-          console.log(await res.json());
+        const responseData = await res.json();
+        console.log(responseData);
+        if (res.status === 201) {
+          toast.success("Flock data added successfully");
+          reset();
         } else if (res.status === 500) {
           console.log(`Error: ${res.statusText}`);
+          toast.error("An Unexpected Error Occurred")
         } else {
           console.log(res.status)
           const responseData = await res.json();
           console.log(responseData);
+          toast.warning("Data saving not successful")
         }
       } catch(err) {
         console.error(err);

@@ -117,9 +117,13 @@
   .dot {
     width: 10px;
     height: 10px;
-    background-color: #613a12;
+    background-color: #dbc76f;
     border-radius: 50%;
     animation: bounce 1.5s infinite ease-in-out;
+  }
+
+  .dot:hover {
+    background-color: #613a12;
   }
   
   /* Add delay to each dot to create the bouncing effect */
