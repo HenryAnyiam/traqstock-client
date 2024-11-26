@@ -1,9 +1,11 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { addFarmData } from '../Utils/Funcs';
+import { toast } from 'react-toastify';
+
 
 function NewRecord() {
-  const { register, handleSubmit, formState } = useForm();
+  const { register, handleSubmit, formState, reset } = useForm();
   const { errors } = formState;
 
   const submitData = async (data) => {
@@ -18,14 +20,16 @@ function NewRecord() {
         const res = await addFarmData(data);
         loader.style.display = 'none';
         text.style.display = 'inline';
-        if (res.status === 200) {
-          console.log(await res.json());
+        if (res.status === 201) {
+          toast.success('Record Added successfully');
+          reset();
         } else if (res.status === 500) {
-          console.log(`Error: ${res.statusText}`);
+          toast.error('An error occurred');
         } else {
-          console.log(res.status)
+          console.log(res.status);
           const responseData = await res.json();
           console.log(responseData);
+          toast.warning("Record adding failed")
         }
     }
   }

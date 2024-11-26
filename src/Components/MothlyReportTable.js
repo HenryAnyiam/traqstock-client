@@ -25,13 +25,18 @@ function MothlyReportTable() {
     fetchFarmData()
       .then((res) => {
         console.log(res.status);
-        setLoading(false)
+        res.json()
+          .then((data) => {
+            console.log(data);
+            setReportData(data);
+            setLoading(false);
+          })
       })
       .catch((err) => {
         console.log(err);
         setLoading(false);
       })
-  }, [reportData, loading])
+  }, [])
 
   const editReport = (index) => {
     setEditData(index);
@@ -53,7 +58,7 @@ function MothlyReportTable() {
           <th className='p-2 w-[15%]'>Date</th>
           <th className='p-2 w-[13%]'>Feed Intake</th>
           <th className='p-2 w-[13%]'>Water Intake</th>
-          <th  className='p-2 w-[13%]'>Mortality</th>
+          <th  className='p-2 w-[13%]'>Vaccine</th>
           <th  className='p-2 w-[5%]'></th>
         </tr>
       </thead>
@@ -116,8 +121,8 @@ function MothlyReportTable() {
                 <div className="bg-white h-9 flex items-center p-1 border-2 border-r-0 border-hover-gold rounded-l-lg">
                     <FaHeartbeat className='text-gray-700'/>
                 </div>
-                <input type="number" name="mortality" id="mortality"
-                placeholder="Mortality" defaultValue={reportData[editData]?.mortality}
+                <input type="text" name="mortality" id="mortality"
+                placeholder="Vaccine" defaultValue={reportData[editData]?.vaccine_administered}
                 className="bg-white border-2 border-l-0  border-hover-gold rounded-r-lg p-1 w-52 lg:w-72 focus:outline-0"/>
             </div>
             <div className="m-4 flex justify-center">
@@ -133,17 +138,17 @@ function MothlyReportTable() {
           <th className='p-2 w-[15%]'>Date</th>
           <th className='p-2 w-[13%]'>Feed Intake</th>
           <th className='p-2 w-[13%]'>Water Intake</th>
-          <th  className='p-2 w-[13%]'>Mortality</th>
+          <th  className='p-2 w-[13%]'>Vaccine</th>
           <th  className='p-2 w-[5%]'></th>
         </tr>
       </thead>
       <tbody>
         {
           reportData.map((report, index) => <tr key={report.id} className='h-10 border-b-2 font-normal text-sm lg:text-base'>
-            <td className='p-2'>{ report.from }</td>
+            <td className='p-2'>{ report.date_recorded }</td>
             <td className='p-2'>{ report.feed_intake }</td>
             <td className='p-2'>{ report.water_intake }</td>
-            <td className='p-2'>{ report.mortality }</td>
+            <td className='p-2'>{ report.vaccine_administered }</td>
             <td className='p-2'>
               <Tippy content='Edit Report'>
                 <button onClick={() => editReport(index) }>
