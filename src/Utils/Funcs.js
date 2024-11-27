@@ -127,7 +127,7 @@ export const getFlockMovement = async () => {
 
 export const addFlockMovement = async (data) => {
   const token = localStorage.getItem('accessToken');
-  const response = fetch(`${BaseURL}/poultry/flock-movements`, {
+  const response = fetch(`${BaseURL}/poultry/flock-movements/`, {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${token}`,

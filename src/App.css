@@ -117,7 +117,6 @@
   .dot {
     width: 10px;
     height: 10px;
-    background-color: #dbc76f;
     border-radius: 50%;
     animation: bounce 1.5s infinite ease-in-out;
   }

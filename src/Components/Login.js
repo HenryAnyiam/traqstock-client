@@ -45,8 +45,9 @@ function Login() {
           toast.error(`Error: ${userResponse.statusText}`);
         } else {
           console.log(userResponse.status)
-          const responseData = await userResponse.json();
-          toast.warning(responseData.detail);
+          toast.warning("Login unsuccessful");
+          const data = await userResponse.json();
+          toast.warning(data.errors.detail)
         }
       } catch (err) {
         console.error("Error occured")
@@ -113,9 +114,9 @@ function Login() {
                   <button type="submit"
                   className="text-center w-full text-base-brown bg-hover-gold p-2 rounded-xl font-bold hover:text-hover-gold hover:bg-base-brown">
                     <div className="dots hidden" id="query-loader">
-                      <div className="dot"></div>
-                      <div className="dot"></div>
-                      <div className="dot"></div>
+                      <div className="dot bg-base-brown"></div>
+                      <div className="dot bg-base-brown"></div>
+                      <div className="dot bg-base-brown"></div>
                     </div>
                     <span id="query-text">Continue</span>
                   </button>

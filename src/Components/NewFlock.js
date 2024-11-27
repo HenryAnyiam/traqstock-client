@@ -175,9 +175,9 @@ function NewFlock() {
                 <button type="submit"
                 className="text-center w-full text-hover-gold bg-base-brown p-2 rounded-xl font-bold hover:text-base-brown hover:bg-hover-gold">
                   <div className="dots hidden" id="query-loader">
-                    <div className="dot"></div>
-                    <div className="dot"></div>
-                    <div className="dot"></div>
+                    <div className="dot bg-hover-gold"></div>
+                    <div className="dot bg-hover-gold"></div>
+                    <div className="dot bg-hover-gold"></div>
                   </div>
                   <span id="query-text">Submit Data</span>
                 </button>

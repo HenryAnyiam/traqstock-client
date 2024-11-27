@@ -12,7 +12,10 @@ function RequireLogin({ children }) {
   useEffect(() => {
     if (!user) {
       const user_token = localStorage.getItem('accessToken');
-      if (!user_token) return;
+      if (!user_token) {
+        setLoading(false)
+        return
+      };
 
       setLoading(true);
       getUser(user_token)
@@ -29,6 +32,8 @@ function RequireLogin({ children }) {
         .catch(() => {
           setLoading(false);
         });
+    } else {
+      setLoading(false);
     }
   }, [user, loadUser])
 

@@ -17,6 +17,7 @@ const AuthContext = createContext(null);
 
   const logout = () => {
     setUser(null);
+    localStorage.removeItem('accessToken');
   }
 
   return (

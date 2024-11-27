@@ -16,12 +16,14 @@ function NewHousingStructure() {
       console.log(data);
       const res = await addHousingStructure(data);
       loader.style.display = 'none';
-      text.style.display = 'flex';
+      text.style.display = 'block';
       if (res.status === 201) {
         toast.success("Data saved successfully");
         reset();
       } else if (res.status === 500) {
         toast.error("An unexpected error occurred");
+        const text = await res.text();
+        console.log(`Error ${text}`);
       } else {
         toast.warning("Data saving unsuccessful");
       }
@@ -73,9 +75,9 @@ function NewHousingStructure() {
                 <button type="submit"
                 className="text-center w-full text-hover-gold bg-base-brown p-2 rounded-xl font-bold hover:text-base-brown hover:bg-hover-gold">
                   <div className="dots hidden" id="query-loader">
-                    <div className="dot"></div>
-                    <div className="dot"></div>
-                    <div className="dot"></div>
+                    <div className="dot bg-hover-gold"></div>
+                    <div className="dot bg-hover-gold"></div>
+                    <div className="dot bg-hover-gold"></div>
                   </div>
                   <span id="query-text" className='text-center'>Submit Data</span>
                 </button>
