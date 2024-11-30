@@ -32,7 +32,7 @@ function NewFlock() {
     if (!errors.source && !errors.breed &&
       !errors.date_of_hatching && !errors.chicken_type &&
       !errors.initial_number_of_birds && !errors.current_rearing_method &&
-      !errors.current_housing_structure
+      !errors.current_housing_structure && !errors.name
     ) {
       const loader = document.getElementById('query-loader');
       const text = document.getElementById('query-text');
@@ -71,6 +71,13 @@ function NewFlock() {
     <div className="bg-base-brown/[.3] shadow-2xl rounded-xl h-fit w-80 lg:w-fit p-4">
         <p className="text-center rounded-xl font-bold font-serif text-hover-gold p-1 w-full mb-2 text-xl">Register New Flock</p>
         <form onSubmit={handleSubmit(sumbitFlockData)} noValidate>
+            <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
+                <label htmlFor="name" className="font-bold font-serif text-hover-gold p-1 mr-2">Name:</label>
+                <input type="text" id="name" placeholder='Name'
+                className="bg-white border-2 border-base-brown rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2"
+                { ...register('name', { required: "Input Name"}) }/>
+            </div>
+            <p className='text-xs text-red-600 mb-4 text-center'>{ errors.name?.message }</p>
             <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
                 <label htmlFor="flockSource" className="font-bold font-serif text-hover-gold p-1 mr-2">Flock Source:</label>
                 <select id='flockSource' defaultValue='default'
@@ -167,7 +174,7 @@ function NewFlock() {
                   } 
                   }) }>
                   <option value='default' disabled>Housing Structure</option>
-                  {structures.map((structure) => <option key={structure.id} value={structure.id}>{ `${structure.category} - ${structure.house_type}` }</option>)}
+                  {structures.map((structure) => <option key={structure.id} value={structure.id}>{ structure.name }</option>)}
                 </select>
             </div>
             <p className='text-xs text-red-600 mb-4 text-center'>{errors.current_housing_structure?.message }</p>

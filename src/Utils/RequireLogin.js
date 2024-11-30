@@ -22,6 +22,7 @@ function RequireLogin({ children }) {
         .then((res) => {
           if (res.status === 200) {
             res.json().then((data) => {
+              console.log(data);
               loadUser(data);
               setLoading(false);
             });

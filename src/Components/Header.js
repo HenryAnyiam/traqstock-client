@@ -37,7 +37,7 @@ function Header({ extraClass }) {
             <FaUserCircle className="h-10 w-10"/>
           </div>
           <p className='text-center'>{ toTitleCase(user?.full_name) }</p>
-          <p className='text-center'>Manager</p>
+          <p className='text-center'>{ toTitleCase(user?.role) }</p>
       </div>
     </header>
   )

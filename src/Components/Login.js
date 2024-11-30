@@ -6,7 +6,7 @@ import { FaUser, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import { useForm } from 'react-hook-form';
 import LoginBackground from './LoginBackground';
 import { toast } from 'react-toastify';
-import { getUser, authUser } from '../Utils/Funcs';
+import { authUser } from '../Utils/Funcs';
 
 
 function Login() {
@@ -28,26 +28,17 @@ function Login() {
         loader.style.display = 'none';
         text.style.display = 'inline';
         if (userResponse.status === 200) {
-          loader.style.display = 'flex';
-          text.style.display = 'none';
           const responseData = await userResponse.json();
-          const userDetails = await getUser(responseData.access_token);
-          if (userDetails.status === 200) {
-            loader.style.display = 'none';
-            text.style.display = 'inline';
-            console.log(await userDetails.json())
-            toast.success(`Successfully Logged In`);
-            auth.login(responseData);
-            const redirect = location.state?.path || "/dashboard/user";
-            navigate(redirect, { replace: true });
-          }
+          toast.success(`Successfully Logged In`);
+          auth.login(responseData);
+          const redirect = location.state?.path || "/dashboard/user";
+          navigate(redirect, { replace: true });
         } else if (userResponse.status === 500) {
           toast.error(`Error: ${userResponse.statusText}`);
         } else {
-          console.log(userResponse.status)
           toast.warning("Login unsuccessful");
           const data = await userResponse.json();
-          toast.warning(data.errors.detail)
+          toast.warning(data.message)
         }
       } catch (err) {
         console.error("Error occured")
@@ -84,13 +75,7 @@ function Login() {
                   <div className="bg-white h-9 flex items-center p-1 border-2 border-r-0 border-hover-gold rounded-l-lg">
                       <FaUser className='text-gray-700'/>
                   </div>
-                  <input type="text" id="email" placeholder="Email" { ...register('email', {
-                    required: 'Email is required',
-                    pattern: {
-                      value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                      message: "Invalid email address provided"
-                    }
-                  }) }
+                  <input type="text" id="username" placeholder="Username" { ...register('username', { required: 'Username is required' }) }
                   className="bg-white border-2 border-l-0  border-hover-gold rounded-r-lg p-1 w-52 lg:w-72 focus:outline-0"
                   required />
               </div>

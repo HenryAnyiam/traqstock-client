@@ -6,13 +6,12 @@ const AuthContext = createContext(null);
   const [user, setUser] = useState(null);
 
   const login = (user) => {
-    localStorage.setItem('accessToken', user.access_token);
-    document.cookie = `refreshToken=${user.refresh_token}; Secure; HttpOnly; SameSite=Strict`;
-    setUser({ full_name: user.full_name, id: user.id, email: user.email });
+    localStorage.setItem('accessToken', user.token);
+    setUser({ full_name: user.username, id: user.id, role: user.role });
   }
 
   const loadUser = (user) => {
-    setUser({ full_name: `${user.first_name} ${user.last_name}`, id: user.id, email: user.email });
+    setUser({ full_name: user.username, id: user.id, role: user.role || user.users_role });
   }
 
   const logout = () => {

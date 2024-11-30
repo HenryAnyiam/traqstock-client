@@ -1,4 +1,4 @@
-const BaseURL = "https://farm-management-production.up.railway.app";
+const BaseURL = "http://127.0.0.1:8000";
 
 export const getUser = async (accessToken) => {
   const response = await fetch(`${BaseURL}/users/profile/`, {

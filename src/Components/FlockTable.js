@@ -25,7 +25,6 @@ function FlockTable() {
       .then((res) => {
         res.json()
           .then((data) => {
-            console.log(data);
             setFlocks(data);
             setLoading(false)
           })

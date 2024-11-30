@@ -8,7 +8,7 @@ function NewHousingStructure() {
   const { errors } = formState;
 
   const submitData = async (data) => {
-    if (!errors.house_type && !errors.category) {
+    if (!errors.house_type && !errors.category & !errors.name) {
       const loader = document.getElementById('query-loader');
       const text = document.getElementById('query-text');
       loader.style.display = 'flex';
@@ -34,6 +34,13 @@ function NewHousingStructure() {
     <div className="bg-base-brown/[.3] shadow-2xl rounded-xl h-fit w-80 lg:w-fit p-4">
         <p className="text-center rounded-xl font-bold font-serif text-hover-gold p-1 w-full mb-2 text-xl">New Housing Structure</p>
         <form onSubmit={handleSubmit(submitData)} noValidate>
+            <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
+                <label htmlFor="name" className="font-bold font-serif text-hover-gold p-1 mr-2">Name:</label>
+                <input type="text" id="name" placeholder='Name'
+                className="bg-white border-2 border-base-brown rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2"
+                { ...register('name', { required: "Input Name"}) }/>
+            </div>
+            <p className='text-xs text-red-600 mb-4 text-center'>{ errors.name?.message }</p>
             <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
                 <label htmlFor="housing-type" className="font-bold font-serif text-hover-gold p-1 mr-2">Type:</label>
                 <select id='housing-type' defaultValue="default" { ...register("house_type", {
