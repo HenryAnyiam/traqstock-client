@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { addHousingStructure } from '../Utils/Funcs';
+import { addHousingStructure, handleData } from '../Utils/Funcs';
 import { toast } from 'react-toastify';
 
 function NewHousingStructure() {
@@ -15,18 +15,7 @@ function NewHousingStructure() {
       text.style.display = 'none';
       console.log(data);
       const res = await addHousingStructure(data);
-      loader.style.display = 'none';
-      text.style.display = 'block';
-      if (res.status === 201) {
-        toast.success("Data saved successfully");
-        reset();
-      } else if (res.status === 500) {
-        toast.error("An unexpected error occurred");
-        const text = await res.text();
-        console.log(`Error ${text}`);
-      } else {
-        toast.warning("Data saving unsuccessful");
-      }
+      await handleData(res, loader, text, toast, reset);
     }
   }
   return (

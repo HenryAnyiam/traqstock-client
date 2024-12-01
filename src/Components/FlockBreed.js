@@ -68,7 +68,7 @@ function FlockBreed() {
   </thead>
   <tbody>
     {
-      breeds.map((breed, index) => <tr key={index} className='h-10 border-b-2 font-normal text-sm lg:text-base'>
+      breeds.map((breed, index) => <tr key={breed.id} className='h-10 border-b-2 font-normal text-sm lg:text-base'>
         <td className='p-2'>{ index + 1 }</td>
         <td className='p-2'>{ breed.name }</td>
         <td className='p-2'>{ breed.total_registered }</td>

@@ -68,7 +68,7 @@ function FlockSource() {
   </thead>
   <tbody>
     {
-      sources.map((source, index) => <tr key={index} className='h-10 border-b-2 font-normal text-sm lg:text-base'>
+      sources.map((source, index) => <tr key={ source.id } className='h-10 border-b-2 font-normal text-sm lg:text-base'>
         <td className='p-2'>{ index + 1 }</td>
         <td className='p-2'>{ source.name }</td>
         <td className='p-2'>{ source.total_registered }</td>

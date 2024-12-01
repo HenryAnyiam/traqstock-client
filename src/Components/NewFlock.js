@@ -4,7 +4,8 @@ import rearingMethods from '../mock_data/rearing_method.json';
 import { useForm } from 'react-hook-form';
 import {
   getFlockSource, getFlockBreed,
-  getHousingStructures, addFlockData
+  getHousingStructures, addFlockData,
+  handleData
 } from '../Utils/Funcs';
 import { toast } from 'react-toastify';
 
@@ -43,22 +44,7 @@ function NewFlock() {
       console.log(refinedData);
       try {
         const res = await addFlockData(refinedData);
-        loader.style.display = 'none';
-        text.style.display = 'inline';
-        const responseData = await res.json();
-        console.log(responseData);
-        if (res.status === 201) {
-          toast.success("Flock data added successfully");
-          reset();
-        } else if (res.status === 500) {
-          console.log(`Error: ${res.statusText}`);
-          toast.error("An Unexpected Error Occurred")
-        } else {
-          console.log(res.status)
-          const responseData = await res.json();
-          console.log(responseData);
-          toast.warning("Data saving not successful")
-        }
+        await handleData(res, loader, text, toast, reset);
       } catch(err) {
         console.error(err);
       }

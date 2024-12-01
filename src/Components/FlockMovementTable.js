@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getFlockMovement } from '../Utils/Funcs';
+import { getFlockMovement, convertDate } from '../Utils/Funcs';
 import Loader from './Loader';
 
 function FlockMovementTable() {
@@ -69,12 +69,12 @@ function FlockMovementTable() {
   </thead>
   <tbody className='text-sm'>
   {
-      movement.map((move, index) => <tr key={index} className='h-10 border-b-2 font-normal text-sm lg:text-base'>
+      movement.map((move, index) => <tr key={ move.id } className='h-10 border-b-2 font-normal text-sm lg:text-base'>
         <td className='p-2'>{ index }</td>
-        <td className='p-2'>{ move.flock }</td>
-        <td className='p-2'>{ move.from_structure }</td>
-        <td className='p-2'>{ move.to_structure }</td>
-        <td className='p-2'>{move.movement_date}</td>
+        <td className='p-2'>{ move.flock_name }</td>
+        <td className='p-2'>{ move.from_structure_name }</td>
+        <td className='p-2'>{ move.to_structure_name }</td>
+        <td className='p-2'>{ convertDate(move.movement_date) }</td>
       </tr>)
     }
   </tbody>

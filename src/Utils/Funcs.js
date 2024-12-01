@@ -152,3 +152,141 @@ export const addHousingStructure = async (data) => {
 
   return response;
 }
+
+export const getFlockInspection = async () => {
+  const token = localStorage.getItem('accessToken');
+  const response = fetch(`${BaseURL}/poultry/flock-inspection-records`, {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    },
+  })
+
+  return response;
+}
+
+export const addFlockInspection = async (data) => {
+  const token = localStorage.getItem('accessToken');
+  const response = fetch(`${BaseURL}/poultry/flock-inspection-records/`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+
+  return response;
+}
+
+export const getFlockBreedInformation = async () => {
+  const token = localStorage.getItem('accessToken');
+  const response = fetch(`${BaseURL}/poultry/flock-breed-information`, {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    },
+  })
+
+  return response;
+}
+
+export const addFlockBreedInformation = async (data) => {
+  const token = localStorage.getItem('accessToken');
+  const response = fetch(`${BaseURL}/poultry/flock-breed-information/`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+
+  return response;
+}
+
+export const getEggCollection = async () => {
+  const token = localStorage.getItem('accessToken');
+  const response = fetch(`${BaseURL}/poultry/egg-collection`, {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    },
+  })
+
+  return response;
+}
+
+export const addEggCollection = async (data) => {
+  const token = localStorage.getItem('accessToken');
+  const response = fetch(`${BaseURL}/poultry/egg-collection/`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+
+  return response;
+}
+
+export const handleData = async (res, loader, text, toast, reset) => {
+  loader.style.display = 'none';
+  text.style.display = 'inline';
+  if (res.status === 201) {
+    const responseData = await res.json();
+    console.log(responseData);
+    toast.success("Data added successfully");
+    reset();
+  } else if (res.status === 500) {
+    console.log(`Error: ${await res.text()}`);
+    toast.error("An Unexpected Error Occurred")
+  } else {
+    console.log(res.status)
+    const responseData = await res.json();
+    console.log(responseData.detail);
+    toast.warning("Data saving not successful");
+    toast.warning(responseData.detail);
+    
+  }
+}
+
+export const convertDate = (timestamp) => {
+  const date = new Date(timestamp);
+
+  const formattedDate = new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  }).format(date);
+
+  return formattedDate;
+}
+
+export const convertTime = (timestamp) => {
+  const date = new Date(`1970-01-01T${timestamp}Z`);
+
+  const formattedTime = new Intl.DateTimeFormat('en-US', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true,
+  }).format(date);
+
+  return formattedTime;
+}
+
+export const convertDateTime = (timestamp) => {
+  const date = new Date(timestamp);
+
+  const formattedDate = new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true,
+  }).format(date);
+
+  return formattedDate;
+}

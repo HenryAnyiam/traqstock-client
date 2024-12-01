@@ -145,3 +145,60 @@
       transform: scaleY(1.5); /* Stretch upwards */
     }
   }
+
+  /* Modal Content Box */
+.modal-hold {
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(49, 112, 35, 0.4);
+}
+
+
+.modal-content {
+  position: relative;
+  margin: auto;
+  padding: 20px;
+  border-radius: 8px;
+  width: 50%;
+}
+
+/* Header */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+  padding-left: 0px;
+}
+
+/* Close Button (X) */
+.close-btn {
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Body and Footer */
+.modal-body {
+  padding: 10px 0;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+@media only screen and (max-width: 767px) {
+  .modal-content {
+    width: 90%;
+  }
+}
