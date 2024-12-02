@@ -84,14 +84,14 @@ function DashboardSideBar() {
         <Header extraClass="flex lg:hidden grow" />
       </div>
       <div
-        className="bg-white h-screen-minus-nav lg:h-screen min-w-56 grid-rows-8 grid-flow-col gap-4 shadow-xl hidden lg:grid absolute lg:relative overflow-hidden"
+        className="bg-white h-screen-minus-nav lg:h-screen min-w-56 grid-rows-9 grid-flow-col gap-4 shadow-xl hidden lg:grid absolute lg:relative overflow-hidden"
         id="menu"
       >
         <div className="py-2 px-2 w-full items-center">
           <img src={logo} alt="logo" className="h-8 w-40 ml-2" />
           <hr />
         </div>
-        <nav className="row-span-6 px-2 text-left tracking-widest" id="navList">
+        <nav className="row-span-7 px-2 text-left tracking-widest" id="navList">
           <NavLink to="/dashboard/user" className="block p-2 rounded-xl my-1" onClick={closeDropDown}>
             Dashboard
           </NavLink>
@@ -145,6 +145,13 @@ function DashboardSideBar() {
             onClick={closeDropDown}
           >
             Movement
+          </NavLink>
+          <NavLink
+            to="/dashboard/flocks/history"
+            className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFlocks"
+            onClick={closeDropDown}
+          >
+            Flock History
           </NavLink>
           <NavLink
             to="/dashboard/flocks/inspection"

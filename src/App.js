@@ -31,6 +31,8 @@ import BreedInformation from "./Components/BreedInformation";
 import NewBreedInformation from "./Components/NewBreedInformation";
 import EggCollection from "./Components/EggCollection";
 import NewEggCollection from "./Components/NewEggCollection";
+import FlockHistory from "./Components/FlockHistory";
+import NewFlockHistory from "./Components/NewFlockHistory";
 
 function App() {
   return (
@@ -59,6 +61,8 @@ function App() {
             <Route path='flocks/breed-information/new' element={<NewBreedInformation />} />
             <Route path='egg-collection' element={<EggCollection />} />
             <Route path='egg-collection/new' element={<NewEggCollection />} />
+            <Route path='flocks/history' element={<FlockHistory />} />
+            <Route path='flocks/history/new' element={<NewFlockHistory />} />
             <Route path='manage-staffs' element={<StaffManagement />}/>
             <Route path='profile' element={<ManageProfile />}/>
           </Route>

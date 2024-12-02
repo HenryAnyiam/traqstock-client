@@ -231,6 +231,58 @@ export const addEggCollection = async (data) => {
   return response;
 }
 
+export const getStaffs = async () => {
+  const token = localStorage.getItem('accessToken');
+  const response = fetch(`${BaseURL}/users/staff`, {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    },
+  })
+
+  return response;
+}
+
+export const addStaff = async (data) => {
+  const token = localStorage.getItem('accessToken');
+  const response = fetch(`${BaseURL}/users/staff/`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+
+  return response;
+}
+
+export const getFlockHistory = async () => {
+  const token = localStorage.getItem('accessToken');
+  const response = fetch(`${BaseURL}/poultry/flock-histories`, {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    },
+  })
+
+  return response;
+}
+
+export const addFlockHistory = async (data) => {
+  const token = localStorage.getItem('accessToken');
+  const response = fetch(`${BaseURL}/poultry/flock-histories/`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+
+  return response;
+}
+
 export const handleData = async (res, loader, text, toast, reset) => {
   loader.style.display = 'none';
   text.style.display = 'inline';
