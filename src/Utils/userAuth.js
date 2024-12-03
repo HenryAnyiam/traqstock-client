@@ -7,11 +7,23 @@ const AuthContext = createContext(null);
 
   const login = (user) => {
     localStorage.setItem('accessToken', user.token);
-    setUser({ full_name: user.username, id: user.id, role: user.users_role });
+    setUser(
+      {
+        full_name: user.username,
+        id: user.id,
+        role: user.users_role,
+        role_id: user.role
+      });
   }
 
   const loadUser = (user) => {
-    setUser({ full_name: user.username, id: user.id, role: user.users_role });
+    setUser(
+      {
+        full_name: user.username,
+        id: user.id,
+        role: user.users_role,
+        role_id: user.role
+      });
   }
 
   const logout = () => {

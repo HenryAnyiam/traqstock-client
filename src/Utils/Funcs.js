@@ -63,6 +63,20 @@ export const getFlockSource = async () => {
   return response;
 }
 
+export const addFlockSource = async (data) => {
+  const token = localStorage.getItem('accessToken');
+  const response = fetch(`${BaseURL}/poultry/flock-sources/`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+
+  return response;
+}
+
 export const getFlockBreed = async () => {
   const token = localStorage.getItem('accessToken');
   const response = fetch(`${BaseURL}/poultry/flock-breeds`, {
@@ -70,6 +84,20 @@ export const getFlockBreed = async () => {
     headers: {
       'Authorization': `Bearer ${token}`
     },
+  })
+
+  return response;
+}
+
+export const addFlockBreed = async (data) => {
+  const token = localStorage.getItem('accessToken');
+  const response = fetch(`${BaseURL}/poultry/flock-breeds/`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
   })
 
   return response;

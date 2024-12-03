@@ -7,8 +7,24 @@ import { useAuth } from '../Utils/userAuth';
 import Header from './Header';
 
 function DashboardSideBar() {
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
   const navigate = useNavigate();
+  const { role_id } = user;
+
+  useEffect(() => {
+    if (role_id < 4) {
+      const housing = document.getElementById('housingLink');
+      housing.classList.add('no-show');
+      const staff = document.getElementById('staffLink');
+      staff.classList.add('no-show');
+      const movement = document.getElementById('movementLink');
+      movement.classList.add('no-show');
+      const breedInfo = document.getElementById('breedInfoLink')
+      breedInfo.classList.add('no-show');
+      const history = document.getElementById('historyLink');
+      history.classList.add('no-show');
+    }
+  }, [role_id])
 
   const handleMonthly = (e) => {
     e.preventDefault()
@@ -142,14 +158,14 @@ function DashboardSideBar() {
           <NavLink
             to="/dashboard/flocks/movement"
             className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFlocks"
-            onClick={closeDropDown}
+            onClick={closeDropDown} id="movementLink"
           >
             Movement
           </NavLink>
           <NavLink
             to="/dashboard/flocks/history"
             className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFlocks"
-            onClick={closeDropDown}
+            onClick={closeDropDown} id="historyLink"
           >
             Flock History
           </NavLink>
@@ -163,17 +179,17 @@ function DashboardSideBar() {
           <NavLink
             to="/dashboard/flocks/breed-information"
             className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFlocks"
-            onClick={closeDropDown}
+            onClick={closeDropDown} id="breedInfoLink"
           >
             Breed Information
           </NavLink>
-          <NavLink to="/dashboard/housing-structure" className="block p-2 rounded-xl my-1" onClick={closeDropDown}>
+          <NavLink to="/dashboard/housing-structure" className="block p-2 rounded-xl my-1" onClick={closeDropDown} id="housingLink">
             Housing Structure
           </NavLink>
           <NavLink to="/dashboard/egg-collection" className="block p-2 rounded-xl my-1">
             Egg Collection
           </NavLink>
-          <NavLink to="manage-staffs" className="block p-2 rounded-xl my-1">
+          <NavLink to="manage-staffs" className="block p-2 rounded-xl my-1" id="staffLink">
             Staff Management
           </NavLink>
         </nav>

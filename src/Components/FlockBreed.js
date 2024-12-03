@@ -3,10 +3,15 @@ import Tippy from '@tippyjs/react';
 import { FaEye } from 'react-icons/fa';
 import Loader from './Loader';
 import { getFlockBreed } from '../Utils/Funcs';
+import { NavLink } from 'react-router-dom';
+import { FaPlus } from 'react-icons/fa';
+import { useAuth } from '../Utils/userAuth';
 
 function FlockBreed() {
   const [breeds, setBreeds] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { user } = useAuth();
+  const { role_id } = user;
 
   useEffect(() => {
     getFlockBreed()
@@ -26,9 +31,26 @@ function FlockBreed() {
       })
   }, [])
 
+  useEffect(() => {
+    if (role_id < 4) {
+      const newData = document.getElementById('newData');
+      newData.classList.add('no-show');
+    }
+  }, [role_id])
+
   if (loading) {
-    return <div className='lg:p-4'>
-       <h2 className='text-3xl'>Flock Breeds</h2>
+    return <div className='lg:p-4' id="report-view">
+       <div className='flex justify-between m-2 ml-0'>
+      <h2 className='text-3xl'>Flock Breeds</h2>
+      <div id="newData">
+        <Tippy content='Add new Flock Breed'>
+          <NavLink className='' to='/dashboard/flocks/breeds/new'>
+            <FaPlus className='mr-1' />
+            New
+          </NavLink>
+        </Tippy>
+      </div>
+    </div>
       <table className='table-auto w-full border-collapse'>
       <thead className='shadow-lg text-left bg-hover-gold text-base-brown font-bold'>
       <tr className='h-10 text-xs lg:text-sm'>
@@ -55,8 +77,18 @@ function FlockBreed() {
     </div>
   }
 
-  return <div className='lg:p-4'>
-    <h2 className='text-3xl'>Flock Breeds</h2>
+  return <div className='lg:p-4' id="report-view">
+    <div className='flex justify-between m-2 ml-0'>
+      <h2 className='text-3xl'>Flock Breeds</h2>
+      <div id="newData">
+        <Tippy content='Add new Flock Breed'>
+          <NavLink className='' to='/dashboard/flocks/breeds/new'>
+            <FaPlus className='mr-1' />
+            New
+          </NavLink>
+        </Tippy>
+      </div>
+    </div>
   <table className='table-auto w-full border-collapse'>
   <thead className='shadow-lg text-left bg-hover-gold text-base-brown font-bold'>
     <tr className='h-10 text-xs lg:text-sm'>

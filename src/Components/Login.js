@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import LoginBackground from './LoginBackground';
 import { toast } from 'react-toastify';
 import { authUser } from '../Utils/Funcs';
+import rights from '../mock_data/UserRights.json';
 
 
 function Login() {
@@ -30,8 +31,13 @@ function Login() {
         if (userResponse.status === 200) {
           const responseData = await userResponse.json();
           toast.success(`Successfully Logged In`);
+          console.log(responseData);
           auth.login(responseData);
-          const redirect = location.state?.path || "/dashboard/user";
+          let redirect = location.state?.path || "/dashboard/user";
+          const userRights = rights[responseData.role]
+          if (redirect in userRights) {
+            redirect = "/dashboard/user";
+          }
           navigate(redirect, { replace: true });
         } else if (userResponse.status === 500) {
           toast.error(`Error: ${userResponse.statusText}`);

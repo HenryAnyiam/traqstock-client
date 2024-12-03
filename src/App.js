@@ -33,6 +33,9 @@ import EggCollection from "./Components/EggCollection";
 import NewEggCollection from "./Components/NewEggCollection";
 import FlockHistory from "./Components/FlockHistory";
 import NewFlockHistory from "./Components/NewFlockHistory";
+import RequireManager from "./Utils/RequireManager"
+import NewFlockSource from "./Components/NewFlockSource";
+import NewFlockBreed from "./Components/NewFlockBreed";
 
 function App() {
   return (
@@ -46,24 +49,26 @@ function App() {
               <Route path='table' element={<MothlyReportTable />}/>
               <Route path='chart' element={<MonthlyReportChart />}/>
             </Route>
-            <Route path='housing-structure' element={<HousingStructure />} />
-            <Route path='housing-structure/new' element={<NewHousingStructure />} />
+            <Route path='housing-structure' element={<RequireManager><HousingStructure /></RequireManager>} />
+            <Route path='housing-structure/new' element={<RequireManager><NewHousingStructure /></RequireManager>} />
             <Route path='farm-data/new-record' element={<NewRecord />}/>
             <Route path='flocks/sources' element={<FlockSource />} />
+            <Route path='flocks/sources/new' element={<RequireManager><NewFlockSource /></RequireManager>} />
             <Route path='flocks/breeds' element={<FlockBreed />} />
-            <Route path='flocks/flocks/new' element={<NewFlock />} />
+            <Route path='flocks/breeds/new' element={<RequireManager><NewFlockBreed /></RequireManager>} />
+            <Route path='flocks/flocks/new' element={<RequireManager><NewFlock /></RequireManager>} />
             <Route path='flocks/flocks' element={<ViewFlock />} />
-            <Route path='flocks/movement' element={<FlockMovement />} />
-            <Route path='flocks/movement/new' element={<NewFlockMovement />} />
+            <Route path='flocks/movement' element={<RequireManager><FlockMovement /></RequireManager>} />
+            <Route path='flocks/movement/new' element={<RequireManager><NewFlockMovement /></RequireManager>} />
             <Route path='flocks/inspection' element={<FlockInspection />} />
             <Route path='flocks/inspection/new' element={<NewFlockInspection />} />
-            <Route path='flocks/breed-information' element={<BreedInformation />} />
-            <Route path='flocks/breed-information/new' element={<NewBreedInformation />} />
-            <Route path='egg-collection' element={<EggCollection />} />
+            <Route path='flocks/breed-information' element={<RequireManager><BreedInformation /></RequireManager>} />
+            <Route path='flocks/breed-information/new' element={<RequireManager><NewBreedInformation /></RequireManager>} />
+            <Route path='egg-collection' element={<RequireManager redirect="/dashboard/egg-collection/new"><EggCollection /></RequireManager>} />
             <Route path='egg-collection/new' element={<NewEggCollection />} />
-            <Route path='flocks/history' element={<FlockHistory />} />
-            <Route path='flocks/history/new' element={<NewFlockHistory />} />
-            <Route path='manage-staffs' element={<StaffManagement />}/>
+            <Route path='flocks/history' element={<RequireManager><FlockHistory /></RequireManager>} />
+            <Route path='flocks/history/new' element={<RequireManager><NewFlockHistory /></RequireManager>} />
+            <Route path='manage-staffs' element={<RequireManager><StaffManagement /></RequireManager>}/>
             <Route path='profile' element={<ManageProfile />}/>
           </Route>
           <Route path='login' element={<LoggedIn><Login /></LoggedIn>} />
