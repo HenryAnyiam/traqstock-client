@@ -285,6 +285,20 @@ export const addStaff = async (data) => {
   return response;
 }
 
+export const updateStaff = async (data, id) => {
+  const token = localStorage.getItem("accessToken");
+  const response = fetch(`${BaseURL}/users/staff/${id}`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  return response;
+};
+
 export const getFlockHistory = async () => {
   const token = localStorage.getItem('accessToken');
   const response = fetch(`${BaseURL}/poultry/flock-histories`, {
@@ -311,19 +325,20 @@ export const addFlockHistory = async (data) => {
   return response;
 }
 
-export const handleData = async (res, loader, text, toast, reset) => {
+export const handleData = async (res, loader, text, toast, reset, msg="Data added successfully") => {
   loader.style.display = 'none';
   text.style.display = 'inline';
   if (res.status === 201) {
     const responseData = await res.json();
     console.log(responseData);
-    toast.success("Data added successfully");
+    toast.success(msg);
     reset();
   } else if (res.status === 500) {
     console.log(`Error: ${await res.text()}`);
     toast.error("An Unexpected Error Occurred")
   } else {
     console.log(res.status)
+    console.log(`Error: ${await res.text()}`);
     const responseData = await res.json();
     console.log(responseData.detail);
     toast.warning("Data saving not successful");

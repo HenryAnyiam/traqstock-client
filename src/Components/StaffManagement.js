@@ -4,7 +4,7 @@ import { FaLock, FaUser, FaUserTag, FaPencilAlt, FaTrashAlt } from 'react-icons/
 import Tippy from '@tippyjs/react';
 import { toast } from 'react-toastify';
 import Loader from './Loader';
-import { getStaffs, addStaff, handleData } from '../Utils/Funcs';
+import { getStaffs, addStaff, handleData, updateStaff } from '../Utils/Funcs';
 import { useForm } from 'react-hook-form';
 
 const initialModalState = { main: false, edit: false, delete: false }
@@ -34,6 +34,7 @@ function StaffManagement() {
   const [staffData, setStaffData] = useState([]);
   const [loading, setLoading] = useState(true);
   const { register, handleSubmit, formState, reset } = useForm();
+  const editForm = useForm();
   const { errors } = formState;
 
   useEffect(() => {
@@ -107,11 +108,40 @@ function StaffManagement() {
     dispatch('openEdit')
   }
 
-  const editStaff = () => {
+  const editStaff = async (data) => {
     const val = staffData[editItem];
-    setEditItem(null);
-    dispatch('closeEdit');
-    toast.success(`Successfully Saved Changes to Staff: ${val.username}`);
+    const reqData = {}
+    console.log(data);
+    if (data.username !== "" && data.username !== val.username) reqData.username = data.username;
+    if (data.role !== "" && data.role !== "deafult" && data.role !== val.role) reqData.role = data.role;
+    if (data.password !== "" && data.password !== val.password) reqData.password = data.password;
+    const loader = document.getElementById("query-loader-edit");
+    const text = document.getElementById("query-text-edit");
+    loader.style.display = "flex";
+    text.style.display = "none";
+    const res = await updateStaff(reqData, val.id);
+    handleData(res, loader, text, toast, reset, "Staff Updated Successfully")
+      .then((res) => {
+        getStaffs()
+          .then((res) => {
+            res.json().then((data) => {
+              console.log(data);
+              setStaffData(data);
+              setLoading(false);
+            });
+          })
+          .catch((err) => {
+            console.error(err);
+            setLoading(false);
+          });
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => {
+        setEditItem(null);
+        dispatch("closeEdit");
+      })
   }
 
   if (loading) {
@@ -264,7 +294,7 @@ function StaffManagement() {
         </div>
       </Modal>
       <Modal 
-      isOpen={modalState.edit} onRequestClose={() => { dispatch('closeEdit') }}
+      isOpen={modalState.edit} onRequestClose={() => { dispatch('closeEdit'); }}
       style={{
         content: {
           width: 'fit-content',
@@ -282,20 +312,22 @@ function StaffManagement() {
       }}
       >
         <p className="text-center rounded-xl font-bold font-serif text-hover-gold p-1 w-full mb-2 text-xl">Update Staff Details</p>
-        <form>
+        <form onSubmit={editForm.handleSubmit(editStaff)} noValidate>
+          <input type="hidden" { ...editForm.register('id') } defaultValue={staffData[editItem]?.id} />
             <div className="m-4 flex items-center">
                 <div className="bg-white h-9 flex items-center p-1 border-2 border-r-0 border-hover-gold rounded-l-lg">
                     <FaUser className='text-gray-700'/>
                 </div>
-                <input type="text" name="username" defaultValue={staffData[editItem]?.username}
+                <input type="text" defaultValue={staffData[editItem]?.username}
                 id="username" placeholder="Username"
+                { ...editForm.register("username") }
                 className="bg-white border-2 border-l-0  border-hover-gold rounded-r-lg p-1 w-52 lg:w-72 focus:outline-0"/>
-            </div>
+          </div>
             <div className="m-4 flex items-center">
                 <div className="bg-white h-9 flex items-center p-1 border-2 border-r-0 border-hover-gold rounded-l-lg">
                     <FaUserTag className='text-gray-700'/>
                 </div>
-                <select id='role' name='name' defaultValue={staffData[editItem]?.role}
+                <select id='role' defaultValue={staffData[editItem]?.role} { ...editForm.register("role") }
                 className="bg-white text-gray-700 h-9 border-2 border-l-0 border-hover-gold rounded-r-lg p-1 w-52 lg:w-72 focus:outline-0">
                   <option disabled value=''>Select User Role</option>
                   <option value='5'>Owner</option>
@@ -304,18 +336,25 @@ function StaffManagement() {
                   <option value='2'>Team Leader</option>
                   <option value='1'>Worker</option>
                 </select>
-            </div>
+          </div>
             <div className="m-4 mb-1 flex items-center">
                 <div className="bg-white h-9 flex items-center p-1 border-2 border-r-0 border-hover-gold rounded-l-lg">
                     <FaLock className='text-gray-700'/>
                 </div>
-                <input type='text' name="password"
-                id="password" placeholder="Password"
+            <input type='text' id="password" placeholder="Password"
+              { ...editForm.register("password") }
                 className="bg-white border-2 border-l-0 border-hover-gold rounded-r-lg p-1 w-52 lg:w-72 focus:outline-0"/>
             </div>
             <div className="m-4 flex justify-center">
-                <button type="submit" onClick={editStaff}
-                className="text-center w-full text-base-brown bg-hover-gold p-2 rounded-xl font-bold hover:text-hover-gold hover:bg-transparent hover:border-hover-gold hover:border-2">Continue</button>
+                <button type="submit"
+              className="text-center w-full text-base-brown bg-hover-gold p-2 rounded-xl font-bold hover:text-hover-gold hover:bg-transparent hover:border-hover-gold hover:border-2">
+              <div className="dots hidden" id="query-loader-edit">
+                    <div className="dot"></div>
+                    <div className="dot"></div>
+                    <div className="dot"></div>
+                  </div>
+              <span id="query-text-edit" className='text-center'>Submit Data</span>
+            </button>
             </div>
         </form>
       </Modal>

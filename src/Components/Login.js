@@ -33,10 +33,10 @@ function Login() {
           toast.success(`Successfully Logged In`);
           console.log(responseData);
           auth.login(responseData);
-          let redirect = location.state?.path || "/dashboard/user";
+          let redirect = location.state?.path || "/dashboard/farm-data/table";
           const userRights = rights[responseData.role]
-          if (redirect in userRights) {
-            redirect = "/dashboard/user";
+          if (userRights && userRights.contains(redirect)) {
+            redirect = "/dashboard/farm-data/table";
           }
           navigate(redirect, { replace: true });
         } else if (userResponse.status === 500) {
@@ -47,7 +47,7 @@ function Login() {
           toast.warning(data.message)
         }
       } catch (err) {
-        console.error("Error occured")
+        console.error("Error occured", err)
       }
     }
   }

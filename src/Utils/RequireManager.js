@@ -16,7 +16,7 @@ function RequireManager({ redirect, children }) {
   }
 
   if (role_id < 4) {
-    return <Navigate to={redirect || '/dashboard/user'} replace />
+    return <Navigate to={redirect || "/dashboard/farm-data/table"} replace />;
   }
 
   return children;
