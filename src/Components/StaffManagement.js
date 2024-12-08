@@ -4,7 +4,7 @@ import { FaLock, FaUser, FaUserTag, FaPencilAlt, FaTrashAlt } from 'react-icons/
 import Tippy from '@tippyjs/react';
 import { toast } from 'react-toastify';
 import Loader from './Loader';
-import { getStaffs, addStaff, handleData, updateStaff } from '../Utils/Funcs';
+import { getStaffs, addStaff, handleData, updateStaff, deleteStaff, handleDelete } from '../Utils/Funcs';
 import { useForm } from 'react-hook-form';
 
 const initialModalState = { main: false, edit: false, delete: false }
@@ -66,11 +66,31 @@ function StaffManagement() {
     dispatch('openDelete')
   }
 
-  const delStaff = () => {
+  const delStaff = async () => {
     const val = staffData[delItem];
-    setDelItem(null);
-    dispatch('closeDelete');
-    toast.success(`Successfully Deleted Staff: ${val.username}`);
+    const res = await deleteStaff(val.id);
+    handleDelete(res, toast, "Staff Deleted Successfully")
+      .then((res) => {
+        getStaffs()
+          .then((res) => {
+            res.json().then((data) => {
+              console.log(data);
+              setStaffData(data);
+              setLoading(false);
+            });
+          })
+          .catch((err) => {
+            console.error(err);
+            setLoading(false);
+          });
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => {
+        setEditItem(null);
+        dispatch("closeDelete");
+      })
   }
 
   const newStaff = async (data) => {
@@ -143,6 +163,14 @@ function StaffManagement() {
         dispatch("closeEdit");
       })
   }
+
+  useEffect(() => {
+    if (editItem !== null && staffData[editItem]) {
+        editForm.setValue('id', staffData[editItem].id || '');
+        editForm.setValue('username', staffData[editItem].username || '');
+        editForm.setValue('role', staffData[editItem].role || '');
+    }
+  }, [editItem, staffData, editForm]);
 
   if (loading) {
     return <div className='h-full p-4 w-full'>
@@ -313,12 +341,12 @@ function StaffManagement() {
       >
         <p className="text-center rounded-xl font-bold font-serif text-hover-gold p-1 w-full mb-2 text-xl">Update Staff Details</p>
         <form onSubmit={editForm.handleSubmit(editStaff)} noValidate>
-          <input type="hidden" { ...editForm.register('id') } defaultValue={staffData[editItem]?.id} />
+          <input type="hidden" { ...editForm.register('id') } />
             <div className="m-4 flex items-center">
                 <div className="bg-white h-9 flex items-center p-1 border-2 border-r-0 border-hover-gold rounded-l-lg">
                     <FaUser className='text-gray-700'/>
                 </div>
-                <input type="text" defaultValue={staffData[editItem]?.username}
+                <input type="text"
                 id="username" placeholder="Username"
                 { ...editForm.register("username") }
                 className="bg-white border-2 border-l-0  border-hover-gold rounded-r-lg p-1 w-52 lg:w-72 focus:outline-0"/>
@@ -327,7 +355,7 @@ function StaffManagement() {
                 <div className="bg-white h-9 flex items-center p-1 border-2 border-r-0 border-hover-gold rounded-l-lg">
                     <FaUserTag className='text-gray-700'/>
                 </div>
-                <select id='role' defaultValue={staffData[editItem]?.role} { ...editForm.register("role") }
+                <select id='role' { ...editForm.register("role") }
                 className="bg-white text-gray-700 h-9 border-2 border-l-0 border-hover-gold rounded-r-lg p-1 w-52 lg:w-72 focus:outline-0">
                   <option disabled value=''>Select User Role</option>
                   <option value='5'>Owner</option>

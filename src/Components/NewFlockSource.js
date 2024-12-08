@@ -13,8 +13,15 @@ function NewFlockSource() {
       const text = document.getElementById('query-text');
       loader.style.display = 'flex';
       text.style.display = 'none';
-      const res = await addFlockSource(data);
-      await handleData(res, loader, text, toast, reset);
+      try {
+        const res = await addFlockSource(data);
+        await handleData(res, loader, text, toast, reset);
+      } catch (err) {
+        console.log(`Error Occured - ${err}`);
+        loader.style.display = 'none';
+        text.style.display = 'block';
+        toast.error('An Error Occured - Please Try Again')
+      }
     }
   }
 

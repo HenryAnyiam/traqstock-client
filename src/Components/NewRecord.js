@@ -45,11 +45,6 @@ function NewRecord() {
                 className="bg-white border-2 border-base-brown rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2" required />
             </div>
             <p className='text-xs text-red-600 mb-3 text-center'>{ errors.vaccine_administered?.message }</p>
-            <div className="m-4">
-                <label htmlFor="additional_notes" className="font-bold font-serif text-hover-gold p-1 mr-2 block">Additional Notes:</label>
-                <textarea rows="5"
-                className='w-full bg-white border-2 border-base-brown rounded-lg p-1 w-full lg:w-58 focus:outline-0'></textarea>
-            </div>
             <div className="m-4 flex justify-center">
                 <button type="submit"
                 className="text-center w-full text-hover-gold bg-base-brown p-2 rounded-xl font-bold hover:text-base-brown hover:bg-hover-gold">
@@ -67,4 +62,4 @@ function NewRecord() {
   )
 }
 
-export default NewRecord
+export default NewRecord;

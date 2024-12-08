@@ -287,13 +287,25 @@ export const addStaff = async (data) => {
 
 export const updateStaff = async (data, id) => {
   const token = localStorage.getItem("accessToken");
-  const response = fetch(`${BaseURL}/users/staff/${id}`, {
+  const response = fetch(`${BaseURL}/users/staff/${id}/`, {
     method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
+  });
+
+  return response;
+};
+
+export const deleteStaff = async (id) => {
+  const token = localStorage.getItem("accessToken");
+  const response = fetch(`${BaseURL}/users/staff/${id}/`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
   });
 
   return response;
@@ -325,25 +337,93 @@ export const addFlockHistory = async (data) => {
   return response;
 }
 
-export const handleData = async (res, loader, text, toast, reset, msg="Data added successfully") => {
-  loader.style.display = 'none';
-  text.style.display = 'inline';
-  if (res.status === 201) {
-    const responseData = await res.json();
-    console.log(responseData);
-    toast.success(msg);
-    reset();
-  } else if (res.status === 500) {
-    console.log(`Error: ${await res.text()}`);
-    toast.error("An Unexpected Error Occurred")
+const displayData = (data, toast) => {
+  if (typeof data === "string") {
+    toast.warning(data);
+  } else if (typeof data === "object") {
+    for (let i in data) {
+      const retrieved = data[i];
+      if (Array.isArray(retrieved)) {
+        retrieved.forEach((data) => {
+          toast.warning(`${i} - ${data}`);
+        })
+      } else {
+        toast.warning(data[i]);
+      }
+    }
   } else {
-    console.log(res.status)
-    console.log(`Error: ${await res.text()}`);
-    const responseData = await res.json();
-    console.log(responseData.detail);
-    toast.warning("Data saving not successful");
-    toast.warning(responseData.detail);
-    
+    console.log(data);
+  }
+}
+
+export const handleData = async (res, loader, text, toast, reset, msg="Data added successfully") => {
+  try {
+    loader.style.display = 'none';
+    text.style.display = 'inline';
+    if (res.status === 201 || res.status === 200) {
+      const responseData = await res.json();
+      console.log(responseData);
+      toast.success(msg);
+      reset();
+    } else {
+      console.log(res.status)
+      const resText = await res.text();
+      toast.warning("Data saving not successful");
+      try {
+        let responseData = JSON.parse(resText);
+        console.log('Object Data', responseData)
+        if (responseData.detail) {
+          const detail = responseData.detail;
+          if (typeof detail === String) {
+            console.log(detail);
+            toast.warning(detail);
+          } else {
+            displayData(detail, toast);
+          }
+        } else {
+          displayData(responseData, toast);
+        }
+      } catch (error) {
+        console.error("Parsing error:", error.message);
+        console.log(resText);
+      }
+    }
+  } catch (err) {
+    console.error(err);
+    toast.error("An Unexpected Error Occurred");
+  }
+}
+
+export const handleDelete = async (res, toast, msg="Data deleted successfully") => {
+  try {
+    if (res.status === 204) {
+      toast.success(msg);
+    } else {
+      console.log(res.status)
+      const resText = await res.text();
+      toast.warning("Delete Unsuccessful");
+      try {
+        let responseData = JSON.parse(resText);
+        console.log('Object Data', responseData)
+        if (responseData.detail) {
+          const detail = responseData.detail;
+          if (typeof detail === String) {
+            console.log(detail);
+            toast.warning(detail);
+          } else {
+            displayData(detail, toast);
+          }
+        } else {
+          displayData(responseData, toast);
+        }
+      } catch (error) {
+        console.error("Parsing error:", error.message);
+        console.log(resText);
+      }
+    }
+  } catch (err) {
+    console.error(err);
+    toast.error("An Unexpected Error Occurred");
   }
 }
 
