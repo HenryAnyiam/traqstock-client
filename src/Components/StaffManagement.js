@@ -374,7 +374,7 @@ function StaffManagement() {
                 className="bg-white border-2 border-l-0 border-hover-gold rounded-r-lg p-1 w-52 lg:w-72 focus:outline-0"/>
             </div>
             <div className="m-4 flex justify-center">
-                <button type="submit"
+              <button type="submit"
               className="text-center w-full text-base-brown bg-hover-gold p-2 rounded-xl font-bold hover:text-hover-gold hover:bg-transparent hover:border-hover-gold hover:border-2">
               <div className="dots hidden" id="query-loader-edit">
                     <div className="dot"></div>

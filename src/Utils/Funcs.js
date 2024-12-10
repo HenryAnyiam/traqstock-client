@@ -77,6 +77,18 @@ export const addFlockSource = async (data) => {
   return response;
 }
 
+export const deleteFlockSource = async (id) => {
+  const token = localStorage.getItem("accessToken");
+  const response = fetch(`${BaseURL}/poultry/flock-sources/${id}/`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+
+  return response;
+};
+
 export const getFlockBreed = async () => {
   const token = localStorage.getItem('accessToken');
   const response = fetch(`${BaseURL}/poultry/flock-breeds`, {
@@ -102,6 +114,18 @@ export const addFlockBreed = async (data) => {
 
   return response;
 }
+
+export const deleteFlockBreed = async (id) => {
+  const token = localStorage.getItem("accessToken");
+  const response = fetch(`${BaseURL}/poultry/flock-breeds/${id}/`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+
+  return response;
+};
 
 export const getHousingStructures = async () => {
   const token = localStorage.getItem('accessToken');
