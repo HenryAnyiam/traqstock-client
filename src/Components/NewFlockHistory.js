@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { getHousingStructures, getFlocks, addFlockMovement, handleData } from '../Utils/Funcs';
+import { getHousingStructures, getFlocks, addFlockHistory, handleData } from '../Utils/Funcs';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import rearingMethods from '../mock_data/rearing_method.json';
 
-function NewFlockMovement() {
+function NewFlockHistory() {
   const [flocks, setFlocks] = useState([]);
   const [structures, setStructures] = useState([]);
   const { register, handleSubmit, formState, reset } = useForm();
@@ -24,15 +25,15 @@ function NewFlockMovement() {
 
   const submitData = async (data) => {
     if (!errors.flock &&
-      !errors.to_structure &&
-      !errors.from_structure
+      !errors.rearing_method &&
+      !errors.current_housing_structure
     ) {
       console.log(data);
       const loader = document.getElementById('query-loader');
       const text = document.getElementById('query-text');
       loader.style.display = 'flex';
       text.style.display = 'none';
-      const res = await addFlockMovement(data);
+      const res = await addFlockHistory(data);
       await handleData(res, loader, text, toast, reset);
     }
   }
@@ -57,35 +58,36 @@ function NewFlockMovement() {
           </div>
           <p className='text-xs text-red-600 mb-4 text-center'>{ errors.flock?.message }</p>
           <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
-            <label htmlFor="movedFromStructure" className="font-bold font-serif text-hover-gold p-1 mr-2">Moved From:</label>
-            <select id='movedFromStructure' defaultValue="default" { ...register('from_structure', {
-              required: "Select Structure Moved From",
+                <label htmlFor="rearingMethod" className="font-bold font-serif text-hover-gold p-1 mr-2">Rearing method:</label>
+                <select id='rearingMethod' defaultValue='default'
+                className="bg-white border-2 border-base-brown rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2"
+                { ...register('rearing_method', {
+                  required: "Select Rearing method",
+                  pattern: {
+                    value: /^(?!default$).+$/,
+                    message: "Select Rearing method"
+                  } 
+                  }) }>
+                  <option value='default' disabled>Rearing method</option>
+                  {rearingMethods.map((method) => <option key={method.id} value={method.name}>{ method.name }</option>)}
+                </select>
+            </div>
+            <p className='text-xs text-red-600 mb-4 text-center'>{errors.rearing_method?.message }</p>
+          <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
+            <label htmlFor="currentStructure" className="font-bold font-serif text-hover-gold p-1 mr-2">Moved From:</label>
+            <select id='currentStructure' defaultValue="default" { ...register('current_housing_structure', {
+              required: "Select Housing Structure",
               pattern: {
                 value: /^(?!default$).+$/,
-                message: "Select Structure Moved From"
+                message: "Select Housing Structure"
               } 
               })} 
             className="bg-white border-2 border-base-brown rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2">
-              <option value="default" disabled>Moved From</option>
+              <option value="default" disabled>Housing Structure</option>
               {structures.map((structure) => <option key={structure.id} value={structure.id}>{ `${structure.name}` }</option>)}
             </select>
           </div>
-          <p className='text-xs text-red-600 mb-4 text-center'>{ errors.from_structure?.message }</p>
-          <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
-            <label htmlFor="MovedToStructure" className="font-bold font-serif text-hover-gold p-1 mr-2">Moved To:</label>
-            <select id='MovedToStructure' defaultValue="default" { ...register('to_structure', {
-              required: "Select structure moved to",
-              pattern: {
-                value: /^(?!default$).+$/,
-                message: "Select structure moved to"
-              } 
-              })}
-            className="bg-white border-2 border-base-brown rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2">
-              <option value="default" disabled>Moved To</option>
-              {structures.map((structure) => <option key={structure.id} value={structure.id}>{ `${structure.name}` }</option>)}
-            </select>
-          </div>
-          <p className='text-xs text-red-600 mb-4 text-center'>{ errors.to_structure?.message }</p>
+          <p className='text-xs text-red-600 mb-4 text-center'>{ errors.current_housing_structure?.message }</p>
           <div className="m-4 flex justify-center">
             <button type="submit"
             className="text-center w-full text-hover-gold bg-base-brown p-2 rounded-xl font-bold hover:text-base-brown hover:bg-hover-gold">
@@ -103,4 +105,4 @@ function NewFlockMovement() {
   )
 }
 
-export default NewFlockMovement;
+export default NewFlockHistory;

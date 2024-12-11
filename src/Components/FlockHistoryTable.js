@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { getEggCollection, convertDate, convertTime  } from '../Utils/Funcs';
+import { getFlockHistory, convertDate,  } from '../Utils/Funcs';
 import Loader from './Loader';
 
-function EggCollectionTable() {
+function FlockHistoryTable() {
   const [loading, setLoading] = useState(true);
   const [collection, setCollection] = useState([]);
 
   useEffect(() => {
-    getEggCollection()
+    getFlockHistory()
       .then((res) => {
         res.json()
           .then((data) => {
+            console.log(data);
             setCollection(data);
             setLoading(false);
           })
@@ -27,11 +28,10 @@ function EggCollectionTable() {
       <thead className='shadow-lg text-left bg-hover-gold text-base-brown font-bold'>
     <tr className='h-10 text-xs lg:text-sm'>
       <th className='p-2 w-[10%] lg:table-cell'>S/No</th>
-      <th className='p-2 w-[25%] lg:table-cell'>Flock Name</th>
-      <th className='p-2 w-[10%] lg:table-cell '>Collected</th>
-      <th className='p-2 w-[10%] lg:table-cell '>Broken</th>
-      <th className='p-2 w-[20%] lg:table-cell '>Date</th>
-      <th className='p-2 w-[20%] lg:table-cell '>Time</th>
+      <th className='p-2 w-[15%] lg:table-cell'>Flock Name</th>
+      <th className='p-2 w-[15%] lg:table-cell '>Rearing Method</th>
+      <th className='p-2 w-[15%] lg:table-cell '>Housing</th>
+      <th className='p-2 w-[15%] lg:table-cell '>Date</th>
     </tr>
   </thead>
       <tbody>
@@ -55,12 +55,11 @@ function EggCollectionTable() {
   <table className='table-auto w-full border-collapse'>
   <thead className='shadow-lg text-left bg-hover-gold text-base-brown font-bold'>
     <tr className='h-10 text-xs lg:text-sm'>
-      <th className='p-2 w-[10%] lg:table-cell'>S/No</th>
-      <th className='p-2 w-[25%] lg:table-cell'>Flock Name</th>
-      <th className='p-2 w-[10%] lg:table-cell '>Collected</th>
-      <th className='p-2 w-[10%] lg:table-cell '>Broken</th>
-      <th className='p-2 w-[20%] lg:table-cell '>Date</th>
-      <th className='p-2 w-[20%] lg:table-cell '>Time</th>
+      <th className='p-2 w-[10%] table-cell'>S/No</th>
+      <th className='p-2 w-[15%] table-cell'>Flock Name</th>
+      <th className='p-2 w-[15%] table-cell '>Rearing Method</th>
+      <th className='p-2 w-[15%] table-cell '>Housing</th>
+      <th className='p-2 w-[15%] table-cell '>Date</th>
     </tr>
   </thead>
   <tbody className='text-sm'>
@@ -68,10 +67,9 @@ function EggCollectionTable() {
       collection.map((data, index) => <tr key={data.id}  className='h-10 border-b-2 font-normal text-sm lg:text-base'>
       <td className='p-2'>{ index + 1 }</td>
       <td className='p-2'>{ data.flock_name }</td>
-      <td className='p-2'>{ data.collected_eggs }</td>
-      <td className='p-2'>{ data.broken_eggs }</td>
-      <td className='p-2'>{ convertDate(data.date_of_collection) }</td>
-      <td className='p-2'>{ convertTime(data.time_of_collection) }</td>
+      <td className='p-2'>{ data.rearing_method }</td>
+      <td className='p-2'>{ data.housing_structure_name }</td>
+      <td className='p-2'>{ convertDate(data.date_changed) }</td>
     </tr>)
     }
   </tbody>
@@ -79,4 +77,4 @@ function EggCollectionTable() {
 </div>
 }
 
-export default EggCollectionTable;
+export default FlockHistoryTable;

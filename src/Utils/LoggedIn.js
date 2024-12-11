@@ -6,9 +6,9 @@ function LoggedIn({ children }) {
   const auth = useAuth();
 
   if (auth.user) {
-    return <Navigate to='/dashboard/new-record' />
+    return <Navigate to='/dashboard/user' />
   }
   return children;
 }
 
-export default LoggedIn
+export default LoggedIn;

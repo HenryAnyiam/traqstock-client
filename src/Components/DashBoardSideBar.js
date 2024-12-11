@@ -7,8 +7,24 @@ import { useAuth } from '../Utils/userAuth';
 import Header from './Header';
 
 function DashboardSideBar() {
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
   const navigate = useNavigate();
+  const { role_id } = user;
+
+  useEffect(() => {
+    if (role_id < 4) {
+      const housing = document.getElementById('housingLink');
+      housing.classList.add('no-show');
+      const staff = document.getElementById('staffLink');
+      staff.classList.add('no-show');
+      const movement = document.getElementById('movementLink');
+      movement.classList.add('no-show');
+      const breedInfo = document.getElementById('breedInfoLink')
+      breedInfo.classList.add('no-show');
+      const history = document.getElementById('historyLink');
+      history.classList.add('no-show');
+    }
+  }, [role_id])
 
   const handleMonthly = (e) => {
     e.preventDefault()
@@ -84,14 +100,14 @@ function DashboardSideBar() {
         <Header extraClass="flex lg:hidden grow" />
       </div>
       <div
-        className="bg-white h-screen-minus-nav lg:h-screen min-w-56 grid-rows-8 grid-flow-col gap-4 shadow-xl hidden lg:grid absolute lg:relative overflow-hidden"
+        className="bg-white h-screen-minus-nav lg:h-screen min-w-56 grid-rows-9 grid-flow-col gap-4 shadow-xl hidden lg:grid absolute lg:relative overflow-hidden"
         id="menu"
       >
         <div className="py-2 px-2 w-full items-center">
           <img src={logo} alt="logo" className="h-8 w-40 ml-2" />
           <hr />
         </div>
-        <nav className="row-span-6 px-2 text-left tracking-widest" id="navList">
+        <nav className="row-span-7 px-2 text-left tracking-widest" id="navList">
           <NavLink to="/dashboard/user" className="block p-2 rounded-xl my-1" onClick={closeDropDown}>
             Dashboard
           </NavLink>
@@ -142,9 +158,16 @@ function DashboardSideBar() {
           <NavLink
             to="/dashboard/flocks/movement"
             className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFlocks"
-            onClick={closeDropDown}
+            onClick={closeDropDown} id="movementLink"
           >
             Movement
+          </NavLink>
+          <NavLink
+            to="/dashboard/flocks/history"
+            className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFlocks"
+            onClick={closeDropDown} id="historyLink"
+          >
+            Flock History
           </NavLink>
           <NavLink
             to="/dashboard/flocks/inspection"
@@ -156,17 +179,17 @@ function DashboardSideBar() {
           <NavLink
             to="/dashboard/flocks/breed-information"
             className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFlocks"
-            onClick={closeDropDown}
+            onClick={closeDropDown} id="breedInfoLink"
           >
             Breed Information
           </NavLink>
-          <NavLink to="/dashboard/housing-structure" className="block p-2 rounded-xl my-1" onClick={closeDropDown}>
+          <NavLink to="/dashboard/housing-structure" className="block p-2 rounded-xl my-1" onClick={closeDropDown} id="housingLink">
             Housing Structure
           </NavLink>
           <NavLink to="/dashboard/egg-collection" className="block p-2 rounded-xl my-1">
             Egg Collection
           </NavLink>
-          <NavLink to="manage-staffs" className="block p-2 rounded-xl my-1">
+          <NavLink to="manage-staffs" className="block p-2 rounded-xl my-1" id="staffLink">
             Staff Management
           </NavLink>
         </nav>
