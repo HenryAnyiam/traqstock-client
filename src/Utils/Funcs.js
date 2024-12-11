@@ -139,6 +139,18 @@ export const getHousingStructures = async () => {
   return response;
 }
 
+export const deleteHousingStructures = async (id) => {
+  const token = localStorage.getItem('accessToken');
+  const response = fetch(`${BaseURL}/poultry/housing-structures/${id}/`, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    },
+  })
+
+  return response;
+}
+
 export const getFlocks = async () => {
   const token = localStorage.getItem('accessToken');
   const response = fetch(`${BaseURL}/poultry/flocks`, {
@@ -195,6 +207,20 @@ export const addHousingStructure = async (data) => {
   const token = localStorage.getItem('accessToken');
   const response = fetch(`${BaseURL}/poultry/housing-structures/`, {
     method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+
+  return response;
+}
+
+export const updateHousingStructure = async (data, id) => {
+  const token = localStorage.getItem('accessToken');
+  const response = fetch(`${BaseURL}/poultry/housing-structures/${id}/`, {
+    method: 'PATCH',
     headers: {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'

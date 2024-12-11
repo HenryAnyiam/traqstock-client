@@ -4,7 +4,6 @@ import Modal from 'react-modal';
 import { FaTrashAlt } from 'react-icons/fa';
 import Loader from './Loader';
 import { getFlockSource, addFlockSource, handleData, deleteFlockSource, handleDelete } from '../Utils/Funcs';
-import { NavLink } from 'react-router-dom';
 import { FaPlus } from 'react-icons/fa';
 import { useAuth } from '../Utils/userAuth';
 import { useForm } from 'react-hook-form';
@@ -35,13 +34,6 @@ function FlockSource() {
   const { role_id } = user;
   const { register, handleSubmit, formState, reset } = useForm();
   const { errors } = formState;
-
-  useEffect(() => {
-    if (role_id < 4) {
-      const newData = document.getElementById('newData');
-      newData.classList.add('no-show');
-    }
-  }, [role_id]);
 
   useEffect(() => {
     Modal.setAppElement('#dashboard-body');
@@ -140,14 +132,6 @@ function FlockSource() {
     return <div className='lg:p-4' id="report-view">
        <div className='flex justify-between m-2 ml-0'>
           <h2 className='text-3xl'>Flock Sources</h2>
-          <div id="newData">
-            <Tippy content='Add new Flock Source'>
-                <NavLink className='' to='/dashboard/flocks/sources/new'>
-                  <FaPlus className='mr-1' />
-                  New
-                </NavLink>
-              </Tippy>
-          </div>
         </div>
       <table className='table-auto w-full border-collapse'>
       <thead className='shadow-lg text-left bg-hover-gold text-base-brown font-bold'>
@@ -247,15 +231,18 @@ function FlockSource() {
       </Modal>
     <div className='flex justify-between m-2 ml-0'>
           <h2 className='text-3xl'>Flock Sources</h2>
-          <div id="newData">
-            <Tippy content='Add new Flock Source'>
-                <button className='fill-hover-gold text-hover-gold flex w-28 items-center bg-base-brown justify-center rounded-lg shadow-md hover:bg-hover-gold hover:text-base-brown hover:fill-base-brown p-2'
-                onClick={() => { dispatch('openMain') }}>
-                  <FaPlus className='mr-1' />
-                  New
-                </button>
-              </Tippy>
-          </div>
+          {
+            role_id > 4 ? <div id="newData">
+              <Tippy content='Add new Flock Source'>
+                  <button className='fill-hover-gold text-hover-gold flex w-28 items-center bg-base-brown justify-center rounded-lg shadow-md hover:bg-hover-gold hover:text-base-brown hover:fill-base-brown p-2'
+                  onClick={() => { dispatch('openMain') }}>
+                    <FaPlus className='mr-1' />
+                    New
+                  </button>
+                </Tippy>
+            </div> : <></>
+          }
+          
         </div>
   <table className='table-auto w-full border-collapse'>
   <thead className='shadow-lg text-left bg-hover-gold text-base-brown font-bold'>
@@ -263,7 +250,9 @@ function FlockSource() {
       <th className='p-2 w-[10%] lg:table-cell'>S/No</th>
       <th className='p-2 w-[35%] lg:table-cell'>Source Name</th>
       <th className='p-2 w-[25%] lg:table-cell '>Total Registered</th>
-      <th className='p-2 w-[25%] lg:table-cell '></th>
+      {
+        role_id < 4 ? <th className='p-2 w-[25%] lg:table-cell no-show'></th> : <th className='p-2 w-[25%] lg:table-cell '></th>
+      }
     </tr>
   </thead>
   <tbody>
@@ -272,13 +261,16 @@ function FlockSource() {
         <td className='p-2'>{ index + 1 }</td>
         <td className='p-2'>{ source.name }</td>
         <td className='p-2'>{ source.total_registered }</td>
-        <td className='p-2'>
-          <Tippy content='Delete Flock Source'>
-            <button aria-label={`Delete ${source.name}`} className='ml-2' onClick={() => openDelModal(index)}>
-              <FaTrashAlt />
-            </button>
-          </Tippy>
-        </td>
+        {
+          role_id > 4 ? <td className='p-2'>
+            <Tippy content='Delete Flock Source'>
+              <button aria-label={`Delete ${source.name}`} className='ml-2' onClick={() => openDelModal(index)}>
+                <FaTrashAlt />
+              </button>
+            </Tippy>
+          </td> : <></>
+        }
+        
       </tr>)
     }
   </tbody>

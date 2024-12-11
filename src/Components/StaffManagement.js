@@ -133,7 +133,7 @@ function StaffManagement() {
     const reqData = {}
     console.log(data);
     if (data.username !== "" && data.username !== val.username) reqData.username = data.username;
-    if (data.role !== "" && data.role !== "deafult" && data.role !== val.role) reqData.role = data.role;
+    if (data.role !== "" && data.role !== "default" && data.role !== val.role) reqData.role = data.role;
     if (data.password !== "" && data.password !== val.password) reqData.password = data.password;
     const loader = document.getElementById("query-loader-edit");
     const text = document.getElementById("query-text-edit");
@@ -357,7 +357,7 @@ function StaffManagement() {
                 </div>
                 <select id='role' { ...editForm.register("role") }
                 className="bg-white text-gray-700 h-9 border-2 border-l-0 border-hover-gold rounded-r-lg p-1 w-52 lg:w-72 focus:outline-0">
-                  <option disabled value=''>Select User Role</option>
+                  <option disabled value='default'>Select User Role</option>
                   <option value='5'>Owner</option>
                   <option value='4'>Manager</option>
                   <option value='3'>Asst Manager</option>
