@@ -131,7 +131,6 @@ function StaffManagement() {
   const editStaff = async (data) => {
     const val = staffData[editItem];
     const reqData = {}
-    console.log(data);
     if (data.username !== "" && data.username !== val.username) reqData.username = data.username;
     if (data.role !== "" && data.role !== "default" && data.role !== val.role) reqData.role = data.role;
     if (data.password !== "" && data.password !== val.password) reqData.password = data.password;
@@ -377,9 +376,9 @@ function StaffManagement() {
               <button type="submit"
               className="text-center w-full text-base-brown bg-hover-gold p-2 rounded-xl font-bold hover:text-hover-gold hover:bg-transparent hover:border-hover-gold hover:border-2">
               <div className="dots hidden" id="query-loader-edit">
-                    <div className="dot"></div>
-                    <div className="dot"></div>
-                    <div className="dot"></div>
+                    <div className="dot bg-base-brown hover:bg-hover-gold"></div>
+                    <div className="dot bg-base-brown hover:bg-hover-gold"></div>
+                    <div className="dot bg-base-brown hover:bg-hover-gold"></div>
                   </div>
               <span id="query-text-edit" className='text-center'>Submit Data</span>
             </button>

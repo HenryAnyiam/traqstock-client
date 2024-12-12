@@ -1,4 +1,4 @@
-const BaseURL = "https://farm-management.onrender.com";
+const BaseURL = "http://127.0.0.1:8000";
 
 export const getUser = async (accessToken) => {
   const response = await fetch(`${BaseURL}/users/profile/`, {
@@ -158,6 +158,32 @@ export const getFlocks = async () => {
     headers: {
       'Authorization': `Bearer ${token}`
     },
+  })
+
+  return response;
+}
+
+export const updateFlock = async (data, id) => {
+  const token = localStorage.getItem('accessToken');
+  const response = fetch(`${BaseURL}/poultry/flocks/${id}/`, {
+    method: 'PATCH',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+
+  return response;
+}
+
+export const deleteFlock = async (id) => {
+  const token = localStorage.getItem('accessToken');
+  const response = fetch(`${BaseURL}/poultry/flocks/${id}/`, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
   })
 
   return response;

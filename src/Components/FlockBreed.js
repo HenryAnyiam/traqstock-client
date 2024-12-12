@@ -184,9 +184,9 @@ function FlockBreed() {
               <button type="submit"
               className="text-center w-full text-base-brown bg-hover-gold p-2 rounded-xl font-bold hover:text-hover-gold hover:bg-transparent hover:border-hover-gold hover:border-2">
                   <div className="dots hidden" id="query-loader">
-                    <div className="dot bg-brown"></div>
-                    <div className="dot bg-brown"></div>
-                    <div className="dot bg-brown"></div>
+                    <div className="dot bg-base-brown hover:bg-hover-gold"></div>
+                    <div className="dot bg-base-brown hover:bg-hover-gold"></div>
+                    <div className="dot bg-base-brown hover:bg-hover-gold"></div>
                   </div>
               <span id="query-text" className='text-center'>Submit Data</span>
             </button>

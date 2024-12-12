@@ -1,14 +1,55 @@
 import Tippy from '@tippyjs/react';
 import React, { useEffect, useState } from 'react';
 import { FaEye, FaPencilAlt, FaTrashAlt, FaTimes } from 'react-icons/fa';
-import { getFlocks } from '../Utils/Funcs';
+import {
+  getFlocks, getFlockSource,
+  getFlockBreed, getHousingStructures,
+  handleData, updateFlock, deleteFlock,
+  handleDelete
+} from '../Utils/Funcs';
 import Loader from './Loader';
+import { useForm } from 'react-hook-form';
+import chickenTypes from '../mock_data/chicken_type.json';
+import rearingMethods from '../mock_data/rearing_method.json';
+import { toast } from 'react-toastify';
 
 function FlockTable() {
 
   const [flocks, setFlocks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [item, setItem] = useState(null);
+  const [editItem, setEditItem] = useState(null);
+  const [deleteItem, setDeleteItem] = useState(null);
+  const { register, setValue, reset, handleSubmit } = useForm();
+  const [sources, setSources] = useState([]);
+  const [breeds, setBreeds] = useState([]);
+  const [structures, setStructures] = useState([]);
+
+  useEffect(() => {
+    if (editItem !== null) {
+      setValue('source', editItem.source.name);
+      setValue('breed', editItem.breed.name);
+      setValue('date_of_hatching', editItem.date_of_hatching);
+      setValue('chicken_type', editItem.chicken_type);
+      setValue('initial_number_of_birds', editItem.initial_number_of_birds);
+      setValue('current_rearing_method', editItem.current_rearing_method);
+      setValue('current_housing_structure', editItem.current_housing_structure);
+      setValue('name', editItem.name);
+    }
+  }, [editItem, setValue]);
+
+  useEffect(() => {
+    Promise.all([getFlockSource(), getFlockBreed(), getHousingStructures()])
+    .then(([sourceRes, breedRes, structureRes]) => 
+      Promise.all([sourceRes.json(), breedRes.json(), structureRes.json()])
+    )
+    .then(([sourceData, breedData, structureData]) => {
+      setSources(sourceData);
+      setBreeds(breedData);
+      setStructures(structureData);
+    })
+    .catch(err => console.log(err));
+  }, [])
 
   useEffect(() => {
     getFlocks()
@@ -27,12 +68,118 @@ function FlockTable() {
 
   const toggleModal = () => {
     const holdData = document.getElementById('hold-data');
-    holdData.classList.toggle('hidden')
+    holdData.classList.toggle('hidden');
+  }
+
+  const toggleEditModal = () => {
+    const editData = document.getElementById('edit-data');
+    editData.classList.toggle('hidden');
+  }
+
+  const toggleDeleteModal = () => {
+    const editData = document.getElementById('delete-data');
+    editData.classList.toggle('hidden');
   }
 
   const openViewDetails = (data) => {
     setItem(data);
+    const editData = document.getElementById('edit-data');
+    if (!editData.classList.contains('hidden')) {
+      editData.classList.add('hidden');
+    }
+    const deleteData = document.getElementById('delete-data');
+    if (!deleteData.classList.contains('hidden')) {
+      deleteData.classList.add('hidden');
+    }
     toggleModal();
+  }
+
+  const openEditModal = (data) => {
+    setEditItem(data);
+    const deleteData = document.getElementById('delete-data');
+    if (!deleteData.classList.contains('hidden')) {
+      deleteData.classList.add('hidden');
+    }
+    const holdData = document.getElementById('hold-data');
+    if (!holdData.classList.contains('hidden')) {
+      holdData.classList.add('hidden');
+    }
+    toggleEditModal();
+  }
+
+  const openDeleteModal = (data) => {
+    setDeleteItem(data);
+    const editData = document.getElementById('edit-data');
+    if (!editData.classList.contains('hidden')) {
+      editData.classList.add('hidden');
+    }
+    const holdData = document.getElementById('hold-data');
+    if (!holdData.classList.contains('hidden')) {
+      holdData.classList.add('hidden');
+    }
+    toggleDeleteModal();
+  }
+
+  const editFlock = async (data) => {
+    const reqData = {}
+    if (data.name !== "" && data.name !== editItem.name) reqData.name = data.name;
+    if (data.source !== "default" && data.source !== editItem.source.name) reqData.source = { name: data.source };
+    if (data.breed !== "default" && data.breed !== editItem.breed.name) reqData.breed = { name: data.breed };
+    if (data.date_of_hatching !== "" && data.date_of_hatching !== editItem.date_of_hatching) reqData.date_of_hatching = data.date_of_hatching;
+    if (data.chicken_type !== "default" && data.chicken_type !== editItem.chicken_type) reqData.chicken_type = data.chicken_type;
+    if (data.initial_number_of_birds !== "" && data.initial_number_of_birds !== editItem.initial_number_of_birds) reqData.initial_number_of_birds = data.initial_number_of_birds;
+    if (data.current_rearing_method !== "default" && data.current_rearing_method !== editItem.current_rearing_method) reqData.current_rearing_method = data.current_rearing_method;
+    if (data.current_housing_structure !== "default" && data.current_housing_structure !== editItem.current_housing_structure) reqData.current_housing_structure = data.current_housing_structure;
+    const loader = document.getElementById("query-loader");
+    const text = document.getElementById("query-text");
+    loader.style.display = "flex";
+    text.style.display = "none";
+    console.log(reqData)
+    const res = await updateFlock(reqData, editItem.id);
+    handleData(res, loader, text, toast, reset, "Flock Updated Successfully")
+      .then((res) => {
+        getFlocks()
+          .then((res) => {
+            res.json()
+              .then((data) => {
+                setFlocks(data);
+                setLoading(false);
+              })
+          })
+          .catch((err) => {
+            console.log(err);
+            setLoading(false);
+          })
+      })
+      .finally(() => {
+        setEditItem(null);
+        toggleEditModal();
+      })
+  }
+
+  const delFlock = async () => {
+    const res = await deleteFlock(deleteItem.id);
+    handleDelete(res, toast, "Flock Deleted Successfully")
+      .then((res) => {
+        getFlocks()
+          .then((res) => {
+            res.json().then((data) => {
+              setFlocks(data);
+              setLoading(false);
+            });
+          })
+          .catch((err) => {
+            console.error(err);
+            setLoading(false);
+          });
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => {
+        setDeleteItem(null);
+        toggleDeleteModal()
+      })
   }
 
   if (loading) {
@@ -124,16 +271,129 @@ function FlockTable() {
               </div>
               <div className="m-4 flex justify-center">
                   <button
-                  className="flex justify-center items-center text-center text-hover-gold bg-base-brown p-2 mr-4 rounded-xl font-bold hover:text-base-brown hover:bg-hover-gold">
+                  className="flex justify-center items-center text-center text-hover-gold bg-base-brown p-2 mr-4 rounded-xl font-bold hover:text-base-brown hover:bg-hover-gold"
+                  aria-label={`Edit ${item?.username}`} onClick={() => openEditModal(item)}>
                     <FaPencilAlt/> <span className='ml-2'>Edit Flock</span>
                   </button>
                   <button
-                  className="flex justify-center items-center text-center text-hover-gold bg-base-brown p-2 rounded-xl font-bold hover:text-base-brown hover:bg-hover-gold">
+                  className="flex justify-center items-center text-center text-hover-gold bg-base-brown p-2 rounded-xl font-bold hover:text-base-brown hover:bg-hover-gold"
+                  aria-label={`Delete ${item?.username}`} onClick={() => openDeleteModal(item)}>
                     <FaTrashAlt/> <span className='ml-2'>Delete Flock</span>
                   </button>
               </div>
             </div>
           </div>
+        </div>
+      </div>
+      <div className='modal-hold hidden' id="edit-data">
+        <div className='modal-content'>
+          <div className="bg-base-brown shadow-2xl rounded-xl h-fit w-80 lg:w-fit p-4">
+            <div className='flex justify-end'>
+              <button
+              className="flex justify-center items-center text-center text-hover-gold bg-base-brown p-2 mr-4 rounded-xl font-bold hover:text-base-brown hover:bg-hover-gold"
+              onClick={() => { toggleEditModal() }}>
+                <FaTimes />
+              </button>
+            </div>
+            <p className="text-center rounded-xl font-bold font-serif text-hover-gold p-1 w-full mb-2 text-xl">Edit Flock</p>
+            <form onSubmit={handleSubmit(editFlock)} noValidate>
+                <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
+                    <label htmlFor="name" className="font-bold font-serif text-hover-gold p-1 mr-2">Name:</label>
+                    <input type="text" id="name" placeholder='Name'
+                    className="bg-white border-2 border-base-brown rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2"
+                    { ...register('name') }/>
+                </div>
+                <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
+                    <label htmlFor="flockSource" className="font-bold font-serif text-hover-gold p-1 mr-2">Flock Source:</label>
+                    <select id='flockSource' defaultValue='default'
+                    className="bg-white border-2 border-base-brown rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2"
+                    { ...register('source') }>
+                      <option value='default' disabled>Source</option>
+                      {sources.map((source) => <option key={source.id} value={ source.name }>{ source.name }</option>)}
+                    </select>
+                </div>
+                <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
+                    <label htmlFor="flockBreed" className="font-bold font-serif text-hover-gold p-1 mr-2">Flock Breed:</label>
+                    <select id='flockBreed' defaultValue='default' name='flockBreed'
+                    className="bg-white border-2 border-base-brown rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2"
+                    { ...register('breed') }>
+                      <option value='default' disabled>Breed</option>
+                      {breeds.map((breed) => <option key={breed.id} value={breed.name}>{ breed.name }</option>)}
+                    </select>
+                </div>
+                <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
+                  <label htmlFor="hatchDate" className="font-bold font-serif text-hover-gold p-1 mr-2">Hatch Date:</label>
+                  <input type="date" id="hatchDate"
+                    className="bg-white border-2 border-base-brown rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2"
+                    { ...register('date_of_hatching') }/>
+                </div>
+                <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
+                    <label htmlFor="chickenType" className="font-bold font-serif text-hover-gold p-1 mr-2">Chicken Type:</label>
+                    <select id='chickenType' defaultValue='default'
+                    className="bg-white border-2 border-base-brown rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2"
+                    { ...register('chicken_type') }>
+                      <option value='default' disabled>Chicken Type</option>
+                      {chickenTypes.map((type) => <option key={type.id} value={type.name}>{ type.name }</option>)}
+                    </select>
+                </div>
+                <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
+                  <label htmlFor="initialNumber" className="font-bold font-serif text-hover-gold p-1 mr-2">Initial Birds:</label>
+                  <input type="number" id="initialNumber" placeholder='Initial Number of Birds' min='0'
+                    className="bg-white border-2 border-base-brown rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2" 
+                    { ...register('initial_number_of_birds') }/>
+                </div>
+                <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
+                    <label htmlFor="rearingMethod" className="font-bold font-serif text-hover-gold p-1 mr-2">Rearing method:</label>
+                    <select id='rearingMethod' defaultValue='default'
+                    className="bg-white border-2 border-base-brown rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2"
+                    { ...register('current_rearing_method') }>
+                      <option value='default' disabled>Rearing method</option>
+                      {rearingMethods.map((method) => <option key={method.id} value={method.name}>{ method.name }</option>)}
+                    </select>
+                </div>
+                <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
+                    <label htmlFor="housingStructure" className="font-bold font-serif text-hover-gold p-1 mr-2">Housing Structure:</label>
+                    <select id='housingStructure' defaultValue='default' 
+                    className="bg-white border-2 border-base-brown rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2"
+                    { ...register('current_housing_structure') }>
+                      <option value='default' disabled>Housing Structure</option>
+                      {structures.map((structure) => <option key={structure.id} value={structure.id}>{ structure.name }</option>)}
+                    </select>
+                </div>
+                <div className="m-4 flex justify-center">
+                  <button type="submit"
+                  className="text-center w-full text-base-brown bg-hover-gold p-2 rounded-xl font-bold hover:text-hover-gold hover:bg-transparent hover:border-hover-gold hover:border-2">
+                  <div className="dots hidden" id="query-loader">
+                        <div className="dot bg-base-brown hover:bg-hover-gold"></div>
+                        <div className="dot bg-base-brown hover:bg-hover-gold"></div>
+                        <div className="dot bg-base-brown hover:bg-hover-gold"></div>
+                      </div>
+                  <span id="query-text" className='text-center'>Submit Data</span>
+                </button>
+              </div>
+            </form>
+            </div>
+        </div>
+      </div>
+      <div className='modal-hold hidden' id="delete-data">
+        <div className='modal-content'>
+        <div className='bg-white p-4 rounded-xl'>
+          <div className='flex justify-end'>
+              <button
+              className="flex justify-center items-center text-center text-base-brown bg-white p-2 mr-4 rounded-xl font-bold hover:text-base-brown hover:bg-hover-gold"
+              onClick={() => { toggleDeleteModal() }}>
+                <FaTimes />
+              </button>
+            </div>
+          <h2 className='text-sm lg:text-xl text-nowrap'>Are you sure you want to delete {deleteItem?.name} Flock?</h2>
+          <div className='w-full flex justify-end my-4'>
+          <button
+          className='p-2 fill-hover-gold text-hover-gold flex w-28 items-center bg-base-brown justify-center rounded-lg shadow-md hover:bg-hover-gold hover:text-base-brown hover:fill-base-brown'
+          onClick={delFlock}>
+            Continue
+          </button>
+          </div>
+        </div>
         </div>
       </div>
       <table className='table-auto w-full border-collapse'>
