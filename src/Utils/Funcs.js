@@ -399,6 +399,18 @@ export const getFlockHistory = async () => {
   return response;
 }
 
+export const deleteFlockHistory = async (id) => {
+  const token = localStorage.getItem("accessToken");
+  const response = fetch(`${BaseURL}/poultry/flock-histories/${id}/`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response;
+};
+
 export const addFlockHistory = async (data) => {
   const token = localStorage.getItem('accessToken');
   const response = fetch(`${BaseURL}/poultry/flock-histories/`, {

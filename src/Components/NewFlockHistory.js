@@ -40,10 +40,10 @@ function NewFlockHistory() {
   return (
     <div className="bg-base-green flex h-full justify-center items-center">
     <div className="bg-base-brown/[.3] shadow-2xl rounded-xl h-fit w-80 lg:w-fit p-4">
-        <p className="text-center rounded-xl font-bold font-serif text-hover-gold p-1 w-full mb-2 text-xl">Record New Flock Movement</p>
+        <p className="text-center rounded-xl font-bold font-serif text-hover-gold p-1 w-full mb-2 text-xl">Record New Flock History</p>
         <form onSubmit={handleSubmit(submitData)} noValidate>
           <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
-            <label htmlFor="flock-name" className="font-bold font-serif text-hover-gold p-1 mr-2">Flock Moved:</label>
+            <label htmlFor="flock-name" className="font-bold font-serif text-hover-gold p-1 mr-2">Flock:</label>
             <select id='flock-name' defaultValue="default" { ...register('flock', {
               required: "Select Flock",
               pattern: {
@@ -74,7 +74,7 @@ function NewFlockHistory() {
             </div>
             <p className='text-xs text-red-600 mb-4 text-center'>{errors.rearing_method?.message }</p>
           <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
-            <label htmlFor="currentStructure" className="font-bold font-serif text-hover-gold p-1 mr-2">Moved From:</label>
+            <label htmlFor="currentStructure" className="font-bold font-serif text-hover-gold p-1 mr-2">Housing:</label>
             <select id='currentStructure' defaultValue="default" { ...register('current_housing_structure', {
               required: "Select Housing Structure",
               pattern: {
