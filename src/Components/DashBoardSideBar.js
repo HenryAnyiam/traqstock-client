@@ -5,6 +5,11 @@ import close from '../Assets/img/close_icon.svg';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../Utils/userAuth';
 import Header from './Header';
+import { GiFarmTractor, GiChicken, GiEasterEgg, GiPlantRoots, GiTreehouse } from "react-icons/gi";
+import { MdHouseSiding, MdOutlineDashboard, MdGroups, MdOutlineManageHistory } from "react-icons/md";
+import { PiFarmThin, PiBarnThin } from "react-icons/pi";
+import { FcInspection } from "react-icons/fc";
+import { BsInfoCircle } from "react-icons/bs";
 
 function DashboardSideBar() {
   const { logout, user } = useAuth();
@@ -37,6 +42,7 @@ function DashboardSideBar() {
     const selectedMenu = document.querySelectorAll('.dropFlocks');
     selectedMenu.forEach((e) => {
       e.classList.toggle("hidden");
+      e.classList.toggle("flex");
     })
   }
 
@@ -45,6 +51,9 @@ function DashboardSideBar() {
     selectedMenu.forEach((e) => {
       if (!e.classList.contains("hidden")) {
         e.classList.add("hidden");
+      }
+      if (e.classList.contains("flex")) {
+        e.classList.remove("flex");
       }
     })
   }
@@ -108,94 +117,84 @@ function DashboardSideBar() {
           <hr />
         </div>
         <nav className="row-span-7 px-2 text-left tracking-widest" id="navList">
-          <NavLink to="/dashboard/user" className="block p-2 rounded-xl my-1" onClick={closeDropDown}>
-            Dashboard
+          <NavLink to="/dashboard/user" className="block p-2 rounded-xl my-1 flex" onClick={closeDropDown}>
+            <MdOutlineDashboard /> <span>Dashboard</span>
           </NavLink>
           <NavLink
             to="/dashboard/farm-data"
-            className="block p-2 rounded-xl my-1"
+            className="block p-2 rounded-xl my-1 flex"
             onClick={handleMonthly}
-          >
-            Farm Data
+          > <GiFarmTractor className='text-2xl'/> <span>Farm</span>
           </NavLink>
           <NavLink
             to="flocks"
-            className="w-full hover:bg-base-brown p-2 rounded-xl flex items-center space-between"
+            className="w-full hover:bg-base-brown p-2 rounded-xl flex"
             onClick={displayDropMenu}
           >
-            Flock Management
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="24px"
-                viewBox="0 -960 960 960"
-                width="24px"
-                fill="#613a12"
-              >
-                <path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z" />
-              </svg>
+            <GiChicken className='text-2xl'/> <span>Manage Flock</span>
           </NavLink>
           <NavLink
             to="/dashboard/flocks/flocks"
             className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFlocks"
             onClick={closeDropDown}
           >
-            Flocks
+            <PiFarmThin className='text-xl'/>  <span>Flock</span>
           </NavLink>
           <NavLink
             to="/dashboard/flocks/sources"
             className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFlocks"
             onClick={closeDropDown}
           >
-            Source
+            <GiPlantRoots className='text-xl' /> <span>Source</span>
           </NavLink>
           <NavLink
             to="/dashboard/flocks/breeds"
             className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFlocks"
             onClick={closeDropDown}
           >
-            Breed
+            <GiTreehouse className='text-xl' /> <span>Breed</span>
           </NavLink>
           <NavLink
             to="/dashboard/flocks/movement"
             className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFlocks"
             onClick={closeDropDown} id="movementLink"
           >
-            Movement
+            <PiBarnThin className='text-xl' /> <span>Movement</span>
           </NavLink>
           <NavLink
             to="/dashboard/flocks/history"
             className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFlocks"
             onClick={closeDropDown} id="historyLink"
           >
-            Flock History
+            <MdOutlineManageHistory className='text-xl' /> <span>Flock History</span>
           </NavLink>
           <NavLink
             to="/dashboard/flocks/inspection"
             className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFlocks"
             onClick={closeDropDown}
           >
-            Inspection Record
+            <FcInspection className='text-xl' /> <span>Inspection</span>
           </NavLink>
           <NavLink
             to="/dashboard/flocks/breed-information"
             className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFlocks"
             onClick={closeDropDown} id="breedInfoLink"
           >
-            Breed Information
+            <BsInfoCircle className='text-xl' /> <span>Breed Info</span>
           </NavLink>
-          <NavLink to="/dashboard/housing-structure" className="block p-2 rounded-xl my-1" onClick={closeDropDown} id="housingLink">
-            Housing Structure
+          <NavLink to="/dashboard/housing-structure" className="block p-2 rounded-xl my-1 flex" onClick={closeDropDown} id="housingLink">
+            <MdHouseSiding  className='text-2xl' /> <span>Housing</span>
           </NavLink>
-          <NavLink to="/dashboard/egg-collection" className="block p-2 rounded-xl my-1">
-            Egg Collection
+          <NavLink to="/dashboard/egg-collection" className="block p-2 rounded-xl my-1 flex" onClick={closeDropDown}>
+            <GiEasterEgg className='text-2xl' /><span>Egg Collection</span>
           </NavLink>
-          <NavLink to="manage-staffs" className="block p-2 rounded-xl my-1" id="staffLink">
-            Staff Management
+          <NavLink to="manage-staffs" className="block p-2 rounded-xl my-1 flex" id="staffLink" onClick={closeDropDown}>
+            <MdGroups className='text-2xl' /> <span>Staff</span>
           </NavLink>
         </nav>
-        <div className="text-center p-2 text-base-brown rounded-xl hover:text-hover-gold hover:font-bold logout-btn">
+        <div className="text-center p-2 text-black rounded-xl logout-btn">
           <button
-            className="w-full hover:bg-base-brown p-2 rounded-xl flex items-center justify-center"
+            className="w-full hover:bg-[#DCFCE7] p-2 rounded-xl flex items-center justify-center scale-100 transition-all duration-300 ease-out hover:scale-105"
             onClick={logout}
           >
             <svg
@@ -203,7 +202,7 @@ function DashboardSideBar() {
               height="24px"
               viewBox="0 -960 960 960"
               width="24px"
-              fill="#613a12"
+              fill="#000"
             >
               <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" />
             </svg>
