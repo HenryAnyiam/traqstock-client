@@ -223,30 +223,30 @@ function StaffManagement() {
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          backgroundColor: 'rgb(97, 58, 18)',
+          backgroundColor: 'rgb(241 245 249)',
           borderRadius: '0.5rem',
           boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)'
         },
         overlay: {
-          backgroundColor: 'rgba(49, 112, 35, 0.4)'
+          backgroundColor: 'rgba(0, 0, 0, 0.4)'
         }
       }}
       >
-        <p className="text-center rounded-xl font-bold font-serif text-hover-gold p-1 w-full mb-2 text-xl">Create New Staff</p>
+        <p className="text-center rounded-xl font-semibold text-black p-1 w-full mb-2 text-xl">Create New Staff</p>
         <form onSubmit={handleSubmit(newStaff)} noValidate>
             <div className="m-4 mb-1 flex items-center">
-                <div className="bg-white h-9 flex items-center p-1 border-2 border-r-0 border-hover-gold rounded-l-lg">
+                <div className="bg-white h-9 flex items-center p-1 border-2 border-r-0 border-black rounded-l-lg">
                     <FaUser className='text-gray-700'/>
                 </div>
                 <input type="text" id="username" placeholder="Username"
                 { ...register('username', {
                   required: 'Input staff username'
                 })}
-                className="bg-white border-2 border-l-0  border-hover-gold rounded-r-lg p-1 w-52 lg:w-72 focus:outline-0"/>
+                className="bg-white border-2 border-l-0  border-black rounded-r-lg p-1 w-52 lg:w-72 focus:outline-0"/>
             </div>
             <p className='text-xs text-red-600 mb-4 text-center'>{ errors.username?.message }</p>
             <div className="m-4 mb-1 flex items-center">
-                <div className="bg-white h-9 flex items-center p-1 border-2 border-r-0 border-hover-gold rounded-l-lg">
+                <div className="bg-white h-9 flex items-center p-1 border-2 border-r-0 border-black rounded-l-lg">
                     <FaUserTag className='text-gray-700'/>
                 </div>
                 <select id='role' defaultValue='default'
@@ -257,7 +257,7 @@ function StaffManagement() {
                     message: 'Select Staff Role'
                   }
                 })}
-                className="bg-white text-gray-700 h-9 border-2 border-l-0 border-hover-gold rounded-r-lg p-1 w-52 lg:w-72 focus:outline-0">
+                className="bg-white text-gray-700 h-9 border-2 border-l-0 border-black rounded-r-lg p-1 w-52 lg:w-72 focus:outline-0">
                   <option disabled value='default'>Select User Role</option>
                   <option value='5'>Owner</option>
                   <option value='4'>Manager</option>
@@ -268,19 +268,19 @@ function StaffManagement() {
             </div>
             <p className='text-xs text-red-600 mb-4 text-center'>{ errors.role?.message }</p>
             <div className="m-4 mb-1 flex items-center">
-                <div className="bg-white h-9 flex items-center p-1 border-2 border-r-0 border-hover-gold rounded-l-lg">
+                <div className="bg-white h-9 flex items-center p-1 border-2 border-r-0 border-black rounded-l-lg">
                     <FaLock className='text-gray-700'/>
                 </div>
                 <input type='text' id="password" placeholder="Password"
                 { ...register('password', {
                   required: 'Input Staff Password'
                 })}
-                className="bg-white border-2 border-l-0 border-hover-gold rounded-r-lg p-1 w-52 lg:w-72 focus:outline-0"/>
+                className="bg-white border-2 border-l-0 border-black rounded-r-lg p-1 w-52 lg:w-72 focus:outline-0"/>
             </div>
             <p className='text-xs text-red-600 mb-4 text-center'>{ errors.password?.message }</p>
             <div className="m-4 flex justify-center">
                 <button type="submit"
-                className="text-center w-full text-base-brown bg-hover-gold p-2 rounded-xl font-bold hover:text-hover-gold hover:bg-transparent hover:border-hover-gold hover:border-2">
+                className="text-center w-full text-white bg-new-green p-2 rounded-xl font-semibold btn-anim">
                   <div className="dots hidden" id="query-loader">
                     <div className="dot"></div>
                     <div className="dot"></div>
@@ -300,12 +300,12 @@ function StaffManagement() {
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          backgroundColor: 'white',
+          backgroundColor: 'rgb(241 245 249)',
           borderRadius: '0.5rem',
           boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)'
         },
         overlay: {
-          backgroundColor: 'rgba(49, 112, 35, 0.4)'
+          backgroundColor: 'rgba(0, 0, 0, 0.4)'
         }
       }}
       >
@@ -313,9 +313,9 @@ function StaffManagement() {
           <h2 className='text-sm lg:text-xl text-nowrap'>Are you sure you want to delete {staffData[delItem]?.username}?</h2>
           <div className='w-full flex justify-end my-4'>
           <button
-          className='p-2 fill-hover-gold text-hover-gold flex w-28 items-center bg-base-brown justify-center rounded-lg shadow-md hover:bg-hover-gold hover:text-base-brown hover:fill-base-brown'
+          className='p-2 fill-black text-white flex gap-x-1 w-28 items-center bg-new-green justify-center rounded-lg shadow-md btn-anim'
           onClick={delStaff}>
-            Continue
+            <FaTrashAlt /> <span>Continue</span>
           </button>
           </div>
         </div>
@@ -329,33 +329,33 @@ function StaffManagement() {
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          backgroundColor: 'rgb(97, 58, 18)',
+          backgroundColor: 'rgb(241 245 249)',
           borderRadius: '0.5rem',
           boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)'
         },
         overlay: {
-          backgroundColor: 'rgba(49, 112, 35, 0.4)'
+          backgroundColor: 'rgba(0, 0, 0, 0.4)'
         }
       }}
       >
-        <p className="text-center rounded-xl font-bold font-serif text-hover-gold p-1 w-full mb-2 text-xl">Update Staff Details</p>
+        <p className="text-center rounded-xl font-semibold text-black p-1 w-full mb-2 text-xl">Update Staff Details</p>
         <form onSubmit={editForm.handleSubmit(editStaff)} noValidate>
           <input type="hidden" { ...editForm.register('id') } />
             <div className="m-4 flex items-center">
-                <div className="bg-white h-9 flex items-center p-1 border-2 border-r-0 border-hover-gold rounded-l-lg">
+                <div className="bg-white h-9 flex items-center p-1 border-2 border-r-0 border-black rounded-l-lg">
                     <FaUser className='text-gray-700'/>
                 </div>
                 <input type="text"
                 id="username" placeholder="Username"
                 { ...editForm.register("username") }
-                className="bg-white border-2 border-l-0  border-hover-gold rounded-r-lg p-1 w-52 lg:w-72 focus:outline-0"/>
+                className="bg-white border-2 border-l-0  border-black rounded-r-lg p-1 w-52 lg:w-72 focus:outline-0"/>
           </div>
             <div className="m-4 flex items-center">
-                <div className="bg-white h-9 flex items-center p-1 border-2 border-r-0 border-hover-gold rounded-l-lg">
+                <div className="bg-white h-9 flex items-center p-1 border-2 border-r-0 border-black rounded-l-lg">
                     <FaUserTag className='text-gray-700'/>
                 </div>
                 <select id='role' { ...editForm.register("role") }
-                className="bg-white text-gray-700 h-9 border-2 border-l-0 border-hover-gold rounded-r-lg p-1 w-52 lg:w-72 focus:outline-0">
+                className="bg-white text-gray-700 h-9 border-2 border-l-0 border-black rounded-r-lg p-1 w-52 lg:w-72 focus:outline-0">
                   <option disabled value='default'>Select User Role</option>
                   <option value='5'>Owner</option>
                   <option value='4'>Manager</option>
@@ -365,20 +365,20 @@ function StaffManagement() {
                 </select>
           </div>
             <div className="m-4 mb-1 flex items-center">
-                <div className="bg-white h-9 flex items-center p-1 border-2 border-r-0 border-hover-gold rounded-l-lg">
+                <div className="bg-white h-9 flex items-center p-1 border-2 border-r-0 border-black rounded-l-lg">
                     <FaLock className='text-gray-700'/>
                 </div>
             <input type='text' id="password" placeholder="Password"
               { ...editForm.register("password") }
-                className="bg-white border-2 border-l-0 border-hover-gold rounded-r-lg p-1 w-52 lg:w-72 focus:outline-0"/>
+                className="bg-white border-2 border-l-0 border-black rounded-r-lg p-1 w-52 lg:w-72 focus:outline-0"/>
             </div>
             <div className="m-4 flex justify-center">
               <button type="submit"
-              className="text-center w-full text-base-brown bg-hover-gold p-2 rounded-xl font-bold hover:text-hover-gold hover:bg-transparent hover:border-hover-gold hover:border-2">
+              className="text-center w-full text-white font-semibold bg-new-green p-2 rounded-xl btn-anim">
               <div className="dots hidden" id="query-loader-edit">
-                    <div className="dot bg-base-brown hover:bg-hover-gold"></div>
-                    <div className="dot bg-base-brown hover:bg-hover-gold"></div>
-                    <div className="dot bg-base-brown hover:bg-hover-gold"></div>
+                    <div className="dot bg-white font-semibold hover:bg-hover-gold"></div>
+                    <div className="dot bg-white font-semibold hover:bg-hover-gold"></div>
+                    <div className="dot bg-white font-semibold hover:bg-hover-gold"></div>
                   </div>
               <span id="query-text-edit" className='text-center'>Submit Data</span>
             </button>
@@ -388,17 +388,17 @@ function StaffManagement() {
       <div className='flex justify-between m-2 ml-0'>
         <h2 className='text-3xl'>Staff Details</h2>
         <button
-        className='fill-hover-gold text-hover-gold flex w-28 items-center bg-base-brown justify-center rounded-lg shadow-md hover:bg-hover-gold hover:text-base-brown hover:fill-base-brown'
+        className='fill-black text-black flex w-28 items-center justify-center rounded-lg hover:bg-new-hover-green slate-100 transition-all duration-300 ease-out hover:scale-105'
         onClick={() => { dispatch('openMain') }}>
-          <span className='text-sm'>New Staff</span>
           <svg xmlns="http://www.w3.org/2000/svg"
             viewBox="0 -960 960 960"
             className='h-6 w-6 ml-1'>
             <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
+            <span className='text-sm'>New Staff</span>
         </button>
       </div>
       <table className='table-auto w-full border-collapse'>
-        <thead className='shadow-lg text-left bg-hover-gold text-base-brown font-bold'>
+        <thead className='shadow-lg text-left bg-slate-100 text-black font-semibold'>
           <tr className='h-10'>
             <td className='p-2 w-[10%] hidden lg:table-cell'>S/N</td>
             <td className='p-2 w-[25%]'>Name</td>

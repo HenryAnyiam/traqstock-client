@@ -29,7 +29,7 @@ import FlockInspection from "./Components/FlockInspection";
 import NewFlockInspection from "./Components/NewFlockInspection";
 import BreedInformation from "./Components/BreedInformation";
 import NewBreedInformation from "./Components/NewBreedInformation";
-import EggCollection from "./Components/EggCollection";
+import EggCollectionTable from "./Components/EggCollectionTable";
 import NewEggCollection from "./Components/NewEggCollection";
 import FlockHistory from "./Components/FlockHistory";
 import NewFlockHistory from "./Components/NewFlockHistory";
@@ -64,7 +64,7 @@ function App() {
             <Route path='flocks/inspection/new' element={<NewFlockInspection />} />
             <Route path='flocks/breed-information' element={<RequireManager><BreedInformation /></RequireManager>} />
             <Route path='flocks/breed-information/new' element={<RequireManager><NewBreedInformation /></RequireManager>} />
-            <Route path='egg-collection' element={<RequireManager redirect="/dashboard/egg-collection/new"><EggCollection /></RequireManager>} />
+            <Route path='egg-collection' element={<RequireManager redirect="/dashboard/egg-collection/new"><EggCollectionTable /></RequireManager>} />
             <Route path='egg-collection/new' element={<NewEggCollection />} />
             <Route path='flocks/history' element={<RequireManager><FlockHistory /></RequireManager>} />
             <Route path='flocks/history/new' element={<RequireManager><NewFlockHistory /></RequireManager>} />
