@@ -176,7 +176,7 @@ function StaffManagement() {
       <div className='flex justify-between m-2 ml-0'>
         <h2 className='text-3xl'>Staff Details</h2>
         <button
-        className='fill-hover-gold text-hover-gold flex w-28 items-center bg-base-brown justify-center rounded-lg shadow-md hover:bg-hover-gold hover:text-base-brown hover:fill-base-brown'
+        className='fill-black text-black flex w-28 items-center justify-center rounded-lg shadow-md btn-anim'
         onClick={() => { dispatch('openMain') }}>
           <span className='text-sm'>New Staff</span>
           <svg xmlns="http://www.w3.org/2000/svg"
@@ -186,7 +186,7 @@ function StaffManagement() {
         </button>
       </div>
       <table className='table-auto w-full border-collapse'>
-        <thead className='shadow-lg text-left bg-hover-gold text-base-brown font-bold'>
+        <thead className='shadow-lg text-left bg-slate-100 text-black font-bold'>
           <tr className='h-10'>
             <td className='p-2 w-[10%] hidden lg:table-cell'>S/N</td>
             <td className='p-2 w-[25%]'>Name</td>
