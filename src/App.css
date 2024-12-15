@@ -122,6 +122,7 @@
   height: 10px;
   border-radius: 50%;
   animation: bounce 1.5s infinite ease-in-out;
+  background-color: #fff;
 } 
 
 .dot:nth-child(1) {
