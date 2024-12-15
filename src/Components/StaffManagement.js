@@ -67,8 +67,14 @@ function StaffManagement() {
   }
 
   const delStaff = async () => {
+    const loader = document.getElementById('query-loader-del');
+    const text = document.getElementById('query-text-del');
+    loader.style.display = 'flex';
+    text.style.display = 'none';
     const val = staffData[delItem];
     const res = await deleteStaff(val.id);
+    loader.style.display = 'none';
+    text.style.display = 'flex';
     handleDelete(res, toast, "Staff Deleted Successfully")
       .then((res) => {
         getStaffs()
@@ -82,13 +88,13 @@ function StaffManagement() {
           .catch((err) => {
             console.error(err);
             setLoading(false);
-          });
+          })
       })
       .catch((err) => {
         console.error(err);
       })
       .finally(() => {
-        setEditItem(null);
+        setDelItem(null);
         dispatch("closeDelete");
       })
   }
@@ -109,16 +115,18 @@ function StaffManagement() {
                 .then((data) => {
                   console.log(data)
                   setStaffData(data);
-                  setLoading(false);
                 })
             })
             .catch((err) => {
               console.error(err);
-              setLoading(false);
             })
         })
         .catch((err) => {
           console.error(err);
+        })
+        .finally(() => {
+          setLoading(false);
+          dispatch('closeMain');
         })
     }
   }
@@ -315,7 +323,14 @@ function StaffManagement() {
           <button
           className='p-2 fill-black text-white flex gap-x-1 w-28 items-center bg-new-green justify-center rounded-lg shadow-md btn-anim'
           onClick={delStaff}>
-            <FaTrashAlt /> <span>Continue</span>
+            <div className="dots hidden" id="query-loader-del">
+              <div className="dot"></div>
+              <div className="dot"></div>
+              <div className="dot"></div>
+            </div>
+            <div id="query-text-del" className='text-center flex gap-x-1 items-center'>
+              <FaTrashAlt /> <span>Continue</span>
+            </div>
           </button>
           </div>
         </div>
