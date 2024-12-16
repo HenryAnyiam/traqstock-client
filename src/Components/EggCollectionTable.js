@@ -292,7 +292,7 @@ function EggCollectionTable() {
             <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
             <span className='text-sm'>New</span>
         </button>
-      </div>
+    </div>
   <table className='table-auto w-full border-collapse'>
   <thead className='shadow-lg text-left bg-slate-100 text-black font-semibold'>
     <tr className='h-10 text-xs lg:text-sm'>
@@ -322,7 +322,7 @@ function EggCollectionTable() {
     </tr>)
     }
   </tbody>
-</table>
+  </table>
 </div>
 }
 

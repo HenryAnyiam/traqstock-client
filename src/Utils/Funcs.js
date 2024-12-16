@@ -335,6 +335,18 @@ export const addEggCollection = async (data) => {
   return response;
 }
 
+export const deleteEggCollection = async (id) => {
+  const token = localStorage.getItem('accessToken');
+  const response = fetch(`${BaseURL}/poultry/egg-collection/${id}/`, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  })
+
+  return response;
+}
+
 export const getStaffs = async () => {
   const token = localStorage.getItem('accessToken');
   const response = fetch(`${BaseURL}/users/staff`, {

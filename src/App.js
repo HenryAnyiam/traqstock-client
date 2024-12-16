@@ -4,14 +4,14 @@ import { AuthProvider } from "./Utils/userAuth";
 import Dashboard from "./Components/Dashboard";
 import RequireLogin from "./Utils/RequireLogin";
 import NewRecord from "./Components/NewRecord";
-import MonthlyReport from "./Components/MonthlyReport";
+import FarmData from "./Components/FarmData";
 import StaffManagement from "./Components/StaffManagement";
 import ManageProfile from "./Components/ManageProfile";
 import Login from "./Components/Login";
 import Page404 from "./Components/Page404";
 import LoggedIn from "./Utils/LoggedIn";
-import MothlyReportTable from "./Components/MothlyReportTable";
-import MonthlyReportChart from "./Components/MonthlyReportChart";
+import FarmDataTable from "./Components/FarmDataTable";
+import FarmDataChart from "./Components/FarmDataChart";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'tippy.js/dist/tippy.css';
@@ -19,7 +19,7 @@ import ResetPassword from "./Components/ResetPassword";
 import UserDashboard from "./Components/UserDashboard";
 import FlockSource from "./Components/FlockSource";
 import FlockBreed from "./Components/FlockBreed";
-import HousingStructure from "./Components/HousingStructure";
+import HousingStructureTable from "./Components/HousingStructureTable";
 import NewHousingStructure from "./Components/NewHousingStructure";
 import NewFlock from "./Components/NewFlock";
 import ViewFlock from "./Components/ViewFlock";
@@ -45,11 +45,11 @@ function App() {
         <Routes>
           <Route path='dashboard' element={<RequireLogin><Dashboard /></RequireLogin>}>
             <Route path='user' element={<UserDashboard />} />
-            <Route path='farm-data' element={<MonthlyReport />}>
-              <Route path='table' element={<MothlyReportTable />}/>
-              <Route path='chart' element={<MonthlyReportChart />}/>
+            <Route path='farm-data' element={<FarmData />}>
+              <Route path='table' element={<FarmDataTable />}/>
+              <Route path='chart' element={<FarmDataChart />}/>
             </Route>
-            <Route path='housing-structure' element={<RequireManager><HousingStructure /></RequireManager>} />
+            <Route path='housing-structure' element={<RequireManager><HousingStructureTable /></RequireManager>} />
             <Route path='housing-structure/new' element={<RequireManager><NewHousingStructure /></RequireManager>} />
             <Route path='farm-data/new-record' element={<NewRecord />}/>
             <Route path='flocks/sources' element={<FlockSource />} />

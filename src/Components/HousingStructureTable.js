@@ -1,5 +1,9 @@
 import React, { useEffect, useState, useReducer } from 'react';
-import { getHousingStructures, deleteHousingStructures, handleDelete, updateHousingStructure, handleData } from '../Utils/Funcs';
+import {
+  getHousingStructures, deleteHousingStructures,
+  handleDelete, updateHousingStructure,
+  handleData, addHousingStructure
+} from '../Utils/Funcs';
 import Loader from './Loader';
 import { FaTrashAlt, FaPencilAlt } from 'react-icons/fa';
 import Tippy from '@tippyjs/react';
@@ -7,7 +11,7 @@ import Modal from 'react-modal';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
-const initialModalState = { edit: false, delete: false }
+const initialModalState = { edit: false, delete: false, main: false }
 const reducer = (state, action) => {
   switch(action) {
     case 'openEdit':
@@ -18,6 +22,10 @@ const reducer = (state, action) => {
       return { ...state, delete: true }
     case 'closeDelete':
       return { ...state, delete: false }
+    case 'openMain':
+      return { ...state, main: true }
+    case 'closeMain':
+      return { ...state, main: false }
     default:
       return state
   }
@@ -30,19 +38,18 @@ function HousingStructureTable() {
   const { register, handleSubmit, reset, setValue } = useForm();
   const [ delItem, setDelItem ] = useState(null);
   const [ editItem, setEditItem ] = useState(null);
+  const mainForm = useForm();
 
   useEffect(() => {
-    getHousingStructures()
-      .then((res) => {
-        res.json()
-          .then((data) => {
-            console.log(data);
-            setStructures(data);
-            setLoading(false)
-          })
+      Promise.all([getHousingStructures()])
+      .then(([structure]) => 
+        Promise.all([structure.json()])
+      )
+      .then(([structureData]) => {
+        setStructures(structureData);
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(err => console.log(err))
+      .finally(() => {
         setLoading(false);
       })
   }, []);
@@ -60,7 +67,7 @@ function HousingStructureTable() {
   const delStructure = async () => {
     const val = structures[delItem];
     const res = await deleteHousingStructures(val.id);
-    handleDelete(res, toast, "Source Deleted Successfully")
+    handleDelete(res, toast, "Structure Deleted Successfully")
     .then((res) => {
       getHousingStructures()
         .then((res) => {
@@ -116,7 +123,6 @@ function HousingStructureTable() {
         getHousingStructures()
           .then((res) => {
             res.json().then((data) => {
-              console.log(data);
               setStructures(data);
               setLoading(false);
             });
@@ -135,10 +141,44 @@ function HousingStructureTable() {
       })
   }
 
+  const submitData = async (data) => {
+    if (!mainForm.formState.errors.house_type &&
+      !mainForm.formState.errors.category &&
+      !mainForm.formState.errors.name) {
+      console.log(mainForm.formState)
+      const loader = document.getElementById('query-loader');
+      const text = document.getElementById('query-text');
+      loader.style.display = 'flex';
+      text.style.display = 'none';
+      console.log(data);
+      const res = await addHousingStructure(data);
+      handleData(res, loader, text, toast, mainForm.reset)
+      .then((res) => {
+        getHousingStructures()
+          .then((res) => {
+            res.json().then((data) => {
+              setStructures(data);
+              setLoading(false);
+            });
+          })
+          .catch((err) => {
+            console.error(err);
+            setLoading(false);
+          });
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => {
+        dispatch("closeMain");
+      })
+    }
+  }
+
   if (loading) {
     return <div>
       <table className='table-auto w-full border-collapse'>
-      <thead className='shadow-lg text-left bg-hover-gold text-base-brown font-bold'>
+      <thead className='shadow-lg text-left bg-slate-100 text-black font-bold'>
         <tr className='h-10 text-xs lg:text-sm'>
           <th className='p-2 w-[10%] lg:table-cell'>S/No</th>
           <th className='p-2 w-[25%] lg:table-cell'>Type</th>
@@ -165,7 +205,86 @@ function HousingStructureTable() {
     </div>
   }
 
-  return <div className=''>
+  return <div className='h-full p-4 w-full'>
+    <Modal 
+      isOpen={modalState.main} onRequestClose={() => { dispatch('closeMain') }}
+      style={{
+        content: {
+          width: 'fit-content',
+          height: 'fit-content',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          backgroundColor: 'rgb(241 245 249)',
+          borderRadius: '0.5rem',
+          boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)'
+        },
+        overlay: {
+          backgroundColor: 'rgba(0, 0, 0, 0.4)'
+        }
+      }}
+      >
+        <div className="h-fit w-80 lg:w-fit">
+          <p className="text-center rounded-xl font-semibold text-black p-1 w-full mb-2 text-xl">New Housing Structure</p>
+          <form onSubmit={mainForm.handleSubmit(submitData)} noValidate>
+            <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
+              <label htmlFor="name" className="font-semibold text-black p-1 mr-2">Name:</label>
+              <input type="text" id="name" placeholder='Name'
+              className="bg-white border-2 border-black rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2"
+              { ...mainForm.register('name', { required: "Input Name"}) }/>
+            </div>
+            <p className='text-xs text-red-600 mb-4 text-center'>{ mainForm.formState.errors.name?.message }</p>
+            <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
+              <label htmlFor="housing-type" className="font-semibold text-black p-1 mr-2">Type:</label>
+              <select id='housing-type' defaultValue="default" { ...mainForm.register("house_type", {
+                required: "Select House Type",
+                pattern: {
+                  value: /^(?!default$).+$/,
+                  message: "Select House Type"
+                } 
+                })} className="bg-white border-2 border-black rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2">
+                <option value="default" disabled>Housing Type</option>
+                <option value='Open-Sided Shed'>Open-Sided Shed</option>
+                <option value='Closed Shed'>Closed Shed</option>
+                <option value='Battery Cage System'>Battery Cage System</option>
+                <option value='Deep Litter House'>Deep Litter House</option>
+                <option value='Semi-Intensive Housing'>Semi-Intensive Housing</option>
+                <option value='Pasture Housing'>Pasture Housing</option>
+              </select>
+            </div>
+            <p className='text-xs text-red-600 mb-4 text-center'>{ mainForm.formState.errors.house_type?.message }</p>
+            <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
+              <label htmlFor="feed_intake" className="font-semibold text-black p-1 mr-2">Category:</label>
+              <select defaultValue="default" id='housing-category' { ...mainForm.register("category", {
+                required: "Select Category",
+                pattern: {
+                  value: /^(?!default$).+$/,
+                  message: "Select Category"
+                } 
+                })} className="bg-white border-2 border-black rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2">
+                <option value="default" disabled>Housing Category</option>
+                <option value='Brooder Chick House'>Brooder Chick House</option>
+                <option value='Growers House'>Growers House</option>
+                <option value='Layers House'>Layers House</option>
+                <option value='Broilers House'>Broilers House</option>
+                <option value='Breeders House'>Breeders House</option>
+              </select>
+            </div>
+            <p className='text-xs text-red-600 mb-4 text-center'>{ mainForm.formState.errors.category?.message }</p>
+            <div className="m-4 flex justify-center">
+              <button type="submit"
+              className="text-center w-full text-white bg-new-green p-2 rounded-xl font-semibold btn-anim">
+                <div className="dots hidden" id="query-loader">
+                  <div className="dot"></div>
+                  <div className="dot"></div>
+                  <div className="dot"></div>
+                </div>
+                <span id="query-text" className='text-center'>Submit Data</span>
+              </button>
+            </div>
+          </form>
+        </div>
+    </Modal>
     <Modal 
       isOpen={modalState.delete} onRequestClose={() => { dispatch('closeDelete') }}
       style={{
@@ -180,7 +299,7 @@ function HousingStructureTable() {
           boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)'
         },
         overlay: {
-          backgroundColor: 'rgba(49, 112, 35, 0.4)'
+          backgroundColor: 'rgba(0, 0, 0, 0.4)'
         }
       }}
       >
@@ -188,9 +307,16 @@ function HousingStructureTable() {
           <h2 className='text-sm lg:text-xl text-nowrap'>Are you sure you want to delete {structures[delItem]?.name}?</h2>
           <div className='w-full flex justify-end my-4'>
           <button
-          className='p-2 fill-hover-gold text-hover-gold flex w-28 items-center bg-base-brown justify-center rounded-lg shadow-md hover:bg-hover-gold hover:text-base-brown hover:fill-base-brown'
+          className='p-2 fill-white text-white flex w-28 items-center bg-new-green justify-center rounded-lg shadow-md btn-anim'
           onClick={delStructure}>
-            Continue
+            <div className="dots hidden" id="query-loader-del">
+              <div className="dot"></div>
+              <div className="dot"></div>
+              <div className="dot"></div>
+            </div>
+            <div id="query-text-del" className='text-center flex gap-x-1 items-center'>
+              <FaTrashAlt /> <span>Continue</span>
+            </div>
           </button>
           </div>
         </div>
@@ -204,27 +330,27 @@ function HousingStructureTable() {
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          backgroundColor: 'rgb(97, 58, 18)',
+          backgroundColor: 'rgb(241 245 249)',
           borderRadius: '0.5rem',
           boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)'
         },
         overlay: {
-          backgroundColor: 'rgba(49, 112, 35, 0.4)'
+          backgroundColor: 'rgba(0, 0, 0, 0.4)'
         }
       }}
       >
-      <p className="text-center rounded-xl font-bold font-serif text-hover-gold p-1 w-full mb-2 text-xl">Update Housing Structure</p>
+      <p className="text-center rounded-xl font-semibold text-black p-1 w-full mb-2 text-xl">Update Housing Structure</p>
       <form onSubmit={handleSubmit(editStructure)} noValidate>
         <input type="hidden" { ...register('id') } />
             <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
-                <label htmlFor="name" className="font-bold font-serif text-hover-gold p-1 mr-2">Name:</label>
+                <label htmlFor="name" className="font-semibold text-black p-1 mr-2">Name:</label>
                 <input type="text" id="name" placeholder='Name'
-                className="bg-white border-2 border-base-brown rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2"
+                className="bg-white border-2 border-black rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2"
                 { ...register('name') }/>
             </div>
             <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
-                <label htmlFor="housing-type" className="font-bold font-serif text-hover-gold p-1 mr-2">Type:</label>
-                <select id='housing-type' defaultValue="default" { ...register("house_type")} className="bg-white border-2 border-base-brown rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2">
+                <label htmlFor="housing-type" className="font-semibold text-black p-1 mr-2">Type:</label>
+                <select id='housing-type' defaultValue="default" { ...register("house_type")} className="bg-white border-2 border-black rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2">
                   <option value="default" disabled>Housing Type</option>
                   <option value='Open-Sided Shed'>Open-Sided Shed</option>
                   <option value='Closed Shed'>Closed Shed</option>
@@ -235,8 +361,8 @@ function HousingStructureTable() {
                 </select>
             </div>
             <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
-                <label htmlFor="feed_intake" className="font-bold font-serif text-hover-gold p-1 mr-2">Category:</label>
-                <select defaultValue="default" id='housing-category' { ...register("category")} className="bg-white border-2 border-base-brown rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2">
+                <label htmlFor="feed_intake" className="font-semibold text-black p-1 mr-2">Category:</label>
+                <select defaultValue="default" id='housing-category' { ...register("category")} className="bg-white border-2 border-black rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2">
                   <option value="default" disabled>Housing Category</option>
                   <option value='Brooder Chick House'>Brooder Chick House</option>
                   <option value='Growers House'>Growers House</option>
@@ -247,19 +373,31 @@ function HousingStructureTable() {
             </div>
             <div className="m-4 flex justify-center">
               <button type="submit"
-              className="text-center w-full text-base-brown bg-hover-gold p-2 rounded-xl font-bold hover:text-hover-gold hover:bg-transparent hover:border-hover-gold hover:border-2">
-              <div className="dots hidden" id="query-loader">
+              className="text-center w-full text-white bg-new-green p-2 rounded-xl font-bold btn-anim">
+              <div className="dots hidden" id="query-loader-edit">
                     <div className="dot"></div>
                     <div className="dot"></div>
                     <div className="dot"></div>
                   </div>
-              <span id="query-text" className='text-center'>Submit Data</span>
+              <span id="query-text-edit" className='text-center'>Submit Data</span>
             </button>
             </div>
         </form>
     </Modal>
+    <div className='flex justify-between m-2 ml-0'>
+        <h2 className='text-3xl'>Housing Structure</h2>
+        <button onClick={ () => { dispatch('openMain') } }
+        className='fill-black text-black flex w-28 items-center justify-center rounded-lg hover:bg-new-hover-green slate-100 transition-all duration-300 ease-out hover:scale-105'
+        >
+          <svg xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 -960 960 960"
+            className='h-6 w-6 ml-1'>
+            <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
+            <span className='text-sm'>New</span>
+        </button>
+    </div>
   <table className='table-auto w-full border-collapse'>
-  <thead className='shadow-lg text-left bg-hover-gold text-base-brown font-bold'>
+  <thead className='shadow-lg text-left bg-slate-100 text-black font-semibold'>
     <tr className='h-10 text-xs lg:text-sm'>
       <th className='p-2 w-[5%] lg:table-cell'>S/N</th>
       <th className='p-2 w-[20%] lg:table-cell'>Name</th>
