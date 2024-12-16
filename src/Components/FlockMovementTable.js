@@ -30,7 +30,7 @@ function FlockMovementTable() {
   if (loading) {
     return <div className=''>
       <table className='table-auto w-full border-collapse'>
-      <thead className='shadow-lg text-left bg-hover-gold text-base-brown font-bold'>
+      <thead className='shadow-lg text-left bg-slate-100 text-black font-semibold'>
         <tr className='h-10 text-xs lg:text-sm'>
         <th className='p-2 w-[10%] lg:table-cell'>S/No</th>
         <th className='p-2 w-[25%] lg:table-cell'>Flock Name</th>
@@ -58,7 +58,7 @@ function FlockMovementTable() {
 
   return <div className=''>
   <table className='table-auto w-full border-collapse'>
-  <thead className='shadow-lg text-left bg-hover-gold text-base-brown font-bold'>
+  <thead className='shadow-lg text-left bg-slate-100 text-black font-semibold'>
     <tr className='h-10 text-xs lg:text-sm'>
       <th className='p-2 w-[10%] lg:table-cell'>S/No</th>
       <th className='p-2 w-[25%] lg:table-cell'>Flock Name</th>
