@@ -463,6 +463,20 @@ export const addFlockHistory = async (data) => {
   return response;
 }
 
+export const updateFlockHistory = async (data, id) => {
+  const token = localStorage.getItem("accessToken");
+  const response = fetch(`${BaseURL}/poultry/flock-histories/${id}/`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  return response;
+};
+
 const displayData = (data, toast) => {
   if (typeof data === "string") {
     toast.warning(data);

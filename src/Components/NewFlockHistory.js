@@ -28,7 +28,6 @@ function NewFlockHistory() {
       !errors.rearing_method &&
       !errors.current_housing_structure
     ) {
-      console.log(data);
       const loader = document.getElementById('query-loader');
       const text = document.getElementById('query-text');
       loader.style.display = 'flex';
