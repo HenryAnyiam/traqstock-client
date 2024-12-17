@@ -30,14 +30,6 @@ function FarmDataTable() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    Modal.setAppElement('#dashboard-body');
-
-    return () => {
-      Modal.setAppElement(undefined);
-    }
-  }, []);
-
-  useEffect(() => {
     fetchFarmData()
       .then((res) => {
         console.log(res.status);

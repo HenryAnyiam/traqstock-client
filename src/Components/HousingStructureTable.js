@@ -113,8 +113,8 @@ function HousingStructureTable() {
     if (data.name !== "" && data.name !== val.name) reqData.name = data.name;
     if (data.house_type !== "" && data.house_type !== "default" && data.house_type !== val.house_type) reqData.house_type = data.house_type;
     if (data.category !== "" && data.category !== val.category) reqData.category = data.category;
-    const loader = document.getElementById("query-loader");
-    const text = document.getElementById("query-text");
+    const loader = document.getElementById("query-loader-edit");
+    const text = document.getElementById("query-text-edit");
     loader.style.display = "flex";
     text.style.display = "none";
     const res = await updateHousingStructure(reqData, val.id);

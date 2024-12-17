@@ -229,6 +229,32 @@ export const addFlockMovement = async (data) => {
   return response;
 }
 
+export const updateFlockMovement = async (data, id) => {
+  const token = localStorage.getItem('accessToken');
+  const response = fetch(`${BaseURL}/poultry/flock-movements/${id}/`, {
+    method: 'PATCH',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+
+  return response;
+}
+
+export const deleteFlockMovement = async (id) => {
+  const token = localStorage.getItem('accessToken');
+  const response = fetch(`${BaseURL}/poultry/flock-movements/${id}/`, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  })
+
+  return response;
+}
+
 export const addHousingStructure = async (data) => {
   const token = localStorage.getItem('accessToken');
   const response = fetch(`${BaseURL}/poultry/housing-structures/`, {
