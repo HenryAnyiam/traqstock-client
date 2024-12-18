@@ -6,7 +6,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../Utils/userAuth';
 import Header from './Header';
 import { GiFarmTractor, GiChicken, GiEasterEgg, GiPlantRoots, GiTreehouse } from "react-icons/gi";
-import { MdHouseSiding, MdOutlineDashboard, MdGroups, MdOutlineManageHistory } from "react-icons/md";
+import { MdHouseSiding, MdGroups, MdOutlineManageHistory } from "react-icons/md";
 import { PiFarmThin, PiBarnThin } from "react-icons/pi";
 import { FcInspection } from "react-icons/fc";
 import { BsInfoCircle } from "react-icons/bs";
@@ -117,9 +117,6 @@ function DashboardSideBar() {
           <hr />
         </div>
         <nav className="row-span-7 px-2 text-left tracking-widest" id="navList">
-          <NavLink to="/dashboard/user" className="block p-2 rounded-xl my-1 flex" onClick={closeDropDown}>
-            <MdOutlineDashboard /> <span>Dashboard</span>
-          </NavLink>
           <NavLink
             to="/dashboard/farm-data"
             className="block p-2 rounded-xl my-1 flex"
