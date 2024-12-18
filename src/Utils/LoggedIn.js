@@ -6,7 +6,7 @@ function LoggedIn({ children }) {
   const auth = useAuth();
 
   if (auth.user) {
-    return <Navigate to='/dashboard/user' />
+    return <Navigate to="/dashboard/farm-data/table" />;
   }
   return children;
 }
