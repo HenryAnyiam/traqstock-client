@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useReducer } from 'react';
-import Tippy from '@tippyjs/react';
-import { FaPencilAlt, FaHeartbeat } from 'react-icons/fa';
+import { FaHeartbeat } from 'react-icons/fa';
 import { FaWheatAwn, FaFaucetDrip } from "react-icons/fa6";
 import Modal from 'react-modal';
 import { toast } from 'react-toastify';
@@ -45,11 +44,6 @@ function FarmDataTable() {
         setLoading(false);
       })
   }, [])
-
-  const editReport = (index) => {
-    setEditData(index);
-    dispatch('openEdit');
-  }
 
   const submitReportEdit = (e) => {
     e.preventDefault();
@@ -147,7 +141,6 @@ function FarmDataTable() {
           <th className='p-2 w-[13%]'>Feed Intake</th>
           <th className='p-2 w-[13%]'>Water Intake</th>
           <th  className='p-2 w-[13%]'>Vaccine</th>
-          <th  className='p-2 w-[5%]'></th>
         </tr>
       </thead>
       <tbody>
@@ -157,13 +150,6 @@ function FarmDataTable() {
             <td className='p-2'>{ report.feed_intake }</td>
             <td className='p-2'>{ report.water_intake }</td>
             <td className='p-2'>{ report.vaccine_administered }</td>
-            <td className='p-2'>
-              <Tippy content='Edit Report'>
-                <button onClick={() => editReport(index) }>
-                  <FaPencilAlt />
-                </button>
-              </Tippy>
-            </td>
           </tr>)
         }
       </tbody>
