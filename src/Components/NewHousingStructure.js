@@ -8,7 +8,7 @@ function NewHousingStructure() {
   const { errors } = formState;
 
   const submitData = async (data) => {
-    if (!errors.house_type && !errors.category & !errors.name) {
+    if (!errors.house_type && !errors.category && !errors.name) {
       const loader = document.getElementById('query-loader');
       const text = document.getElementById('query-text');
       loader.style.display = 'flex';

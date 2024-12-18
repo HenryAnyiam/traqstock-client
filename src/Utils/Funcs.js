@@ -1,4 +1,4 @@
-const BaseURL = "https://farm-management.onrender.com";
+const BaseURL = "http://127.0.0.1:8000";
 
 export const getUser = async (accessToken) => {
   const response = await fetch(`${BaseURL}/users/profile/`, {
@@ -163,6 +163,32 @@ export const getFlocks = async () => {
   return response;
 }
 
+export const updateFlock = async (data, id) => {
+  const token = localStorage.getItem('accessToken');
+  const response = fetch(`${BaseURL}/poultry/flocks/${id}/`, {
+    method: 'PATCH',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+
+  return response;
+}
+
+export const deleteFlock = async (id) => {
+  const token = localStorage.getItem('accessToken');
+  const response = fetch(`${BaseURL}/poultry/flocks/${id}/`, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  })
+
+  return response;
+}
+
 export const addFlockData = async (data) => {
   const token = localStorage.getItem('accessToken');
   const response = fetch(`${BaseURL}/poultry/flocks/`, {
@@ -198,6 +224,32 @@ export const addFlockMovement = async (data) => {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(data)
+  })
+
+  return response;
+}
+
+export const updateFlockMovement = async (data, id) => {
+  const token = localStorage.getItem('accessToken');
+  const response = fetch(`${BaseURL}/poultry/flock-movements/${id}/`, {
+    method: 'PATCH',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+
+  return response;
+}
+
+export const deleteFlockMovement = async (id) => {
+  const token = localStorage.getItem('accessToken');
+  const response = fetch(`${BaseURL}/poultry/flock-movements/${id}/`, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
   })
 
   return response;
@@ -283,6 +335,32 @@ export const addFlockBreedInformation = async (data) => {
   return response;
 }
 
+export const updateFlockBreedInformation = async (data, id) => {
+  const token = localStorage.getItem('accessToken');
+  const response = fetch(`${BaseURL}/poultry/flock-breed-information/${id}/`, {
+    method: 'PATCH',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+
+  return response;
+}
+
+export const deleteFlockBreedInformation = async (id) => {
+  const token = localStorage.getItem('accessToken');
+  const response = fetch(`${BaseURL}/poultry/flock-breed-information/${id}/`, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  })
+
+  return response;
+}
+
 export const getEggCollection = async () => {
   const token = localStorage.getItem('accessToken');
   const response = fetch(`${BaseURL}/poultry/egg-collection`, {
@@ -304,6 +382,18 @@ export const addEggCollection = async (data) => {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(data)
+  })
+
+  return response;
+}
+
+export const deleteEggCollection = async (id) => {
+  const token = localStorage.getItem('accessToken');
+  const response = fetch(`${BaseURL}/poultry/egg-collection/${id}/`, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
   })
 
   return response;
@@ -373,6 +463,18 @@ export const getFlockHistory = async () => {
   return response;
 }
 
+export const deleteFlockHistory = async (id) => {
+  const token = localStorage.getItem("accessToken");
+  const response = fetch(`${BaseURL}/poultry/flock-histories/${id}/`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response;
+};
+
 export const addFlockHistory = async (data) => {
   const token = localStorage.getItem('accessToken');
   const response = fetch(`${BaseURL}/poultry/flock-histories/`, {
@@ -386,6 +488,20 @@ export const addFlockHistory = async (data) => {
 
   return response;
 }
+
+export const updateFlockHistory = async (data, id) => {
+  const token = localStorage.getItem("accessToken");
+  const response = fetch(`${BaseURL}/poultry/flock-histories/${id}/`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  return response;
+};
 
 const displayData = (data, toast) => {
   if (typeof data === "string") {

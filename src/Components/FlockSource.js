@@ -49,8 +49,14 @@ function FlockSource() {
   }
 
   const delSource = async () => {
+    const loader = document.getElementById('query-loader-del');
+    const text = document.getElementById('query-text-del');
+    loader.style.display = 'flex';
+    text.style.display = 'none';
     const val = sources[delItem];
     const res = await deleteFlockSource(val.id);
+    loader.style.display = 'none';
+    text.style.display = 'flex';
     handleDelete(res, toast, "Source Deleted Successfully")
     .then((res) => {
       getFlockSource()
@@ -77,7 +83,7 @@ function FlockSource() {
     if (!errors.name) {
       const loader = document.getElementById('query-loader');
       const text = document.getElementById('query-text');
-      loader.style.display = 'block';
+      loader.style.display = 'flex';
       text.style.display = 'none';
       try {
         const res = await addFlockSource(data);
@@ -134,7 +140,7 @@ function FlockSource() {
           <h2 className='text-3xl'>Flock Sources</h2>
         </div>
       <table className='table-auto w-full border-collapse'>
-      <thead className='shadow-lg text-left bg-hover-gold text-base-brown font-bold'>
+      <thead className='shadow-lg text-left bg-slate-100 text-black font-semibold'>
       <tr className='h-10 text-xs lg:text-sm'>
         <th className='p-2 w-[10%] lg:table-cell'>S/No</th>
         <th className='p-2 w-[35%] lg:table-cell'>Source Name</th>
@@ -169,31 +175,31 @@ function FlockSource() {
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          backgroundColor: 'rgb(97, 58, 18)',
+          backgroundColor: 'rgb(241 245 249)',
           borderRadius: '0.5rem',
           boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)'
         },
         overlay: {
-          backgroundColor: 'rgba(49, 112, 35, 0.4)'
+          backgroundColor: 'rgba(0, 0, 0, 0.4)'
         }
       }}
       >
-        <p className="text-center rounded-xl font-bold font-serif text-hover-gold p-1 w-full mb-2 text-xl">Add New Flock Source</p>
+        <p className="text-center rounded-xl font-bold text-black p-1 w-full mb-2 text-xl">Add New Flock Source</p>
         <form onSubmit={handleSubmit(submitData)} noValidate>
           <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
-              <label htmlFor="name" className="font-bold font-serif text-hover-gold p-1 mr-2">Name:</label>
+              <label htmlFor="name" className="font-bold font-serif text-black p-1 mr-2">Name:</label>
               <input type="text" id="name" placeholder='Name'
-              className="bg-white border-2 border-base-brown rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2"
+              className="bg-white border-2 border-black rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2"
               { ...register('name', { required: "Input Name"}) }/>
           </div>
           <p className='text-xs text-red-600 mb-4 text-center'>{ errors.name?.message }</p>
           <div className="m-4 flex justify-center">
               <button type="submit"
-              className="text-center w-full text-base-brown bg-hover-gold p-2 rounded-xl font-bold hover:text-hover-gold hover:bg-transparent hover:border-hover-gold hover:border-2">
+              className="text-center w-full text-white bg-new-green p-2 rounded-xl font-semibold btn-anim">
                   <div className="dots hidden" id="query-loader">
-                    <div className="dot bg-brown"></div>
-                    <div className="dot bg-brown"></div>
-                    <div className="dot bg-brown"></div>
+                    <div className="dot"></div>
+                    <div className="dot"></div>
+                    <div className="dot"></div>
                   </div>
               <span id="query-text" className='text-center'>Submit Data</span>
             </button>
@@ -214,7 +220,7 @@ function FlockSource() {
           boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)'
         },
         overlay: {
-          backgroundColor: 'rgba(49, 112, 35, 0.4)'
+          backgroundColor: 'rgba(0, 0, 0, 0.4)'
         }
       }}
       >
@@ -222,36 +228,43 @@ function FlockSource() {
           <h2 className='text-sm lg:text-xl text-nowrap'>Are you sure you want to delete {sources[delItem]?.name}?</h2>
           <div className='w-full flex justify-end my-4'>
           <button
-          className='p-2 fill-hover-gold text-hover-gold flex w-28 items-center bg-base-brown justify-center rounded-lg shadow-md hover:bg-hover-gold hover:text-base-brown hover:fill-base-brown'
+          className='p-2 fill-white text-white flex w-28 items-center bg-new-green justify-center rounded-lg shadow-md btn-anim'
           onClick={delSource}>
-            Continue
+            <div className="dots hidden" id="query-loader-del">
+              <div className="dot"></div>
+              <div className="dot"></div>
+              <div className="dot"></div>
+            </div>
+            <div id="query-text-del" className='text-center flex gap-x-1 items-center'>
+              <FaTrashAlt /> <span>Continue</span>
+            </div>
           </button>
           </div>
         </div>
       </Modal>
     <div className='flex justify-between m-2 ml-0'>
-          <h2 className='text-3xl'>Flock Sources</h2>
-          {
-            role_id > 4 ? <div id="newData">
-              <Tippy content='Add new Flock Source'>
-                  <button className='fill-hover-gold text-hover-gold flex w-28 items-center bg-base-brown justify-center rounded-lg shadow-md hover:bg-hover-gold hover:text-base-brown hover:fill-base-brown p-2'
-                  onClick={() => { dispatch('openMain') }}>
-                    <FaPlus className='mr-1' />
-                    New
-                  </button>
-                </Tippy>
-            </div> : <></>
-          }
-          
-        </div>
+      <h2 className='text-3xl'>Flock Sources</h2>
+      {
+        role_id > 4 ? <div id="newData">
+          <Tippy content='Add new Flock Source'>
+            <button className='fill-black text-black flex w-28 items-center justify-center rounded-lg p-2 hover:bg-new-hover-green btn-anim'
+            onClick={() => { dispatch('openMain') }}>
+              <FaPlus className='mr-1' />
+              New
+            </button>
+          </Tippy>
+        </div> : <></>
+      }
+      
+    </div>
   <table className='table-auto w-full border-collapse'>
-  <thead className='shadow-lg text-left bg-hover-gold text-base-brown font-bold'>
+  <thead className='shadow-lg text-left bg-slate-100 text-black font-semibold'>
     <tr className='h-10 text-xs lg:text-sm'>
       <th className='p-2 w-[10%] lg:table-cell'>S/No</th>
       <th className='p-2 w-[35%] lg:table-cell'>Source Name</th>
       <th className='p-2 w-[25%] lg:table-cell '>Total Registered</th>
       {
-        role_id < 4 ? <th className='p-2 w-[25%] lg:table-cell no-show'></th> : <th className='p-2 w-[25%] lg:table-cell '></th>
+        role_id < 4 ? <th className='p-2 w-[25%] lg:table-cell no-show'></th> : <th className='p-2 w-[25%] lg:table-cell'></th>
       }
     </tr>
   </thead>

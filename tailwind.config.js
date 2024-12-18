@@ -10,6 +10,8 @@ module.exports = {
         'hover-green': '#b2a741',
         'hover-gold': '#dbc76f',
         'base-brown': '#613a12',
+        'new-green': '#22c55e',
+        'new-hover-green': '#DCFCE7'
       },
       height: {
         'screen-minus-nav': 'calc(100vh - 2.5rem)',

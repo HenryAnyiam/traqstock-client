@@ -8,7 +8,7 @@ ChartJS.defaults.font.size = 10;
 
 
 
-function MonthlyReportChart() {
+function FarmDataChart() {
   const [feedData, setFeedData] = useState([]);
 
   useEffect(() => {
@@ -83,6 +83,7 @@ function MonthlyReportChart() {
       },
     },
   }
+
   return (
     <div className='p-2'>
       <Line data={data} options={options}/>
@@ -90,4 +91,4 @@ function MonthlyReportChart() {
   )
 }
 
-export default MonthlyReportChart;
+export default FarmDataChart;
