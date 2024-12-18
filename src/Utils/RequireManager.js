@@ -8,7 +8,6 @@ function RequireManager({ redirect, children }) {
   const { role_id } = user;
 
   useEffect(() => {
-    console.log(role_id, user);
   }, [user, role_id])
 
   if (!user || !role_id) {
