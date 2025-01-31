@@ -129,12 +129,17 @@ function ViewFlock() {
               </div>
               <p className='text-xs text-red-600 mb-4 text-center'>{ errors.breed?.message }</p>
               <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
-                <label htmlFor="hatchDate" className="font-semibold text-black p-1 mr-2">Hatch Date:</label>
-                <input type="date" id="hatchDate"
+                <label htmlFor="ageInWeeks" className="font-semibold text-black p-1 mr-2">Age In Weeks:</label>
+                <input type="number" id="ageInWeeks" placeholder="Age in Total Weeks"
                   className="bg-white border-2 border-base-brown rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2"
-                  { ...register('date_of_hatching', { required: "Select Hatch Date"}) }/>
+                  { ...register('age_in_weeks', {
+                    required: "Input Flocks Age",
+                    min: {
+                      
+                    }
+                  }) }/>
               </div>
-              <p className='text-xs text-red-600 mb-4 text-center'>{errors.date_of_hatching?.message }</p>
+              <p className='text-xs text-red-600 mb-4 text-center'>{errors.age_in_weeks?.message }</p>
               <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
                   <label htmlFor="chickenType" className="font-semibold text-black p-1 mr-2">Chicken Type:</label>
                   <select id='chickenType' defaultValue='default'

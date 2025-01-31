@@ -185,6 +185,12 @@ function DashboardSideBar() {
           <NavLink to="/dashboard/egg-collection" className="block p-2 rounded-xl my-1 flex" onClick={closeDropDown}>
             <GiEasterEgg className='text-2xl' /><span>Egg Collection</span>
           </NavLink>
+          <NavLink to="/dashboard/treatment" className="block p-2 rounded-xl my-1 flex" onClick={closeDropDown}>
+            <GiEasterEgg className='text-2xl' /><span>Treatment</span>
+          </NavLink>
+          <NavLink to="/dashboard/egg-sales" className="block p-2 rounded-xl my-1 flex" onClick={closeDropDown}>
+            <GiEasterEgg className='text-2xl' /><span>Egg Sales</span>
+          </NavLink>
           <NavLink to="manage-staffs" className="block p-2 rounded-xl my-1 flex" id="staffLink" onClick={closeDropDown}>
             <MdGroups className='text-2xl' /> <span>Staff</span>
           </NavLink>
