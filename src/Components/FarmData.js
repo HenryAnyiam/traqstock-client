@@ -101,8 +101,8 @@ function FarmData() {
           <p className='text-xs text-red-600 mb-3 text-center'>{ errors.feed_time?.message }</p>
           <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
               <label htmlFor="note" className="text-black p-1 mr-2">Note/Remark:</label>
-              <textbox id="note" placeholder="Note" { ...register("note") }
-              className="bg-white border-2 border-black rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2"></textbox>
+              <textarea id="note" rows="3" placeholder="Note" { ...register("note") }
+              className="bg-white border-2 border-black rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2"></textarea>
           </div>
           <div className="m-4 flex justify-center">
               <button type="submit"
