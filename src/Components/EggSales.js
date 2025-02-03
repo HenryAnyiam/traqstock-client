@@ -45,11 +45,11 @@ function EggSales() {
   if (loading) {
     return <div className='h-full p-4 w-full'>
       <div className='flex justify-between m-2 ml-0'>
-        <h2 className='text-3xl'>Treatment Details</h2>
+        <h2 className='text-3xl'>Egg Sales</h2>
         <button
         className='fill-black text-black flex w-28 items-center justify-center rounded-lg shadow-md btn-anim'
         onClick={() => { dispatch('openMain') }}>
-          <span className='text-sm'>New Treatment</span>
+          <span className='text-sm'>New Egg Sale</span>
           <svg xmlns="http://www.w3.org/2000/svg"
             viewBox="0 -960 960 960"
             className='h-6 w-6 ml-1'>
@@ -126,8 +126,8 @@ function EggSales() {
           <p className='text-xs text-red-600 mb-3 text-center'>{ errors.date_sold?.message }</p>
           <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
               <label htmlFor="note" className="text-black p-1 mr-2">Note/Remark:</label>
-              <textbox id="note" placeholder="Note" { ...register("note") }
-              className="bg-white border-2 border-black rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2"></textbox>
+              <textarea id="note" rows="3" placeholder="Note" { ...register("note") }
+              className="bg-white border-2 border-black rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2"></textarea>
           </div>
           <div className="m-4 flex justify-center">
               <button type="submit"
