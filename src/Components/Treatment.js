@@ -71,7 +71,7 @@ function Treatment() {
                 <FaTimes />
               </button>
             </div>
-              <p className="text-center rounded-xl text-black p-1 w-full mb-2 text-xl">Add New Record</p>
+              <p className="text-center font-semibold rounded-xl text-black p-1 w-full mb-2 text-xl">Add New Record</p>
               <form onSubmit={handleSubmit(submitData)} noValidate>
                 <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
                   <label htmlFor="flock-name" className="font-semibold text-black p-1 mr-2">Flock Fed:</label>
@@ -105,19 +105,19 @@ function Treatment() {
                 </div>
                 <p className='text-xs text-red-600 mb-3 text-center'>{ errors.treatment_type?.message }</p>
                 <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
-                    <label htmlFor="details" className="text-black p-1 mr-2">Details:</label>
+                    <label htmlFor="details" className="font-semibold text-black p-1 mr-2">Details:</label>
                     <input type="text" id="details" placeholder="Treatment Details" { ...register("details", { required: "Add Details" }) }
                     className="bg-white border-2 border-black rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2" required />
                 </div>
                 <p className='text-xs text-red-600 mb-3 text-center'>{ errors.details?.message }</p>
                 <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
-                    <label htmlFor="dosage" className="text-black p-1 mr-2">Dosage:</label>
+                    <label htmlFor="dosage" className="font-semibold text-black p-1 mr-2">Dosage:</label>
                     <input type="text" id="dosage" placeholder="Treatment Dosage" { ...register("dosage", { required: "Add Dosage" }) }
                     className="bg-white border-2 border-black rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2" required />
                 </div>
                 <p className='text-xs text-red-600 mb-3 text-center'>{ errors.dosage?.message }</p>
                 <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
-                    <label htmlFor="associated_cost" className="text-black p-1 mr-2">Associated Cost:</label>
+                    <label htmlFor="associated_cost" className="font-semibold text-black p-1 mr-2">Associated Cost:</label>
                     <input type="number" id="associated_cost" placeholder="Associated cost for Treatment" { ...register("associated_cost", { required: "Add Associated Cost" }) }
                     className="bg-white border-2 border-black rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2" required />
                 </div>
@@ -142,31 +142,31 @@ function Treatment() {
                 </div>
                 <p className='text-xs text-red-600 mb-3 text-center'>{ errors.treatment_method?.message }</p>
                 <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
-                    <label htmlFor="birds_treated" className="text-black p-1 mr-2">Birds Treated:</label>
+                    <label htmlFor="birds_treated" className="font-semibold text-black p-1 mr-2">Birds Treated:</label>
                     <input type="number" id="birds_treated" placeholder="Number of Birds Treated" { ...register("birds_treated", { required: "Add Number of Birds Treated" }) }
                     className="bg-white border-2 border-black rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2" required />
                 </div>
                 <p className='text-xs text-red-600 mb-3 text-center'>{ errors.birds_treated?.message }</p>
                 <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
-                    <label htmlFor="veterinarian" className="text-black p-1 mr-2">Veterinarian:</label>
+                    <label htmlFor="veterinarian" className="font-semibold text-black p-1 mr-2">Veterinarian:</label>
                     <input type="text" id="veterinarian" placeholder="Veterinarian" { ...register("veterinarian", { required: "Add Veterinarian" }) }
                     className="bg-white border-2 border-black rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2" required />
                 </div>
                 <p className='text-xs text-red-600 mb-3 text-center'>{ errors.veterinarian?.message }</p>
                 <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
-                    <label htmlFor="date_administered" className="text-black p-1 mr-2">Date Fed:</label>
+                    <label htmlFor="date_administered" className="font-semibold text-black p-1 mr-2">Date Administered:</label>
                     <input type="date" id="date_administered" placeholder="Date Administered" { ...register("date_administered", { required: "Add vaccine" }) }
                     className="bg-white border-2 border-black rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2" required />
                 </div>
                 <p className='text-xs text-red-600 mb-3 text-center'>{ errors.date_administered?.message }</p>
                 <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
-                    <label htmlFor="time_administered" className="text-black p-1 mr-2">Time Administered:</label>
+                    <label htmlFor="time_administered" className="font-semibold text-black p-1 mr-2">Time Administered:</label>
                     <input type="time" id="time_administered" placeholder="Time Administered" { ...register("time_administered", { required: "Add Time Administered" }) }
                     className="bg-white border-2 border-black rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2" required />
                 </div>
                 <p className='text-xs text-red-600 mb-3 text-center'>{ errors.time_administered?.message }</p>
                 <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
-                    <label htmlFor="note" className="text-black p-1 mr-2">Note/Remark:</label>
+                    <label htmlFor="note" className="font-semibold text-black p-1 mr-2">Note/Remark:</label>
                     <textarea id="note" rows="3" placeholder="Note" { ...register("note") }
                     className="bg-white border-2 border-black rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2"></textarea>
                 </div>
@@ -188,7 +188,7 @@ function Treatment() {
       <div className='flex justify-between m-2 ml-0'>
         <h2 className='text-3xl'>Treatment Details</h2>
         <button
-          className='fill-black text-black flex w-28 items-center justify-center rounded-lg hover:bg-new-hover-green slate-100 transition-all duration-300 ease-out hover:scale-105'
+          className='fill-black text-black flex w-40 items-center justify-center rounded-lg hover:bg-new-hover-green slate-100 transition-all duration-300 ease-out hover:scale-105'
           onClick={() => toggleModal() }>
             <svg xmlns="http://www.w3.org/2000/svg"
               viewBox="0 -960 960 960"
@@ -202,9 +202,10 @@ function Treatment() {
         <thead className='shadow-lg text-left bg-slate-100 text-black font-semibold'>
           <tr className='h-10'>
             <td className='p-2 w-[10%] hidden lg:table-cell'>S/N</td>
-            <td className='p-2 w-[25%]'>Flock</td>
+            <td className='p-2 w-[15%]'>Flock</td>
             <td className='p-2 w-[15%]'>Treatment Type</td>
-            <td className='p-2 w-[40%]'>Date Treated</td>
+            <td className='p-2 w-[15%]'>Treatment Method</td>
+            <td className='p-2 w-[15%]'>Date Treated</td>
             <td  className='p-2 w-[10%]'>Action</td>
           </tr>
         </thead>

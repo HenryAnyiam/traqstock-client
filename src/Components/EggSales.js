@@ -104,28 +104,28 @@ function EggSales() {
       }}
       >
       <div className="h-fit w-80 lg:w-fit">
-        <p className="text-center rounded-xl text-black p-1 w-full mb-2 text-xl">Add New Record</p>
+        <p className="text-center font-semibold rounded-xl text-black p-1 w-full mb-2 text-xl">Add New Record</p>
         <form onSubmit={handleSubmit(submitData)} noValidate>
           <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
-              <label htmlFor="no_of_crates" className="text-black p-1 mr-2">Crates:</label>
+              <label htmlFor="no_of_crates" className="font-semibold text-black p-1 mr-2">Crates:</label>
               <input type="number" id="no_of_crates" placeholder="Number Of Crates" { ...register("no_of_crates", { required: "Add Number Of Crates" }) }
               className="bg-white border-2 border-black rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2" required />
           </div>
           <p className='text-xs text-red-600 mb-3 text-center'>{ errors.no_of_crates?.message }</p>
           <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
-              <label htmlFor="unit_price" className="text-black p-1 mr-2">Unit Price:</label>
+              <label htmlFor="unit_price" className="font-semibold text-black p-1 mr-2">Unit Price:</label>
               <input type="number" id="unit_price" placeholder="Unit Price Of Crate" { ...register("unit_price", { required: "Add Associated Cost" }) }
               className="bg-white border-2 border-black rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2" required />
           </div>
           <p className='text-xs text-red-600 mb-3 text-center'>{ errors.unit_price?.message }</p>
           <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
-              <label htmlFor="date_sold" className="text-black p-1 mr-2">Date Sold:</label>
+              <label htmlFor="date_sold" className="font-semibold text-black p-1 mr-2">Date Sold:</label>
               <input type="date" id="date_sold" placeholder="Date Sold" { ...register("date_sold", { required: "Add Date Sold" }) }
               className="bg-white border-2 border-black rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2" required />
           </div>
           <p className='text-xs text-red-600 mb-3 text-center'>{ errors.date_sold?.message }</p>
           <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
-              <label htmlFor="note" className="text-black p-1 mr-2">Note/Remark:</label>
+              <label htmlFor="note" className="font-semibold text-black p-1 mr-2">Note/Remark:</label>
               <textarea id="note" rows="3" placeholder="Note" { ...register("note") }
               className="bg-white border-2 border-black rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2"></textarea>
           </div>

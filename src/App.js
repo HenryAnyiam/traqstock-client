@@ -38,6 +38,8 @@ import NewFlockSource from "./Components/NewFlockSource";
 import NewFlockBreed from "./Components/NewFlockBreed";
 import Treatment from "./Components/Treatment";
 import EggSales from "./Components/EggSales";
+import FeedPurchase from "./Components/FeedPurchase";
+import Finance from "./Components/Finance";
 
 function App() {
   return (
@@ -61,7 +63,9 @@ function App() {
             <Route path='flocks/flocks/new' element={<RequireManager><NewFlock /></RequireManager>} />
             <Route path='flocks/flocks' element={<ViewFlock />} />
             <Route path='flocks/treatment' element={<Treatment />} />
-            <Route path='flocks/egg-sales' element={<EggSales />} />
+            <Route path='farm/egg-sales' element={<EggSales />} />
+            <Route path='farm/feed-purchase' element={<FeedPurchase />} />
+            <Route path='farm/finance' element={<Finance />} />
             <Route path='flocks/movement' element={<RequireManager><FlockMovement /></RequireManager>} />
             <Route path='flocks/movement/new' element={<RequireManager><NewFlockMovement /></RequireManager>} />
             <Route path='flocks/inspection' element={<FlockInspection />} />
