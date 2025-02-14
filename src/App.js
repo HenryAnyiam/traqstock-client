@@ -53,12 +53,12 @@ function App() {
               <Route path='table' element={<FarmDataTable />}/>
               <Route path='chart' element={<FarmDataChart />}/>
             </Route>
-            <Route path='housing-structure' element={<RequireManager><HousingStructureTable /></RequireManager>} />
+            <Route path='farm/housing-structure' element={<RequireManager><HousingStructureTable /></RequireManager>} />
             <Route path='housing-structure/new' element={<RequireManager><NewHousingStructure /></RequireManager>} />
             <Route path='farm-data/new-record' element={<NewRecord />}/>
-            <Route path='flocks/sources' element={<FlockSource />} />
+            <Route path='farm/sources' element={<FlockSource />} />
             <Route path='flocks/sources/new' element={<RequireManager><NewFlockSource /></RequireManager>} />
-            <Route path='flocks/breeds' element={<FlockBreed />} />
+            <Route path='farm/breeds' element={<FlockBreed />} />
             <Route path='flocks/breeds/new' element={<RequireManager><NewFlockBreed /></RequireManager>} />
             <Route path='flocks/flocks/new' element={<RequireManager><NewFlock /></RequireManager>} />
             <Route path='flocks/flocks' element={<ViewFlock />} />
@@ -70,9 +70,9 @@ function App() {
             <Route path='flocks/movement/new' element={<RequireManager><NewFlockMovement /></RequireManager>} />
             <Route path='flocks/inspection' element={<FlockInspection />} />
             <Route path='flocks/inspection/new' element={<NewFlockInspection />} />
-            <Route path='flocks/breed-information' element={<RequireManager><BreedInformation /></RequireManager>} />
+            <Route path='farm/breed-information' element={<RequireManager><BreedInformation /></RequireManager>} />
             <Route path='flocks/breed-information/new' element={<RequireManager><NewBreedInformation /></RequireManager>} />
-            <Route path='egg-collection' element={<RequireManager redirect="/dashboard/egg-collection/new"><EggCollectionTable /></RequireManager>} />
+            <Route path='flocks/egg-collection' element={<RequireManager redirect="/dashboard/egg-collection/new"><EggCollectionTable /></RequireManager>} />
             <Route path='egg-collection/new' element={<NewEggCollection />} />
             <Route path='flocks/history' element={<RequireManager><FlockHistory /></RequireManager>} />
             <Route path='flocks/history/new' element={<RequireManager><NewFlockHistory /></RequireManager>} />

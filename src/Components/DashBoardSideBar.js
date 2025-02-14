@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import logo from '../Assets/img/traqstock_logo1.png';
 import hamburger from '../Assets/img/hamburger.svg';
 import close from '../Assets/img/close_icon.svg';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useAuth } from '../Utils/userAuth';
 import Header from './Header';
 import { GiFarmTractor, GiChicken, GiEasterEgg, GiPlantRoots, GiTreehouse } from "react-icons/gi";
@@ -10,10 +10,11 @@ import { MdHouseSiding, MdGroups, MdOutlineManageHistory } from "react-icons/md"
 import { PiFarmThin, PiBarnThin } from "react-icons/pi";
 import { FcInspection } from "react-icons/fc";
 import { BsInfoCircle } from "react-icons/bs";
+import { BiInjection, BiFoodTag } from "react-icons/bi";
+import { RiFundsBoxLine } from "react-icons/ri";
 
 function DashboardSideBar() {
   const { logout, user } = useAuth();
-  const navigate = useNavigate();
   const { role_id } = user;
 
   useEffect(() => {
@@ -31,14 +32,9 @@ function DashboardSideBar() {
     }
   }, [role_id])
 
-  const handleMonthly = (e) => {
-    e.preventDefault()
-    closeDropDown();
-    navigate('farm-data/table')
-  }
-
   const displayDropMenu = (e) => {
-    e.preventDefault()
+    e.preventDefault();
+    closeDropFarms(e);
     const selectedMenu = document.querySelectorAll('.dropFlocks');
     selectedMenu.forEach((e) => {
       e.classList.toggle("hidden");
@@ -46,8 +42,23 @@ function DashboardSideBar() {
     })
   }
 
+  const displayFarmMenu = (e) => {
+    e.preventDefault();
+    closeDropFlocks(e);
+    const selectedMenu = document.querySelectorAll(".dropFarms");
+    selectedMenu.forEach((e) => {
+      e.classList.toggle("hidden");
+      e.classList.toggle("flex");
+    });
+  };
+
   const closeDropDown = (e) => {
-    const selectedMenu = document.querySelectorAll('.dropFlocks');
+    closeDropFlocks(e);
+    closeDropFarms(e);
+  }
+
+  const closeDropFlocks = (e) => {
+    const selectedMenu = document.querySelectorAll(".dropFlocks");
     selectedMenu.forEach((e) => {
       if (!e.classList.contains("hidden")) {
         e.classList.add("hidden");
@@ -55,8 +66,20 @@ function DashboardSideBar() {
       if (e.classList.contains("flex")) {
         e.classList.remove("flex");
       }
-    })
+    });
   }
+
+  const closeDropFarms = (e) => {
+    const selectedMenu = document.querySelectorAll(".dropFarms");
+    selectedMenu.forEach((e) => {
+      if (!e.classList.contains("hidden")) {
+        e.classList.add("hidden");
+      }
+      if (e.classList.contains("flex")) {
+        e.classList.remove("flex");
+      }
+    });
+  };
 
   const toggleMenu = () => {
     const menu = document.getElementById("menu");
@@ -118,87 +141,129 @@ function DashboardSideBar() {
         </div>
         <nav className="row-span-7 px-2 text-left tracking-widest" id="navList">
           <NavLink
-            to="/dashboard/farm-data"
-            className="block p-2 rounded-xl my-1 flex"
-            onClick={handleMonthly}
-          > <GiFarmTractor className='text-2xl'/> <span>Farm</span>
+            to="farm"
+            className="w-full hover:bg-base-brown p-2 rounded-xl flex"
+            onClick={displayFarmMenu}
+          >
+            <GiFarmTractor className="text-2xl" /> <span>Manage Farm</span>
+          </NavLink>
+          <NavLink
+            to="/dashboard/farm/sources"
+            className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFarms"
+            onClick={closeDropDown}
+          >
+            <GiPlantRoots className="text-xl" /> <span>Source</span>
+          </NavLink>
+          <NavLink
+            to="/dashboard/farm/breeds"
+            className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFarms"
+            onClick={closeDropDown}
+          >
+            <GiTreehouse className="text-xl" /> <span>Breed</span>
+          </NavLink>
+          <NavLink
+            to="/dashboard/farm/breed-information"
+            className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFarms"
+            onClick={closeDropDown}
+            id="breedInfoLink"
+          >
+            <BsInfoCircle className="text-xl" /> <span>Breed Info</span>
+          </NavLink>
+          <NavLink
+            to="/dashboard/farm/housing-structure"
+            className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFarms"
+            onClick={closeDropDown}
+            id="housingLink"
+          >
+            <MdHouseSiding className="text-2xl" /> <span>Housing</span>
+          </NavLink>
+          <NavLink
+            to="/dashboard/farm/feed-purchase"
+            className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFarms"
+            onClick={closeDropDown}
+          >
+            <BiFoodTag className="text-2xl" />
+            <span>Feed Purchase</span>
+          </NavLink>
+          <NavLink
+            to="/dashboard/farm/egg-sales"
+            className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFarms"
+            onClick={closeDropDown}
+          >
+            <GiEasterEgg className="text-2xl" />
+            <span>Egg Sales</span>
+          </NavLink>
+          <NavLink
+            to="/dashboard/farm/finance"
+            className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFarms"
+            onClick={closeDropDown}
+          >
+            <RiFundsBoxLine className="text-2xl" />
+            <span>Finance</span>
           </NavLink>
           <NavLink
             to="flocks"
             className="w-full hover:bg-base-brown p-2 rounded-xl flex"
             onClick={displayDropMenu}
           >
-            <GiChicken className='text-2xl'/> <span>Manage Flock</span>
+            <GiChicken className="text-2xl" /> <span>Manage Flock</span>
           </NavLink>
           <NavLink
             to="/dashboard/flocks/flocks"
             className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFlocks"
             onClick={closeDropDown}
           >
-            <PiFarmThin className='text-xl'/>  <span>Flock</span>
+            <PiFarmThin className="text-xl" /> <span>Flock</span>
           </NavLink>
-          <NavLink
-            to="/dashboard/flocks/sources"
-            className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFlocks"
-            onClick={closeDropDown}
-          >
-            <GiPlantRoots className='text-xl' /> <span>Source</span>
-          </NavLink>
-          <NavLink
-            to="/dashboard/flocks/breeds"
-            className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFlocks"
-            onClick={closeDropDown}
-          >
-            <GiTreehouse className='text-xl' /> <span>Breed</span>
-          </NavLink>
+
           <NavLink
             to="/dashboard/flocks/movement"
             className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFlocks"
-            onClick={closeDropDown} id="movementLink"
+            onClick={closeDropDown}
+            id="movementLink"
           >
-            <PiBarnThin className='text-xl' /> <span>Movement</span>
+            <PiBarnThin className="text-xl" /> <span>Movement</span>
           </NavLink>
           <NavLink
             to="/dashboard/flocks/history"
             className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFlocks"
-            onClick={closeDropDown} id="historyLink"
+            onClick={closeDropDown}
+            id="historyLink"
           >
-            <MdOutlineManageHistory className='text-xl' /> <span>Flock History</span>
+            <MdOutlineManageHistory className="text-xl" />
+            <span>Flock History</span>
           </NavLink>
           <NavLink
             to="/dashboard/flocks/inspection"
             className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFlocks"
             onClick={closeDropDown}
           >
-            <FcInspection className='text-xl' /> <span>Inspection</span>
+            <FcInspection className="text-xl" /> <span>Inspection</span>
+          </NavLink>
+
+          <NavLink
+            to="/dashboard/flocks/egg-collection"
+            className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFlocks"
+            onClick={closeDropDown}
+          >
+            <GiEasterEgg className="text-2xl" />
+            <span>Egg Collection</span>
           </NavLink>
           <NavLink
-            to="/dashboard/flocks/breed-information"
+            to="/dashboard/flocks/treatment"
             className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFlocks"
-            onClick={closeDropDown} id="breedInfoLink"
+            onClick={closeDropDown}
           >
-            <BsInfoCircle className='text-xl' /> <span>Breed Info</span>
+            <BiInjection className="text-2xl" />
+            <span>Treatment</span>
           </NavLink>
-          <NavLink to="/dashboard/housing-structure" className="block p-2 rounded-xl my-1 flex" onClick={closeDropDown} id="housingLink">
-            <MdHouseSiding  className='text-2xl' /> <span>Housing</span>
-          </NavLink>
-          <NavLink to="/dashboard/egg-collection" className="block p-2 rounded-xl my-1 flex" onClick={closeDropDown}>
-            <GiEasterEgg className='text-2xl' /><span>Egg Collection</span>
-          </NavLink>
-          <NavLink to="/dashboard/treatment" className="block p-2 rounded-xl my-1 flex" onClick={closeDropDown}>
-            <GiEasterEgg className='text-2xl' /><span>Treatment</span>
-          </NavLink>
-          <NavLink to="/dashboard/farm/feed-purchase" className="block p-2 rounded-xl my-1 flex" onClick={closeDropDown}>
-            <GiEasterEgg className='text-2xl' /><span>Feed Purchase</span>
-          </NavLink>
-          <NavLink to="/dashboard/farm/egg-sales" className="block p-2 rounded-xl my-1 flex" onClick={closeDropDown}>
-            <GiEasterEgg className='text-2xl' /><span>Egg Sales</span>
-          </NavLink>
-          <NavLink to="/dashboard/farm/finance" className="block p-2 rounded-xl my-1 flex" onClick={closeDropDown}>
-            <GiEasterEgg className='text-2xl' /><span>Finance</span>
-          </NavLink>
-          <NavLink to="manage-staffs" className="block p-2 rounded-xl my-1 flex" id="staffLink" onClick={closeDropDown}>
-            <MdGroups className='text-2xl' /> <span>Staff</span>
+          <NavLink
+            to="manage-staffs"
+            className="block p-2 rounded-xl my-1 flex"
+            id="staffLink"
+            onClick={closeDropDown}
+          >
+            <MdGroups className="text-2xl" /> <span>Staff</span>
           </NavLink>
         </nav>
         <div className="text-center p-2 text-black rounded-xl logout-btn">
