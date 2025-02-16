@@ -1,21 +1,88 @@
-import React from 'react'
-import { FaPencilAlt, FaTrashAlt, FaTimes } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react'
+import { FaEye, FaTimes } from 'react-icons/fa';
 import Tippy from '@tippyjs/react';
 import Loader from './Loader';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
+import { getFlocks, getTreatment, addTreatment, handleData } from '../Utils/Funcs'
 
 
 function Treatment() {
-  const staffData = [];
-  const loading = false;
-  const { register, handleSubmit, formState } = useForm();
+  const [treatmentData, setTreatmentData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const { register, handleSubmit, formState, reset } = useForm();
+  const [flocks, setFlocks] = useState([]);
   const { errors } = formState;
+  const [item, setItem] = useState(null);
 
-  const submitData = () => {}
+  const submitData = async (data) => {
+    if (!errors.flock && !errors.treatment_type &&
+      !errors.details && !errors.dosage && !errors.associated_cost
+      && !errors.treatment_method && !errors.birds_treated &&
+      !errors.veterinarian && !errors.date_administered &&
+      !errors.time_administered
+    ) {
+      const loader = document.getElementById('query-loader');
+      const text = document.getElementById('query-text');
+      loader.style.display = 'flex';
+      text.style.display = 'none';
+      const res = await addTreatment(data);
+      handleData(res, loader, text, toast, reset)
+      .then((res) => {
+        getTreatment()
+          .then((res) => {
+            res.json().then((data) => {
+              setTreatmentData(data);
+              setLoading(false);
+            });
+          })
+          .catch((err) => {
+            console.error(err);
+            setLoading(false);
+          });
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => {
+        toggleModal();
+      })
+    }
+  }
 
   const toggleModal = () => {
+    const holdData = document.getElementById('new-data');
+    holdData.classList.toggle('hidden');
+  }
+
+  useEffect(() => {
+    Promise.all([getFlocks(), getTreatment()])
+      .then(([flocksRes, treatmentRes]) =>
+        Promise.all([flocksRes.json(), treatmentRes.json()])
+      )
+      .then(([flockResData, treatmentResData]) => {
+        console.log(treatmentResData);
+        setFlocks(flockResData);
+        setTreatmentData(treatmentResData);
+      })
+      .catch(err => console.log(err))
+      .finally(() => {
+        setLoading(false);
+      })
+  }, [])
+
+  const toggleViewModal = () => {
     const holdData = document.getElementById('view-data');
     holdData.classList.toggle('hidden');
+  }
+
+  const openViewDetails = (data) => {
+    setItem(data);
+    const editData = document.getElementById('new-data');
+    if (!editData.classList.contains('hidden')) {
+      editData.classList.add('hidden');
+    }
+    toggleViewModal();
   }
 
   if (loading) {
@@ -36,10 +103,10 @@ function Treatment() {
         <thead className='shadow-lg text-left bg-slate-100 text-black font-bold'>
           <tr className='h-10'>
             <td className='p-2 w-[10%] hidden lg:table-cell'>S/N</td>
-            <td className='p-2 w-[25%]'>Flock</td>
-            <td className='p-2 w-[15%]'>Treatment Type</td>
-            <td className='p-2 w-[40%]'>Date Treated</td>
-            <td  className='p-2 w-[10%]'>Action</td>
+            <td className='p-2 w-[15%]'>Flock</td>
+            <td className='p-2 w-[15%]'>Associated Cost</td>
+            <td className='p-2 w-[15%]'>Date Treated</td>
+            <td  className='p-2 w-[10%]'></td>
           </tr>
         </thead>
       <tbody>
@@ -63,6 +130,66 @@ function Treatment() {
     <div className='h-full p-4 w-full'>
       <div className='modal-hold hidden' id="view-data">
         <div className='modal-content'>
+          <div className='shadow-2xl rounded-xl h-fit w-80 lg:w-fit p-4 bg-slate-100'>
+            <div className='flex justify-end'>
+              <button
+              className="flex justify-center items-center text-center text-black p-2 mr-4 rounded-xl font-semibold hover:bg-new-green btn-anim"
+              onClick={() => { toggleViewModal() }}>
+                <FaTimes />
+              </button>
+            </div>
+            <p className="text-center rounded-xl font-semibold text-black p-1 w-full mb-2 text-xl">Treatment Details</p>
+            <div>
+              <div className="m-4 lg:grid lg:grid-cols-2">
+                  <p className="font-semibold text-black p-1 mr-2">flock:</p>
+                  <p className="font-semibold text-black p-1 mr-2">{ item?.flock_name }</p>
+              </div>
+              <div className="m-4 lg:grid lg:grid-cols-2">
+                  <p className="font-semibold text-black p-1 mr-2">Treatment Type:</p>
+                  <p className="font-semibold text-black p-1 mr-2">{ item?.treatment_type }</p>
+              </div>
+              <div className="m-4 lg:grid lg:grid-cols-2">
+                  <p className="font-semibold text-black p-1 mr-2">Details:</p>
+                  <p className="font-semibold text-black p-1 mr-2">{ item?.details }</p>
+              </div>
+              <div className="m-4 lg:grid lg:grid-cols-2">
+                <p className="font-semibold text-black p-1 mr-2">Dosage:</p>
+                <p className="font-semibold text-black p-1 mr-2">{ item?.dosage }</p>
+              </div>
+              <div className="m-4 lg:grid lg:grid-cols-2">
+                <p className="font-semibold text-black p-1 mr-2">Associated Cost:</p>
+                <p className="font-semibold text-black p-1 mr-2">{ item?.associated_cost }</p>
+              </div>
+              <div className="m-4 lg:grid lg:grid-cols-2">
+                  <p className="font-semibold text-black p-1 mr-2">Treatment Method:</p>
+                  <p className="font-semibold text-black p-1 mr-2">{ item?.treatment_method }</p>
+              </div>
+              <div className="m-4 lg:grid lg:grid-cols-2">
+                  <p className="font-semibold text-black p-1 mr-2">Total Birds Treated:</p>
+                  <p className="font-semibold text-black p-1 mr-2">{ item?.birds_treated }</p>
+              </div>
+              <div className="m-4 lg:grid lg:grid-cols-2">
+                  <p className="font-semibold text-black p-1 mr-2">Veterinarian:</p>
+                  <p className="font-semibold text-black p-1 mr-2">{ item?.veterinarian }</p>
+              </div>
+              <div className="m-4 lg:grid lg:grid-cols-2">
+                <p className="font-semibold text-black p-1 mr-2">Date Administered:</p>
+                <p className="font-semibold text-black p-1 mr-2">{ item?.date_administered }</p>
+              </div>
+              <div className="m-4 lg:grid lg:grid-cols-2">
+                <p className="font-semibold text-black p-1 mr-2">Time Administered:</p>
+                <p className="font-semibold text-black p-1 mr-2">{ item?.time_administered }</p>
+              </div>
+              <div className="m-4 lg:grid lg:grid-cols-2">
+                  <p className="font-semibold text-black p-1 mr-2">Notes:</p>
+                  <p className="font-semibold text-black p-1 mr-2">{ item?.notes === null ? 'No Notes' : item?.notes }</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className='modal-hold hidden' id="new-data">
+        <div className='modal-content'>
           <div className="bg-slate-100 shadow-2xl rounded-xl h-fit w-80 lg:w-fit p-4">
             <div className='flex justify-end'>
               <button
@@ -84,6 +211,7 @@ function Treatment() {
                     }) }
                     className="bg-white border-2 border-black rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2">
                     <option value="default" disabled>Flock</option>
+                    { flocks.map((flock) => <option key={flock.id} value={flock.id}>{flock.name}</option>)}
                   </select>
                 </div>
                 <p className='text-xs text-red-600 mb-3 text-center'>{ errors.flock?.message }</p>
@@ -203,25 +331,23 @@ function Treatment() {
           <tr className='h-10'>
             <td className='p-2 w-[10%] hidden lg:table-cell'>S/N</td>
             <td className='p-2 w-[15%]'>Flock</td>
-            <td className='p-2 w-[15%]'>Treatment Type</td>
-            <td className='p-2 w-[15%]'>Treatment Method</td>
+            <td className='p-2 w-[15%]'>Associated Cost</td>
             <td className='p-2 w-[15%]'>Date Treated</td>
-            <td  className='p-2 w-[10%]'>Action</td>
+            <td  className='p-2 w-[10%]'></td>
           </tr>
         </thead>
         <tbody>
           {
-            staffData.map((staff, index) => <tr key={staff.id} className='h-10 border-b-2 font-normal text-sm lg:text-base'>
+            treatmentData.map((data, index) => <tr key={data.id} className='h-10 border-b-2 font-normal text-sm lg:text-base'>
               <td className='p-2 hidden lg:table-cell font-normal'>{ index + 1 }</td>
-              <td className='p-2'>{ staff.username }</td>
-              <td className='p-2'>{ staff.users_role }</td>
-              <td className='p-2'>{ staff.last_activity }</td>
+              <td className='p-2'>{ data.flock_name }</td>
+              <td className='p-2'>{ data.associated_cost }</td>
+              <td className='p-2'>{ data.date_administered }</td>
               <td className='p-2'>
-                <Tippy content={`Edit ${staff.username} details`}>
-                  <button  aria-label={`Edit ${staff.username}`}><FaPencilAlt /></button>
-                </Tippy>
-                <Tippy content={`Delete ${staff.username}`}>
-                  <button aria-label={`Delete ${staff.username}`} className='ml-2'><FaTrashAlt /></button>
+                <Tippy content='View Full Details'>
+                  <button aria-label={`View ${data.username}`} onClick={() => openViewDetails(data)}>
+                    <FaEye />
+                  </button>
                 </Tippy>
               </td>
             </tr>)

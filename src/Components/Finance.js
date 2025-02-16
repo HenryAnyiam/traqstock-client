@@ -123,7 +123,7 @@ function Finance() {
               </div>
               <div className="m-4 lg:grid lg:grid-cols-2">
                   <p className="font-semibold text-black p-1 mr-2">Description:</p>
-                  <p className="font-semibold text-black p-1 mr-2">{ item?.description }</p>
+                  <p className="font-semibold text-black p-1 mr-2">{ item?.description === null ? 'No Description' : item?.description }</p>
               </div>
             </div>
           </div>
