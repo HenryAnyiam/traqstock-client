@@ -1,22 +1,84 @@
-import React from 'react'
-import { FaPencilAlt, FaTrashAlt, FaTimes } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react'
+import { FaEye, FaTimes } from 'react-icons/fa';
 import Tippy from '@tippyjs/react';
 import Loader from './Loader';
 import { useForm } from 'react-hook-form';
+import { addFeedPurchase, getFeedPurchase, handleData } from '../Utils/Funcs';
+import { toast } from 'react-toastify';
 
 
 function FeedPurchase() {
-  const staffData = [];
-  const loading = false;
-  const { register, handleSubmit, formState } = useForm();
+  const [loading, setLoading] = useState(true);
+  const { register, handleSubmit, formState, reset } = useForm();
   const { errors } = formState;
+  const [feedPurchase, setFeedPurchase] = useState([]);
+  const [item, setItem] = useState(null);
 
-  const submitData = () => {}
+  const submitData = async (data) => {
+    if (!errors.name && !errors.variety && !errors.form &&
+      !errors.chicken_type && !errors.growth_stage &&
+      !errors.size_of_bags && !errors.unit_price &&
+      !errors.purchase_date && !errors.total_bags
+    ) {
+      const loader = document.getElementById('query-loader');
+      const text = document.getElementById('query-text');
+      loader.style.display = 'flex';
+      text.style.display = 'none';
+      const res = await addFeedPurchase(data);
+      handleData(res, loader, text, toast, reset)
+      .then((res) => {
+        getFeedPurchase()
+          .then((res) => {
+            res.json().then((data) => {
+              console.log(data);
+              setFeedPurchase(data);
+              setLoading(false);
+            });
+          })
+          .catch((err) => {
+            console.error(err);
+            setLoading(false);
+          });
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => {
+        toggleModal();
+      })
+    }
+  }
 
-  const toggleModal = () => {
+  const toggleViewModal = () => {
     const holdData = document.getElementById('view-data');
     holdData.classList.toggle('hidden');
   }
+
+  const toggleModal = () => {
+    const holdData = document.getElementById('new-data');
+    holdData.classList.toggle('hidden');
+  }
+
+  const openViewDetails = (data) => {
+    setItem(data);
+    const editData = document.getElementById('new-data');
+    if (!editData.classList.contains('hidden')) {
+      editData.classList.add('hidden');
+    }
+    toggleViewModal();
+  }
+
+  useEffect(() => {
+    getFeedPurchase()
+      .then((res) => res.json())
+      .then((data) => {
+        setFeedPurchase(data);
+      })
+      .catch(err => console.log(err))
+    .finally(() => {
+      setLoading(false);
+    })
+  }, [])
 
   if (loading) {
     return <div className='h-full p-4 w-full'>
@@ -36,10 +98,11 @@ function FeedPurchase() {
         <thead className='shadow-lg text-left bg-slate-100 text-black font-bold'>
           <tr className='h-10'>
             <td className='p-2 w-[10%] hidden lg:table-cell'>S/N</td>
-            <td className='p-2 w-[25%]'>Name</td>
+            <td className='p-2 w-[15%]'>Name</td>
             <td className='p-2 w-[15%]'>Variety</td>
-            <td className='p-2 w-[40%]'>Date Purchased</td>
-            <td  className='p-2 w-[10%]'>Action</td>
+            <td  className='p-2 w-[20%]'>Unit Price</td>
+            <td className='p-2 w-[20%] hidden lg:table-cell'>Date Purchased</td>
+            <td className='p-2 w-[10%]'></td>
           </tr>
         </thead>
       <tbody>
@@ -62,6 +125,58 @@ function FeedPurchase() {
   return (
     <div className='h-full p-4 w-full'>
       <div className='modal-hold hidden' id="view-data">
+        <div className='modal-content'>
+          <div className="bg-slate-100 shadow-2xl rounded-xl h-fit w-80 lg:w-fit p-4">
+            <div className='flex justify-end'>
+              <button
+              className="flex justify-center items-center text-center text-black p-2 mr-4 rounded-xl font-semibold hover:bg-new-green btn-anim"
+              onClick={() => { toggleViewModal() }}>
+                <FaTimes />
+              </button>
+            </div>
+            <p className="text-center rounded-xl font-semibold text-black p-1 w-full mb-2 text-xl">Purchase Details</p>
+            <div>
+              <div className="m-4 lg:grid lg:grid-cols-2">
+                  <p className="font-semibold text-black p-1 mr-2">Name:</p>
+                  <p className="font-semibold text-black p-1 mr-2">{ item?.name }</p>
+              </div>
+              <div className="m-4 lg:grid lg:grid-cols-2">
+                  <p className="font-semibold text-black p-1 mr-2">Variety:</p>
+                  <p className="font-semibold text-black p-1 mr-2">{ item?.variety }</p>
+              </div>
+              <div className="m-4 lg:grid lg:grid-cols-2">
+                  <p className="font-semibold text-black p-1 mr-2">Form:</p>
+                  <p className="font-semibold text-black p-1 mr-2">{ item?.form }</p>
+              </div>
+              <div className="m-4 lg:grid lg:grid-cols-2">
+                <p className="font-semibold text-black p-1 mr-2">Chicken Type:</p>
+                <p className="font-semibold text-black p-1 mr-2">{ item?.chicken_type }</p>
+              </div>
+              <div className="m-4 lg:grid lg:grid-cols-2">
+                <p className="font-semibold text-black p-1 mr-2">Growth Stage:</p>
+                <p className="font-semibold text-black p-1 mr-2">{ item?.growth_stage }</p>
+              </div>
+              <div className="m-4 lg:grid lg:grid-cols-2">
+                  <p className="font-semibold text-black p-1 mr-2">Unit Price:</p>
+                  <p className="font-semibold text-black p-1 mr-2">{ item?.unit_price }</p>
+              </div>
+              <div className="m-4 lg:grid lg:grid-cols-2">
+                <p className="font-semibold text-black p-1 mr-2">Size of Bags:</p>
+                <p className="font-semibold text-black p-1 mr-2">{ item?.size_of_bags }</p>
+              </div>
+              <div className="m-4 lg:grid lg:grid-cols-2">
+                <p className="font-semibold text-black p-1 mr-2">Bags Purchased:</p>
+                <p className="font-semibold text-black p-1 mr-2">{ item?.total_bags }</p>
+              </div>
+              <div className="m-4 lg:grid lg:grid-cols-2">
+                  <p className="font-semibold text-black p-1 mr-2">Date Purchased:</p>
+                  <p className="font-semibold text-black p-1 mr-2">{ item?.purchase_date }</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className='modal-hold hidden' id="new-data">
         <div className='modal-content'>
           <div className="bg-slate-100 shadow-2xl rounded-xl h-fit w-80 lg:w-fit p-4">
             <div className='flex justify-end'>
@@ -144,18 +259,17 @@ function FeedPurchase() {
                 </div>
                 <p className='text-xs text-red-600 mb-3 text-center'>{ errors.size_of_bags?.message }</p>
                 <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
+                    <label htmlFor="total_bags" className="font-semibold text-black p-1 mr-2">Bags Purchased:</label>
+                    <input type="number" id="total_bags" placeholder="Total Bags Purchased" { ...register("total_bags", { required: "Add Bag Purchased" }) }
+                    className="bg-white border-2 border-black rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2" required />
+                </div>
+                <p className='text-xs text-red-600 mb-3 text-center'>{ errors.total_bags?.message }</p>
+                <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
                     <label htmlFor="unit_price" className="font-semibold text-black p-1 mr-2">Unit Price:</label>
                     <input type="number" id="unit_price" placeholder="Unit Price Per Bag" { ...register("unit_price", { required: "Add Unit Price" }) }
                     className="bg-white border-2 border-black rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2" required />
                 </div>
                 <p className='text-xs text-red-600 mb-3 text-center'>{ errors.unit_price?.message }</p>
-                
-                <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
-                    <label htmlFor="veterinarian" className="font-semibold text-black p-1 mr-2">Veterinarian:</label>
-                    <input type="text" id="veterinarian" placeholder="Veterinarian" { ...register("veterinarian", { required: "Add Veterinarian" }) }
-                    className="bg-white border-2 border-black rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2" required />
-                </div>
-                <p className='text-xs text-red-600 mb-3 text-center'>{ errors.veterinarian?.message }</p>
                 <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
                     <label htmlFor="purchase_date" className="font-semibold text-black p-1 mr-2">Date Purchased:</label>
                     <input type="date" id="purchase_date" placeholder="Date Purchased" { ...register("purchase_date", { required: "Add Purchase Date" }) }
@@ -187,32 +301,33 @@ function FeedPurchase() {
               className='h-6 w-6 ml-1'>
               <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/>
             </svg>
-            <span className='text-sm'>New Purcase</span>
+            <span className='text-sm'>New Purchase</span>
         </button>
       </div>
       <table className='table-auto w-full border-collapse'>
         <thead className='shadow-lg text-left bg-slate-100 text-black font-semibold'>
           <tr className='h-10'>
             <td className='p-2 w-[10%] hidden lg:table-cell'>S/N</td>
-            <td className='p-2 w-[25%]'>Name</td>
+            <td className='p-2 w-[15%]'>Name</td>
             <td className='p-2 w-[15%]'>Variety</td>
-            <td className='p-2 w-[40%]'>Date Purchased</td>
-            <td  className='p-2 w-[10%]'>Action</td>
+            <td  className='p-2 w-[20%]'>Unit Price</td>
+            <td className='p-2 w-[20%] hidden lg:table-cell'>Date Purchased</td>
+            <td className='p-2 w-[10%]'></td>
           </tr>
         </thead>
         <tbody>
           {
-            staffData.map((staff, index) => <tr key={staff.id} className='h-10 border-b-2 font-normal text-sm lg:text-base'>
+            feedPurchase.map((feed, index) => <tr key={feed.id} className='h-10 border-b-2 font-normal text-sm lg:text-base'>
               <td className='p-2 hidden lg:table-cell font-normal'>{ index + 1 }</td>
-              <td className='p-2'>{ staff.username }</td>
-              <td className='p-2'>{ staff.users_role }</td>
-              <td className='p-2'>{ staff.last_activity }</td>
+              <td className='p-2'>{ feed.name }</td>
+              <td className='p-2'>{ feed.variety }</td>
+              <td className='p-2'>{ feed.unit_price }</td>
+              <td className='p-2'>{ feed.purchase_date }</td>
               <td className='p-2'>
-                <Tippy content={`Edit ${staff.username} details`}>
-                  <button  aria-label={`Edit ${staff.username}`}><FaPencilAlt /></button>
-                </Tippy>
-                <Tippy content={`Delete ${staff.username}`}>
-                  <button aria-label={`Delete ${staff.username}`} className='ml-2'><FaTrashAlt /></button>
+                <Tippy content='View Full Details'>
+                  <button aria-label={`View ${feed.username}`} onClick={() => openViewDetails(feed)}>
+                    <FaEye />
+                  </button>
                 </Tippy>
               </td>
             </tr>)

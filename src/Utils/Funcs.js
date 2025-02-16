@@ -77,6 +77,20 @@ export const addFlockSource = async (data) => {
   return response;
 }
 
+export const addFeedPurchase = async (data) => {
+  const token = localStorage.getItem('accessToken');
+  const response = fetch(`${BaseURL}/poultry/feed-purchase/`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+
+  return response;
+}
+
 export const deleteFlockSource = async (id) => {
   const token = localStorage.getItem("accessToken");
   const response = fetch(`${BaseURL}/poultry/flock-sources/${id}/`, {
@@ -154,6 +168,18 @@ export const deleteHousingStructures = async (id) => {
 export const getFlocks = async () => {
   const token = localStorage.getItem('accessToken');
   const response = fetch(`${BaseURL}/poultry/flocks`, {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    },
+  })
+
+  return response;
+}
+
+export const getFeedPurchase = async () => {
+  const token = localStorage.getItem('accessToken');
+  const response = fetch(`${BaseURL}/poultry/feed-purchase`, {
     method: 'GET',
     headers: {
       'Authorization': `Bearer ${token}`
