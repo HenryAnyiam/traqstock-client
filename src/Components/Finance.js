@@ -1,20 +1,48 @@
-import React from 'react'
-import { FaPencilAlt, FaTrashAlt, FaTimes } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react'
+import { FaEye, FaTimes } from 'react-icons/fa';
 import Tippy from '@tippyjs/react';
 import Loader from './Loader';
 import { useForm } from 'react-hook-form';
+import { getFinance } from '../Utils/Funcs'
 
 
 function Finance() {
-  const staffData = [];
-  const loading = false;
+  const [loading, setLoading] = useState(true);
   const { register, handleSubmit, formState } = useForm();
+  const [item, setItem] = useState(null);
+  const [financeData, setFinanceData] = useState([])
   const { errors } = formState;
 
   const submitData = () => {}
 
-  const toggleModal = () => {
+  useEffect(() => {
+    getFinance()
+      .then((res) => res.json())
+      .then((data) => {
+        setFinanceData(data);
+      })
+      .catch(err => console.log(err))
+      .finally(() => {
+        setLoading(false);
+      })
+  }, [])
+
+  const toggleViewModal = () => {
     const holdData = document.getElementById('view-data');
+    holdData.classList.toggle('hidden');
+  }
+
+  const openViewDetails = (data) => {
+    setItem(data);
+    const editData = document.getElementById('new-data');
+    if (!editData.classList.contains('hidden')) {
+      editData.classList.add('hidden');
+    }
+    toggleViewModal();
+  }
+
+  const toggleModal = () => {
+    const holdData = document.getElementById('new-data');
     holdData.classList.toggle('hidden');
   }
 
@@ -37,10 +65,9 @@ function Finance() {
           <tr className='h-10'>
             <td className='p-2 w-[10%] hidden lg:table-cell'>S/N</td>
             <td className='p-2 w-[25%]'>Category</td>
-            <td className='p-2 w-[15%]'>Type</td>
             <td className='p-2 w-[20%]'>Amount</td>
             <td className='p-2 w-[20%]'>Date Occured</td>
-            <td  className='p-2 w-[10%]'>Action</td>
+            <td  className='p-2 w-[10%]'></td>
           </tr>
         </thead>
       <tbody>
@@ -63,6 +90,46 @@ function Finance() {
   return (
     <div className='h-full p-4 w-full'>
       <div className='modal-hold hidden' id="view-data">
+        <div className='modal-content'>
+          <div className={`shadow-2xl rounded-xl h-fit w-80 lg:w-fit p-4 ${item?.category === 'Expense' ? 'bg-red-500' : 'bg-new-green'}`}>
+            <div className='flex justify-end'>
+              <button
+              className="flex justify-center items-center text-center text-black p-2 mr-4 rounded-xl font-semibold hover:bg-slate-100 btn-anim"
+              onClick={() => { toggleViewModal() }}>
+                <FaTimes />
+              </button>
+            </div>
+            <p className="text-center rounded-xl font-semibold text-black p-1 w-full mb-2 text-xl">Purchase Details</p>
+            <div>
+              <div className="m-4 lg:grid lg:grid-cols-2">
+                  <p className="font-semibold text-black p-1 mr-2">Category:</p>
+                  <p className="font-semibold text-black p-1 mr-2">{ item?.category }</p>
+              </div>
+              <div className="m-4 lg:grid lg:grid-cols-2">
+                  <p className="font-semibold text-black p-1 mr-2">Type:</p>
+                  <p className="font-semibold text-black p-1 mr-2">{ item?.finance_type }</p>
+              </div>
+              <div className="m-4 lg:grid lg:grid-cols-2">
+                  <p className="font-semibold text-black p-1 mr-2">Amount:</p>
+                  <p className="font-semibold text-black p-1 mr-2">{ item?.amount }</p>
+              </div>
+              <div className="m-4 lg:grid lg:grid-cols-2">
+                <p className="font-semibold text-black p-1 mr-2">Date Occurred:</p>
+                <p className="font-semibold text-black p-1 mr-2">{ item?.date_occurred }</p>
+              </div>
+              <div className="m-4 lg:grid lg:grid-cols-2">
+                <p className="font-semibold text-black p-1 mr-2">Beneficiary:</p>
+                <p className="font-semibold text-black p-1 mr-2">{ item?.beneficiary }</p>
+              </div>
+              <div className="m-4 lg:grid lg:grid-cols-2">
+                  <p className="font-semibold text-black p-1 mr-2">Description:</p>
+                  <p className="font-semibold text-black p-1 mr-2">{ item?.description }</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className='modal-hold hidden' id="new-data">
         <div className='modal-content'>
           <div className="bg-slate-100 shadow-2xl rounded-xl h-fit w-80 lg:w-fit p-4">
             <div className='flex justify-end'>
@@ -160,27 +227,27 @@ function Finance() {
       <table className='table-auto w-full border-collapse'>
         <thead className='shadow-lg text-left bg-slate-100 text-black font-semibold'>
           <tr className='h-10'>
-          <td className='p-2 w-[10%] hidden lg:table-cell'>S/N</td>
+            <td className='p-2 w-[10%] hidden lg:table-cell'>S/N</td>
             <td className='p-2 w-[25%]'>Category</td>
-            <td className='p-2 w-[15%]'>Type</td>
             <td className='p-2 w-[20%]'>Amount</td>
             <td className='p-2 w-[20%]'>Date Occured</td>
-            <td  className='p-2 w-[10%]'>Action</td>
+            <td  className='p-2 w-[10%]'></td>
           </tr>
         </thead>
         <tbody>
           {
-            staffData.map((staff, index) => <tr key={staff.id} className='h-10 border-b-2 font-normal text-sm lg:text-base'>
+            financeData.map((data, index) => <tr key={data.id} className='h-10 border-b-2 font-normal text-sm lg:text-base'>
               <td className='p-2 hidden lg:table-cell font-normal'>{ index + 1 }</td>
-              <td className='p-2'>{ staff.username }</td>
-              <td className='p-2'>{ staff.users_role }</td>
-              <td className='p-2'>{ staff.last_activity }</td>
               <td className='p-2'>
-                <Tippy content={`Edit ${staff.username} details`}>
-                  <button  aria-label={`Edit ${staff.username}`}><FaPencilAlt /></button>
-                </Tippy>
-                <Tippy content={`Delete ${staff.username}`}>
-                  <button aria-label={`Delete ${staff.username}`} className='ml-2'><FaTrashAlt /></button>
+                <span className={`p-1 rounded-md text-slate-100 ${data?.category === 'Expense' ? 'bg-red-500' : 'bg-new-green'}`}>{ data.category }</span>
+              </td>
+              <td className='p-2'>{ data.amount }</td>
+              <td className='p-2'>{ data.date_occurred }</td>
+              <td className='p-2'>
+                <Tippy content='View Full Details'>
+                  <button aria-label={`View ${data.username}`} onClick={() => openViewDetails(data)}>
+                    <FaEye />
+                  </button>
                 </Tippy>
               </td>
             </tr>)

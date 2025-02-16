@@ -189,6 +189,18 @@ export const getFeedPurchase = async () => {
   return response;
 }
 
+export const getFinance = async () => {
+  const token = localStorage.getItem('accessToken');
+  const response = fetch(`${BaseURL}/poultry/finance`, {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    },
+  })
+
+  return response;
+}
+
 export const updateFlock = async (data, id) => {
   const token = localStorage.getItem('accessToken');
   const response = fetch(`${BaseURL}/poultry/flocks/${id}/`, {
