@@ -5,7 +5,7 @@ import close from '../Assets/img/close_icon.svg';
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../Utils/userAuth';
 import Header from './Header';
-import { GiFarmTractor, GiChicken, GiEasterEgg, GiPlantRoots, GiTreehouse } from "react-icons/gi";
+import { GiFarmTractor, GiChicken, GiEasterEgg, GiPlantRoots, GiTreehouse, GiWheat } from "react-icons/gi";
 import { MdHouseSiding, MdGroups, MdOutlineManageHistory } from "react-icons/md";
 import { PiFarmThin, PiBarnThin } from "react-icons/pi";
 import { FcInspection } from "react-icons/fc";
@@ -248,6 +248,14 @@ function DashboardSideBar() {
           >
             <GiEasterEgg className="text-2xl" />
             <span>Egg Collection</span>
+          </NavLink>
+          <NavLink
+            to="/dashboard/flocks/feeding"
+            className="block p-2 pl-4 text-sm rounded-xl my-1 hidden dropFlocks"
+            onClick={closeDropDown}
+          >
+            <GiWheat className="text-2xl" />
+            <span>Feeding</span>
           </NavLink>
           <NavLink
             to="/dashboard/flocks/treatment"

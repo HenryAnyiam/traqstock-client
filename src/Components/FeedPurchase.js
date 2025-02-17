@@ -169,6 +169,14 @@ function FeedPurchase() {
                 <p className="font-semibold text-black p-1 mr-2">{ item?.total_bags }</p>
               </div>
               <div className="m-4 lg:grid lg:grid-cols-2">
+                <p className="font-semibold text-black p-1 mr-2">Feed Weight Total:</p>
+                <p className="font-semibold text-black p-1 mr-2">{ item?.total_feed_weight }</p>
+              </div>
+              <div className="m-4 lg:grid lg:grid-cols-2">
+                <p className="font-semibold text-black p-1 mr-2">Feed Weight Left:</p>
+                <p className="font-semibold text-black p-1 mr-2">{ item?.total_feed_left }</p>
+              </div>
+              <div className="m-4 lg:grid lg:grid-cols-2">
                   <p className="font-semibold text-black p-1 mr-2">Date Purchased:</p>
                   <p className="font-semibold text-black p-1 mr-2">{ item?.purchase_date }</p>
               </div>

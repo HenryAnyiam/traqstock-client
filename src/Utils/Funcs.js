@@ -34,6 +34,30 @@ export const addFarmData = async (data) => {
   return response;
 }
 
+export const addFeeding = async (data) => {
+  const token = localStorage.getItem("accessToken");
+  const response = await fetch(`${BaseURL}/poultry/feeding/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  });
+  return response;
+};
+
+export const getFeeding = async () => {
+  const token = localStorage.getItem("accessToken");
+  const response = await fetch(`${BaseURL}/poultry/feeding`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response;
+};
+
 export const fetchFarmData = async () => {
   const token = localStorage.getItem('accessToken');
   const response = await fetch(`${BaseURL}/poultry_inventory/farm-data/list/`, {

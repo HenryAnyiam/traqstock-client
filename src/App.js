@@ -63,6 +63,7 @@ function App() {
             <Route path='flocks/flocks/new' element={<RequireManager><NewFlock /></RequireManager>} />
             <Route path='flocks/flocks' element={<ViewFlock />} />
             <Route path='flocks/treatment' element={<Treatment />} />
+            <Route path='flocks/feeding' element={<FarmDataTable />} />
             <Route path='farm/egg-sales' element={<EggSales />} />
             <Route path='farm/feed-purchase' element={<FeedPurchase />} />
             <Route path='farm/finance' element={<Finance />} />
