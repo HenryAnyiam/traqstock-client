@@ -40,7 +40,8 @@ function ViewFlock() {
     if (!errors.source && !errors.breed &&
       !errors.date_of_hatching && !errors.chicken_type &&
       !errors.initial_number_of_birds && !errors.current_rearing_method &&
-      !errors.current_housing_structure && !errors.name
+      !errors.current_housing_structure && !errors.name && !errors.initial_weight
+      && !errors.unit_prices
     ) {
       const loader = document.getElementById('query-loader');
       const text = document.getElementById('query-text');
@@ -134,9 +135,6 @@ function ViewFlock() {
                   className="bg-white border-2 border-base-brown rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2"
                   { ...register('age_in_weeks', {
                     required: "Input Flocks Age",
-                    min: {
-                      
-                    }
                   }) }/>
               </div>
               <p className='text-xs text-red-600 mb-4 text-center'>{errors.age_in_weeks?.message }</p>
@@ -168,7 +166,38 @@ function ViewFlock() {
                     } 
                     }) }/>
               </div>
-              <p className='text-xs text-red-600 mb-4 text-center'>{errors.initial_number_of_birds?.message }</p>
+              <p className='text-xs text-red-600 mb-4 text-center'>{errors.initial_number_of_birds?.message}</p>
+              
+              <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
+                <label htmlFor="unitPrices" className="font-semibold text-black p-1 mr-2">Unit Price:</label>
+                <input type="number" id="unitPrices" placeholder='Unit Price' min='0'
+                  className="bg-white border-2 border-black rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2" 
+                  { ...register('unit_prices', {
+                    required: "Input Unit Price",
+                    pattern: {
+                      value: /^(0|[1-9]\d*)$/,
+                      message: "Input Unit Price"
+                    },
+                    }) }/>
+              </div>
+              <p className='text-xs text-red-600 mb-4 text-center'>{errors.unit_prices?.message}</p>
+              <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
+                <label htmlFor="initialWeight" className="font-semibold text-black p-1 mr-2">Initial Weight:</label>
+                <input type="number" id="initialWeight" placeholder='Initial Weight in KG' min='0'
+                  className="bg-white border-2 border-black rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2" 
+                  { ...register('initial_weight', {
+                    required: "Input Unit Price",
+                    pattern: {
+                      value: /^(0|[1-9]\d*)$/,
+                      message: "Input Initial Weight"
+                    },
+                    min: {
+                      value: 2,
+                      message: "Minimum weight is 2kg"
+                    }
+                    }) }/>
+              </div>
+              <p className='text-xs text-red-600 mb-4 text-center'>{errors.initial_weight?.message}</p>
               <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
                   <label htmlFor="rearingMethod" className="font-semibold text-black p-1 mr-2">Rearing method:</label>
                   <select id='rearingMethod' defaultValue='default'
