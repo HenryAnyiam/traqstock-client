@@ -49,13 +49,8 @@ function App() {
         <Routes>
           <Route path='dashboard' element={<RequireLogin><Dashboard /></RequireLogin>}>
             <Route path='user' element={<UserDashboard />} />
-            <Route path='farm-data' element={<FarmData />}>
-              <Route path='table' element={<FarmDataTable />}/>
-              <Route path='chart' element={<FarmDataChart />}/>
-            </Route>
             <Route path='farm/housing-structure' element={<RequireManager><HousingStructureTable /></RequireManager>} />
             <Route path='housing-structure/new' element={<RequireManager><NewHousingStructure /></RequireManager>} />
-            <Route path='farm-data/new-record' element={<NewRecord />}/>
             <Route path='farm/sources' element={<FlockSource />} />
             <Route path='flocks/sources/new' element={<RequireManager><NewFlockSource /></RequireManager>} />
             <Route path='farm/breeds' element={<FlockBreed />} />
