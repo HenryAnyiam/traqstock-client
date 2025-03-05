@@ -62,23 +62,48 @@ function FarmData() {
         <p className="text-center rounded-xl text-black p-1 w-full mb-2 text-xl">Add New Record</p>
         <form onSubmit={handleSubmit(submitData)} noValidate>
           <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
+            <label htmlFor="flock-name" className="font-semibold text-black p-1 mr-2">Flock Fed:</label>
+            <select id='flock-name' defaultValue="default" { ...register('flock', {
+              required: "Select Flock",
+              pattern: {
+                value: /^(?!default$).+$/,
+                message: "Select Flock"
+              } 
+              }) }
+              className="bg-white border-2 border-black rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2">
+              <option value="default" disabled>Flock</option>
+            </select>
+          </div>
+          <p className='text-xs text-red-600 mb-3 text-center'>{ errors.flock?.message }</p>
+          <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
               <label htmlFor="feed_intake" className="text-black p-1 mr-2">Feed Intake:</label>
-              <input type="number" id="feed_intake" placeholder="Feed Intake" { ...register("feed_intake", { required: "Add Feed intake" }) }
+              <input type="number" id="feed_intake" placeholder="Feed Intake in Kgs" { ...register("feed_intake", { required: "Add Feed intake" }) }
               className="bg-white border-2 border-black rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2" required />
           </div>
           <p className='text-xs text-red-600 mb-3 text-center'>{ errors.feed_intake?.message }</p>
           <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
               <label htmlFor="water_intake" className="text-black p-1 mr-2">Water Intake:</label>
-              <input type="number" id="water_intake" placeholder="Water Intake" { ...register("water_intake", { required: "Add Water Intake" }) }
+              <input type="number" id="water_intake" placeholder="Water Intake In Ltrs" { ...register("water_intake", { required: "Add Water Intake" }) }
               className="bg-white border-2 border-black rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2" required />
           </div>
           <p className='text-xs text-red-600 mb-3 text-center'>{ errors.water_intake?.message }</p>
           <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
-              <label htmlFor="vaccine" className="text-black p-1 mr-2">Vaccine:</label>
-              <input type="text" id="vaccine" placeholder="Vaccine" { ...register("vaccine_administered", { required: "Add vaccine" }) }
+              <label htmlFor="dateFed" className="text-black p-1 mr-2">Date Fed:</label>
+              <input type="date" id="dateFed" placeholder="Feed Date" { ...register("feed_date", { required: "Add vaccine" }) }
               className="bg-white border-2 border-black rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2" required />
           </div>
-          <p className='text-xs text-red-600 mb-3 text-center'>{ errors.vaccine_administered?.message }</p>
+          <p className='text-xs text-red-600 mb-3 text-center'>{ errors.feed_date?.message }</p>
+          <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
+              <label htmlFor="timeFed" className="text-black p-1 mr-2">Time Fed:</label>
+              <input type="time" id="timeFed" placeholder="Feed Time" { ...register("feed_time", { required: "Add vaccine" }) }
+              className="bg-white border-2 border-black rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2" required />
+          </div>
+          <p className='text-xs text-red-600 mb-3 text-center'>{ errors.feed_time?.message }</p>
+          <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
+              <label htmlFor="note" className="text-black p-1 mr-2">Note/Remark:</label>
+              <textarea id="note" rows="3" placeholder="Note" { ...register("note") }
+              className="bg-white border-2 border-black rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2"></textarea>
+          </div>
           <div className="m-4 flex justify-center">
               <button type="submit"
               className="text-center w-full text-white bg-new-green p-2 rounded-xl btn-anim">
