@@ -173,7 +173,7 @@ function Finance() {
                 <p className='text-xs text-red-600 mb-3 text-center'>{ errors.finance_type?.message }</p>
                 <div className="m-4 mb-1 lg:grid lg:grid-cols-3">
                     <label htmlFor="amount" className="font-semibold text-black p-1 mr-2">Amount:</label>
-                    <input type="number" id="amount" placeholder="Sizes of Bag in Kg" { ...register("amount", { required: "Add Amount" }) }
+                    <input type="number" id="amount" placeholder="Amount Involved" { ...register("amount", { required: "Add Amount" }) }
                     className="bg-white border-2 border-black rounded-lg p-1 w-full lg:w-58 focus:outline-0 lg:col-span-2" required />
                 </div>
                 <p className='text-xs text-red-600 mb-3 text-center'>{ errors.amount?.message }</p>
