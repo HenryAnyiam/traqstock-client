@@ -1,9 +1,9 @@
 import Modal from 'react-modal';
-import React, { useEffect, useReducer } from 'react'
-import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
-import Tippy from '@tippyjs/react';
+import React, { useEffect, useReducer, useState } from 'react';
 import Loader from './Loader';
 import { useForm } from 'react-hook-form';
+import { getEggSales, addEggSales, handleData } from '../Utils/Funcs';
+import { toast } from 'react-toastify';
 
 const initialModalState = { main: false, edit: false, delete: false }
 const reducer = (state, action) => {
@@ -27,9 +27,9 @@ const reducer = (state, action) => {
 
 function EggSales() {
   const [ modalState, dispatch ] = useReducer(reducer, initialModalState);
-  const staffData = [];
-  const loading = false;
-  const { register, handleSubmit, formState } = useForm();
+  const [ salesData, setSalesData ] = useState([])
+  const [loading, setLoading] = useState(true);
+  const { register, handleSubmit, formState, reset } = useForm();
   const { errors } = formState;
 
   useEffect(() => {
@@ -40,7 +40,49 @@ function EggSales() {
     }
   }, []);
 
-  const submitData = () => {}
+  useEffect(() => {
+      getEggSales()
+        .then((res) => res.json())
+        .then((data) => {
+          setSalesData(data);
+        })
+        .catch((err) => console.log(err))
+        .finally(() => {
+          setLoading(false);
+        });
+    }, [])
+
+  const submitData = async (data) => {
+    if (!errors.no_of_crates && !errors.unit_price && !errors.date_sold
+      ) {
+        const loader = document.getElementById('query-loader');
+        const text = document.getElementById('query-text');
+        loader.style.display = 'flex';
+        text.style.display = 'none';
+        const res = await addEggSales(data);
+        handleData(res, loader, text, toast, reset)
+        .then((res) => {
+          getEggSales()
+            .then((res) => {
+              res.json().then((data) => {
+                console.log(data);
+                setSalesData(data);
+                setLoading(false);
+              });
+            })
+            .catch((err) => {
+              console.error(err);
+              setLoading(false);
+            });
+        })
+        .catch((err) => {
+          console.error(err);
+        })
+        .finally(() => {
+          dispatch("closeMain");
+        })
+      }
+  }
 
   if (loading) {
     return <div className='h-full p-4 w-full'>
@@ -159,27 +201,20 @@ function EggSales() {
         <thead className='shadow-lg text-left bg-slate-100 text-black font-semibold'>
           <tr className='h-10'>
             <td className='p-2 w-[10%] hidden lg:table-cell'>S/N</td>
-            <td className='p-2 w-[25%]'>Crates</td>
+            <td className='p-2 w-[15%]'>Crates</td>
             <td className='p-2 w-[15%]'>Unit Price</td>
-            <td className='p-2 w-[40%]'>Date Sold</td>
-            <td  className='p-2 w-[10%]'>Action</td>
+            <td className='p-2 w-[15%]'>Date Sold</td>
+            <td  className='p-2 w-[40%]'>Notes</td>
           </tr>
         </thead>
         <tbody>
           {
-            staffData.map((staff, index) => <tr key={staff.id} className='h-10 border-b-2 font-normal text-sm lg:text-base'>
+            salesData.map((item, index) => <tr key={item.id} className='h-10 border-b-2 font-normal text-sm lg:text-base'>
               <td className='p-2 hidden lg:table-cell font-normal'>{ index + 1 }</td>
-              <td className='p-2'>{ staff.username }</td>
-              <td className='p-2'>{ staff.users_role }</td>
-              <td className='p-2'>{ staff.last_activity }</td>
-              <td className='p-2'>
-                <Tippy content={`Edit ${staff.username} details`}>
-                  <button  aria-label={`Edit ${staff.username}`}><FaPencilAlt /></button>
-                </Tippy>
-                <Tippy content={`Delete ${staff.username}`}>
-                  <button aria-label={`Delete ${staff.username}`} className='ml-2'><FaTrashAlt /></button>
-                </Tippy>
-              </td>
+              <td className='p-2'>{ item.no_of_crates }</td>
+              <td className='p-2'>{ item.unit_price }</td>
+              <td className='p-2'>{item.date_sold}</td>
+              <td className='p-2'>{ item.notes === null ? 'No Notes' : item?.notes }</td>
             </tr>)
           }
         </tbody>

@@ -99,7 +99,7 @@ function Finance() {
                 <FaTimes />
               </button>
             </div>
-            <p className="text-center rounded-xl font-semibold text-black p-1 w-full mb-2 text-xl">Purchase Details</p>
+            <p className="text-center rounded-xl font-semibold text-black p-1 w-full mb-2 text-xl">Finance Details</p>
             <div>
               <div className="m-4 lg:grid lg:grid-cols-2">
                   <p className="font-semibold text-black p-1 mr-2">Category:</p>
